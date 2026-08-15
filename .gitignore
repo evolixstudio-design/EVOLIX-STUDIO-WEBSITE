@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+Thumbs.db
+*.zip
+evolix-site (2)/
+software evolix/
+website evolix/

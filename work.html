@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Evolix — business growth and technology agency. Website development, branding, Amazon A+ content, product photography, custom software, and digital marketing." />
+<link rel="icon" href="/assets/evolix-logo.png" />
+<link rel="apple-touch-icon" href="/assets/evolix-logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/css/theme.css" />
+<script>
+  (function() {
+    var savedTheme = localStorage.getItem("evolix-theme") || "dark";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  })();
+</script>
+
+<title>Work — Evolix Studio</title>
+<meta name="description" content="Selected work from Evolix — websites, custom software, branding, Amazon A+ content, product photography, and 3D renders for modern brands and technology companies." />
+<link rel="stylesheet" href="/css/work.css" />
+</head>
+<body>
+
+<!-- Universal Global Page Transition Overlay -->
+<div class="global-page-transition" id="globalPageTransition" aria-hidden="true">
+  <span class="global-transition-word" id="globalTransitionWord">Services</span>
+</div>
+
+<header class="site-nav">
+  <div class="nav-container">
+    <a href="/" class="logo" data-transition="Evolix">
+      <img src="/assets/evolix-logo.png" alt="Evolix" />
+      <span>Evolix</span>
+    </a>
+
+    <!-- Top Navigation Bar: always visible & tap-friendly on mobile -->
+    <nav class="nav-links" data-page="work" id="mainNavLinks">
+      <a href="/" data-key="home" data-transition="Home">Home</a>
+      <a href="/services.html" data-key="services" data-transition="Services">Services</a>
+      <a href="/work.html" data-key="work" data-transition="Work">Work</a>
+      <a href="/contact.html" data-key="contact" data-transition="Contact">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle Light/Dark Theme">
+        <span class="theme-icon sun">☀️</span>
+        <span class="theme-icon moon">🌙</span>
+      </button>
+      <a href="/contact.html" class="btn btn-accent nav-cta" data-transition="Contact">Start a project</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  (function () {
+    // 1. Set active nav link
+    var nav = document.getElementById("mainNavLinks");
+    if (nav) {
+      var key = nav.getAttribute("data-page");
+      var link = nav.querySelector('a[data-key="' + key + '"]');
+      if (link) link.classList.add("active");
+    }
+
+    // 2. Theme toggle
+    var toggleBtn = document.getElementById("themeToggle");
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("evolix-theme", next);
+      });
+    }
+
+    // 3. Universal Global Page Transition Handler (across Home, Work, Services, Contact)
+    var overlay = document.getElementById("globalPageTransition");
+    var word = document.getElementById("globalTransitionWord");
+
+    document.addEventListener("click", function (e) {
+      var target = e.target.closest("a");
+      if (!target) return;
+
+      var href = target.getAttribute("href");
+      if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || target.target === "_blank") {
+        return;
+      }
+
+      // Check if clicking current page
+      var currentPath = window.location.pathname.toLowerCase();
+      var cleanHref = href.toLowerCase().split("?")[0].split("#")[0];
+      
+      if (
+        (cleanHref === "/" && (currentPath === "/" || currentPath.endsWith("index.html"))) ||
+        (cleanHref.indexOf("services") !== -1 && currentPath.indexOf("services") !== -1) ||
+        (cleanHref.indexOf("work") !== -1 && currentPath.indexOf("work") !== -1) ||
+        (cleanHref.indexOf("contact") !== -1 && currentPath.indexOf("contact") !== -1)
+      ) {
+        return;
+      }
+
+      // Intercept and animate
+      if (cleanHref === "/" || cleanHref.endsWith(".html") || cleanHref.startsWith("/services") || cleanHref.startsWith("/work") || cleanHref.startsWith("/contact")) {
+        e.preventDefault();
+
+        var label = target.getAttribute("data-transition");
+        if (!label) {
+          if (cleanHref.indexOf("services") !== -1) label = "Services";
+          else if (cleanHref.indexOf("work") !== -1) label = "Work";
+          else if (cleanHref.indexOf("contact") !== -1) label = "Contact";
+          else label = "Evolix";
+        }
+
+        if (word) word.textContent = label;
+        if (overlay) overlay.classList.add("active");
+
+        setTimeout(function () {
+          window.location.href = href;
+        }, 420);
+      }
+    });
+  })();
+</script>
+
+
+<!-- ============ HERO ============ -->
+<section class="work-hero" id="workHero">
+  <div class="container">
+    <div class="work-hero-inner">
+      <div class="eyebrow">Portfolio &amp; Client Showcase</div>
+      <h1 class="work-hero-headline">Our<br />Work</h1>
+      <p class="work-hero-sub">Real projects, real software, real results — production-ready websites, custom ERPs, and high-impact digital systems engineered by Evolix.</p>
+    </div>
+  </div>
+  <!-- Cursor-trail / interactive visual cards spawn here -->
+  <div class="hero-trail-zone" id="heroTrailZone"></div>
+</section>
+
+<!-- ============ SELECTED WORK ============ -->
+<section class="section" id="selectedWork">
+  <div class="container">
+    <div class="sw-head">
+      <div class="eyebrow">Client Portfolio</div>
+      <h2>Projects that speak for themselves.</h2>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="work-filter-tabs" id="workFilterTabs" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:44px;">
+      <button class="filter-tab-btn active" data-filter="all">All Projects (8)</button>
+      <button class="filter-tab-btn" data-filter="website">Website Development (3)</button>
+      <button class="filter-tab-btn" data-filter="software">Custom Software &amp; ERP (2)</button>
+      <button class="filter-tab-btn" data-filter="creative">Visuals &amp; Creative (3)</button>
+    </div>
+
+    <div class="featured-work-grid" id="workProjectsGrid">
+
+      <!-- ============================================
+           WEBSITE EVOLIX CLIENT PROJECTS
+           ============================================ -->
+
+      <!-- Project 1: Indian Remedies -->
+      <div class="featured-project-card" data-category="website" data-theme="web">
+        <div class="project-carousel-container">
+          <span class="card-floating-badge"><span class="live-dot"></span>Live E-Commerce Website</span>
+          <div class="project-carousel-track">
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/01.png" alt="Indian Remedies Ayurvedic Platform" loading="eager" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/02.png" alt="Indian Remedies Product Showcase" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/03.png" alt="Indian Remedies Herbal Collections" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/04.png" alt="Indian Remedies Formulation Guide" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/05.png" alt="Indian Remedies Doctor Consultation" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/06.png" alt="Indian Remedies Customer Reviews" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/07.png" alt="Indian Remedies Checkout Flow" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/08.png" alt="Indian Remedies Brand Story" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
+          <button class="carousel-btn next" aria-label="Next Slide">›</button>
+          <div class="carousel-indicators">
+            <span class="carousel-dot active"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+          </div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-meta">
+            <span class="project-card-tag">Website Development</span>
+          </div>
+          <h3 class="project-card-title">Indian Remedies — Ayurvedic Healthcare &amp; E-Com</h3>
+          <p class="project-card-desc">Modern, responsive e-commerce web platform for authentic Ayurvedic remedies and wellness formulations. Features rich product catalogs, herbal ingredient breakdowns, doctor consultations, and checkout integration.</p>
+          <a href="/contact.html?service=website" class="project-card-link">Inquire About Web Platforms ↗</a>
+        </div>
+      </div>
+
+      <!-- Project 2: Krishna Tools -->
+      <div class="featured-project-card" data-category="website" data-theme="web">
+        <div class="project-carousel-container">
+          <span class="card-floating-badge"><span class="live-dot"></span>Live Machinery Portal</span>
+          <div class="project-carousel-track">
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/01.png" alt="Krishna Tools Industrial Equipment" loading="eager" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/02.png" alt="Krishna Tools Machine Catalog" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/03.png" alt="Krishna Tools Power Tools" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/04.png" alt="Krishna Tools Technical Specs" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/05.png" alt="Krishna Tools Quotation Pipeline" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/06.png" alt="Krishna Tools Wholesale Inquiries" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
+          <button class="carousel-btn next" aria-label="Next Slide">›</button>
+          <div class="carousel-indicators">
+            <span class="carousel-dot active"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+          </div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-meta">
+            <span class="project-card-tag">Website Development</span>
+          </div>
+          <h3 class="project-card-title">Krishna Tools — Industrial Equipment Catalog</h3>
+          <p class="project-card-desc">High-performance industrial tools &amp; machinery catalog website built for B2B distribution and commercial hardware suppliers. Features structured categorization, technical specification sheets, and fast quotation requests.</p>
+          <a href="/contact.html?service=website" class="project-card-link">Inquire About Web Platforms ↗</a>
+        </div>
+      </div>
+
+      <!-- Project 3: Nagarwala Building Material -->
+      <div class="featured-project-card" data-category="website" data-theme="web">
+        <div class="project-carousel-container">
+          <span class="card-floating-badge"><span class="live-dot"></span>Live Commercial Portal</span>
+          <div class="project-carousel-track">
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/01.png" alt="Nagarwala Building Material Portal" loading="eager" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/02.png" alt="Nagarwala Architectural Supplies" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/03.png" alt="Nagarwala Material Catalog" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/04.png" alt="Nagarwala Structural Supply Categories" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/05.png" alt="Nagarwala Bulk Inquiries" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/06.png" alt="Nagarwala Contractor Partner Portal" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
+          <button class="carousel-btn next" aria-label="Next Slide">›</button>
+          <div class="carousel-indicators">
+            <span class="carousel-dot active"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+          </div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-meta">
+            <span class="project-card-tag">Website Development</span>
+          </div>
+          <h3 class="project-card-title">Nagarwala — Building Materials &amp; Supplies</h3>
+          <p class="project-card-desc">Commercial architectural supplies &amp; building materials showcase website. Equipped with dynamic product galleries, multi-category inventory explorers, contractor partner inquiries, and bulk material quotation funnels.</p>
+          <a href="/contact.html?service=website" class="project-card-link">Inquire About Web Platforms ↗</a>
+        </div>
+      </div>
+
+      <!-- ============================================
+           SOFTWARE EVOLIX CLIENT PROJECTS
+           ============================================ -->
+
+      <!-- Project 4: CRM Software -->
+      <div class="featured-project-card" data-category="software" data-theme="software">
+        <div class="project-carousel-container">
+          <span class="card-floating-badge"><span class="live-dot" style="background:#10b981; box-shadow:0 0 8px #10b981;"></span>Production CRM Suite</span>
+          <div class="project-carousel-track">
+            <div class="carousel-slide"><img src="/assets/work/software/crm/01.png" alt="Evolix CRM Client Dashboard" loading="eager" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/crm/02.png" alt="Evolix CRM Sales Pipeline" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/crm/03.png" alt="Evolix CRM Lead Management" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/crm/04.png" alt="Evolix CRM Task Allocation" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/crm/05.png" alt="Evolix CRM Analytics Reports" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/crm/06.png" alt="Evolix CRM Contact Records" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
+          <button class="carousel-btn next" aria-label="Next Slide">›</button>
+          <div class="carousel-indicators">
+            <span class="carousel-dot active"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+          </div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-meta">
+            <span class="project-card-tag">Custom Software</span>
+          </div>
+          <h3 class="project-card-title">Evolix CRM — Enterprise Pipeline &amp; Sales Suite</h3>
+          <p class="project-card-desc">Bespoke multi-tenant CRM application engineered to streamline client lead capture, sales funnel progression, automated task assignments, call logs, and executive revenue dashboards with real-time analytics.</p>
+          <a href="/contact.html?service=software" class="project-card-link">Inquire About Custom Software ↗</a>
+        </div>
+      </div>
+
+      <!-- Project 5: Shield Max Software -->
+      <div class="featured-project-card" data-category="software" data-theme="software">
+        <div class="project-carousel-container">
+          <span class="card-floating-badge"><span class="live-dot" style="background:#10b981; box-shadow:0 0 8px #10b981;"></span>Security Operations ERP</span>
+          <div class="project-carousel-track">
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/01.png" alt="Shield Max Operations Suite" loading="eager" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/02.png" alt="Shield Max Personnel Rosters" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/03.png" alt="Shield Max Shift Scheduling" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/04.png" alt="Shield Max Attendance Verification" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/05.png" alt="Shield Max Incident Logging" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/06.png" alt="Shield Max Client Invoicing" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/07.png" alt="Shield Max Executive Overview" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
+          <button class="carousel-btn next" aria-label="Next Slide">›</button>
+          <div class="carousel-indicators">
+            <span class="carousel-dot active"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+          </div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-meta">
+            <span class="project-card-tag">Custom Software</span>
+          </div>
+          <h3 class="project-card-title">Shield Max — Operations &amp; Security ERP</h3>
+          <p class="project-card-desc">End-to-end security operations management ERP. Features real-time field deployment tracking, biometric attendance verification, shift scheduling automation, incident tracking, and automated compliance billing.</p>
+          <a href="/contact.html?service=software" class="project-card-link">Inquire About Custom Software ↗</a>
+        </div>
+      </div>
+
+      <!-- ============================================
+           CREATIVE, 3D & BRANDING PROJECTS
+           ============================================ -->
+
+      <!-- Project 6: Branding (Arcadia) -->
+      <div class="featured-project-card" data-category="creative" data-theme="brand">
+        <div class="project-carousel-container">
+          <span class="card-floating-badge"><span class="live-dot" style="background:#f43f5e; box-shadow:0 0 8px #f43f5e;"></span>Brand Architecture</span>
+          <div class="project-carousel-track">
+            <div class="carousel-slide"><img src="/assets/projects/branding.jpg" alt="Arcadia Brand Identity" loading="eager" /></div>
+            <div class="carousel-slide"><img src="/assets/hero-cards/02.png" alt="Arcadia Packaging" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/hero-cards/08.png" alt="Arcadia Digital Guidelines" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
+          <button class="carousel-btn next" aria-label="Next Slide">›</button>
+          <div class="carousel-indicators">
+            <span class="carousel-dot active"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+          </div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-meta">
+            <span class="project-card-tag">Branding &amp; Identity</span>
+          </div>
+          <h3 class="project-card-title">Arcadia — Complete Brand Identity System</h3>
+          <p class="project-card-desc">Comprehensive brand architecture including logo design, color systems, modern typography hierarchy, physical packaging, and digital style guides.</p>
+          <a href="/contact.html?service=branding" class="project-card-link">Inquire About Branding Systems ↗</a>
+        </div>
+      </div>
+
+      <!-- Project 7: Amazon A+ (Sonora Elite) -->
+      <div class="featured-project-card" data-category="creative" data-theme="amazon">
+        <div class="project-carousel-container">
+          <span class="card-floating-badge"><span class="live-dot" style="background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span>+42% Conversion Lift</span>
+          <div class="project-carousel-track">
+            <div class="carousel-slide"><img src="/assets/projects/amazon.jpg" alt="Sonora Elite Amazon A+ Storefront" loading="eager" /></div>
+            <div class="carousel-slide"><img src="/assets/hero-cards/08.png" alt="Sonora Elite Product Infographics" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/hero-cards/04.png" alt="Sonora Elite Brand Story Modules" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
+          <button class="carousel-btn next" aria-label="Next Slide">›</button>
+          <div class="carousel-indicators">
+            <span class="carousel-dot active"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+          </div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-meta">
+            <span class="project-card-tag">Amazon A+ Content</span>
+          </div>
+          <h3 class="project-card-title">Sonora Elite — Premium A+ Storefront</h3>
+          <p class="project-card-desc">Conversion-engineered Amazon A+ listing modules, interactive comparison matrices, and lifestyle infographics that generated a +42% sales uplift.</p>
+          <a href="/contact.html?service=amazon" class="project-card-link">Inquire About Amazon A+ Content ↗</a>
+        </div>
+      </div>
+
+      <!-- Project 8: 3D CGI & Motion (Hyperion Core) -->
+      <div class="featured-project-card" data-category="creative" data-theme="3d">
+        <div class="project-carousel-container">
+          <span class="card-floating-badge"><span class="live-dot" style="background:#f97316; box-shadow:0 0 8px #f97316;"></span>3D CGI Animation</span>
+          <div class="project-carousel-track">
+            <div class="carousel-slide"><img src="/assets/projects/3d.jpg" alt="Hyperion 3D CGI Visuals" loading="eager" /></div>
+            <div class="carousel-slide"><img src="/assets/hero-cards/05.png" alt="Hyperion Promotional Animation" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/hero-cards/09.png" alt="Hyperion Performance Ad Campaigns" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
+          <button class="carousel-btn next" aria-label="Next Slide">›</button>
+          <div class="carousel-indicators">
+            <span class="carousel-dot active"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+          </div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-meta">
+            <span class="project-card-tag">3D Renders &amp; Motion</span>
+          </div>
+          <h3 class="project-card-title">Hyperion Core — 3D Visuals &amp; Motion CGI</h3>
+          <p class="project-card-desc">Cinema-quality 3D product renders combined with hyper-targeted paid advertising funnels, conversion tracking, and creative social campaigns.</p>
+          <a href="/contact.html?service=marketing" class="project-card-link">Inquire About 3D Visuals ↗</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sw-cta">
+      <a href="/contact.html" class="btn btn-accent" data-transition="Contact">Start your project with us →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DYNAMIC TEXT CTA (KOKONUTUI) ============ -->
+<section class="dynamic-cta-section" id="ctaSection">
+  <div class="container">
+    <div class="dynamic-text-stage">
+      <div class="dynamic-text-eyebrow">
+        <span class="dynamic-dot"></span>
+        <span>Let's Collaborate</span>
+      </div>
+      <h2 class="dynamic-headline cta-headline-dynamic">
+        <span class="dynamic-static">Let's build</span><br />
+        <span class="dynamic-roller-wrap">
+          <span class="dynamic-changing-word">Something Iconic.</span>
+        </span>
+      </h2>
+      <p class="cta-sub">Have a project in mind? Tell us what you're building — we'll tell you how to get it done.</p>
+      <a href="/contact.html" class="btn btn-accent" data-transition="Contact">Start a project →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <img src="/assets/evolix-logo.png" alt="EVOLIX STUDIO" />
+          <span style="font-family: var(--font-mono); font-size: 15px; font-weight: 700;">EVOLIX STUDIO</span>
+        </a>
+        <p>A business growth and technology agency — websites, brand systems, conversion content, and custom software for modern brands and technology companies.</p>
+        
+        <div style="margin-top: 18px; display: flex; gap: 14px; flex-wrap: wrap;">
+          <a href="https://wa.me/919098173239" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 12px; color: var(--accent);">WhatsApp Direct ↗</a>
+          <a href="https://www.instagram.com/evolixstudio/" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">Instagram ↗</a>
+          <a href="https://www.facebook.com/profile.php?id=61591762854131" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">Facebook ↗</a>
+        </div>
+      </div>
+
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="/services.html">Website Development</a>
+          <a href="/services.html">Branding &amp; Identity</a>
+          <a href="/services.html">Amazon A+ Content</a>
+          <a href="/services.html">Product Photography</a>
+          <a href="/services.html">Custom Software</a>
+          <a href="/services.html">Digital Marketing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/work.html">Selected Work</a>
+          <a href="/services.html">All Services</a>
+          <a href="/contact.html">Contact &amp; Discovery</a>
+        </div>
+        <div class="footer-col">
+          <h4>Direct Channels</h4>
+          <a href="https://wa.me/919098173239" target="_blank" rel="noopener noreferrer">WhatsApp: +91 90981 73239</a>
+          <a href="tel:+919098173239">Phone: +91 90981 73239</a>
+          <a href="mailto:evolixstudio@gmail.com">evolixstudio@gmail.com</a>
+          <a href="/contact.html" style="color: var(--accent); margin-top: 6px;">Start a project →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> EVOLIX STUDIO. All rights reserved.</span>
+      <span>Designed &amp; Engineered in-house.</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="/js/work.js"></script>
+<script src="/js/carousel.js"></script>
+<script src="/js/dynamic-text.js"></script>
+</body>
+</html>

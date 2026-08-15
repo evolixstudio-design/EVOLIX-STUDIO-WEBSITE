@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Evolix — business growth and technology agency. Website development, branding, Amazon A+ content, product photography, custom software, and digital marketing." />
+<link rel="icon" href="/assets/evolix-logo.png" />
+<link rel="apple-touch-icon" href="/assets/evolix-logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/css/theme.css" />
+<script>
+  (function() {
+    var savedTheme = localStorage.getItem("evolix-theme") || "dark";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  })();
+</script>
+
+<title>Contact — EVOLIX STUDIO</title>
+<meta name="description" content="Get in touch with EVOLIX STUDIO — Full-service digital marketing, web development, brand identity, Amazon A+ content, product photography, and custom software." />
+<link rel="stylesheet" href="/css/contact.css" />
+</head>
+<body>
+
+<!-- Universal Global Page Transition Overlay -->
+<div class="global-page-transition" id="globalPageTransition" aria-hidden="true">
+  <span class="global-transition-word" id="globalTransitionWord">Services</span>
+</div>
+
+<header class="site-nav">
+  <div class="nav-container">
+    <a href="/" class="logo" data-transition="Evolix">
+      <img src="/assets/evolix-logo.png" alt="Evolix" />
+      <span>Evolix</span>
+    </a>
+
+    <!-- Top Navigation Bar: always visible & tap-friendly on mobile -->
+    <nav class="nav-links" data-page="contact" id="mainNavLinks">
+      <a href="/" data-key="home" data-transition="Home">Home</a>
+      <a href="/services.html" data-key="services" data-transition="Services">Services</a>
+      <a href="/work.html" data-key="work" data-transition="Work">Work</a>
+      <a href="/contact.html" data-key="contact" data-transition="Contact">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle Light/Dark Theme">
+        <span class="theme-icon sun">☀️</span>
+        <span class="theme-icon moon">🌙</span>
+      </button>
+      <a href="/contact.html" class="btn btn-accent nav-cta" data-transition="Contact">Start a project</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  (function () {
+    // 1. Set active nav link
+    var nav = document.getElementById("mainNavLinks");
+    if (nav) {
+      var key = nav.getAttribute("data-page");
+      var link = nav.querySelector('a[data-key="' + key + '"]');
+      if (link) link.classList.add("active");
+    }
+
+    // 2. Theme toggle
+    var toggleBtn = document.getElementById("themeToggle");
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("evolix-theme", next);
+      });
+    }
+
+    // 3. Universal Global Page Transition Handler (across Home, Work, Services, Contact)
+    var overlay = document.getElementById("globalPageTransition");
+    var word = document.getElementById("globalTransitionWord");
+
+    document.addEventListener("click", function (e) {
+      var target = e.target.closest("a");
+      if (!target) return;
+
+      var href = target.getAttribute("href");
+      if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || target.target === "_blank") {
+        return;
+      }
+
+      // Check if clicking current page
+      var currentPath = window.location.pathname.toLowerCase();
+      var cleanHref = href.toLowerCase().split("?")[0].split("#")[0];
+      
+      if (
+        (cleanHref === "/" && (currentPath === "/" || currentPath.endsWith("index.html"))) ||
+        (cleanHref.indexOf("services") !== -1 && currentPath.indexOf("services") !== -1) ||
+        (cleanHref.indexOf("work") !== -1 && currentPath.indexOf("work") !== -1) ||
+        (cleanHref.indexOf("contact") !== -1 && currentPath.indexOf("contact") !== -1)
+      ) {
+        return;
+      }
+
+      // Intercept and animate
+      if (cleanHref === "/" || cleanHref.endsWith(".html") || cleanHref.startsWith("/services") || cleanHref.startsWith("/work") || cleanHref.startsWith("/contact")) {
+        e.preventDefault();
+
+        var label = target.getAttribute("data-transition");
+        if (!label) {
+          if (cleanHref.indexOf("services") !== -1) label = "Services";
+          else if (cleanHref.indexOf("work") !== -1) label = "Work";
+          else if (cleanHref.indexOf("contact") !== -1) label = "Contact";
+          else label = "Evolix";
+        }
+
+        if (word) word.textContent = label;
+        if (overlay) overlay.classList.add("active");
+
+        setTimeout(function () {
+          window.location.href = href;
+        }, 420);
+      }
+    });
+  })();
+</script>
+
+
+<!-- ============ 3D CONTACT HERO STAGE ============ -->
+<section class="contact-hero-section" id="contactHero">
+
+  <!-- Canvas Particle Flow Field Background (KokonutUI FlowField) -->
+  <div class="flow-field-backdrop" id="flowFieldBackdrop" aria-hidden="true">
+    <canvas id="flowFieldCanvas"></canvas>
+    <div class="flow-vignette-radial"></div>
+    <div class="flow-fade-top"></div>
+    <div class="flow-fade-bottom"></div>
+  </div>
+
+  <div class="container contact-container">
+
+    <!-- Top Headline Banner -->
+    <div class="contact-header" id="contactHeader">
+      <div class="contact-eyebrow">
+        <span class="eyebrow-dot">✦</span>
+        <span>Contact Evolix Studio</span>
+      </div>
+      <h1 class="contact-headline">Let's Build<br /><span class="highlight-text">Something Iconic.</span></h1>
+      <p class="contact-subhead">
+        We are a full-service digital marketing, branding, web development, and technology agency. Tell us about your project and let's scale your brand together.
+      </p>
+    </div>
+
+    <!-- Main Split Grid: Discovery Form + Studio Info -->
+    <div class="contact-split-grid">
+
+      <!-- LEFT: Discovery Intake Form -->
+      <div class="contact-form-card" id="contactFormCard">
+
+        <form id="evolixContactForm" class="evolix-discovery-form" novalidate>
+
+          <!-- Section 1: Client & Org Info -->
+          <div class="form-section-group">
+            <div class="form-group-title">
+              <span class="step-num">01</span>
+              <span>Client Details</span>
+            </div>
+
+            <div class="form-row-2col">
+              <div class="input-field-wrapper">
+                <label for="clientName">Full Name <span class="req">*</span></label>
+                <div class="input-control">
+                  <input type="text" id="clientName" name="clientName" placeholder="Your name" required autocomplete="name" />
+                </div>
+                <span class="field-error" id="errorName">Please enter your name</span>
+              </div>
+
+              <div class="input-field-wrapper">
+                <label for="orgName">Organization / Brand <span class="req">*</span></label>
+                <div class="input-control">
+                  <input type="text" id="orgName" name="orgName" placeholder="Company or brand name" required autocomplete="organization" />
+                </div>
+                <span class="field-error" id="errorOrg">Please enter your company or brand name</span>
+              </div>
+            </div>
+
+            <div class="form-row-2col">
+              <div class="input-field-wrapper">
+                <label for="clientMobile">Mobile / WhatsApp <span class="req">*</span></label>
+                <div class="input-control">
+                  <input type="tel" id="clientMobile" name="clientMobile" placeholder="e.g. +91 90981 73239" required autocomplete="tel" />
+                </div>
+                <span class="field-error" id="errorMobile">Please enter a valid mobile number</span>
+              </div>
+
+              <div class="input-field-wrapper">
+                <label for="clientLocation">Location <span class="req">*</span></label>
+                <div class="input-control">
+                  <input type="text" id="clientLocation" name="clientLocation" placeholder="City, Country" required />
+                </div>
+                <span class="field-error" id="errorLocation">Please enter your location</span>
+              </div>
+            </div>
+
+            <div class="input-field-wrapper">
+              <label for="clientEmail">Email Address <span class="req">*</span></label>
+              <div class="input-control">
+                <input type="email" id="clientEmail" name="clientEmail" placeholder="name@company.com" required autocomplete="email" />
+              </div>
+              <span class="field-error" id="errorEmail">Please enter a valid email address</span>
+            </div>
+          </div>
+
+          <!-- Section 2: Service Selection Pills -->
+          <div class="form-section-group">
+            <div class="form-group-title">
+              <span class="step-num">02</span>
+              <span>Services Required <span class="req">*</span></span>
+            </div>
+
+            <div class="service-pills-selector" id="servicePillsGrid">
+              <button type="button" class="service-chip-btn" data-service-id="web" data-color="#cc3f48">
+                <span class="chip-num">01</span>
+                <span class="chip-label">Website Development</span>
+                <span class="chip-check">✓</span>
+              </button>
+
+              <button type="button" class="service-chip-btn" data-service-id="branding" data-color="#d9962f">
+                <span class="chip-num">02</span>
+                <span class="chip-label">Brand Identity &amp; Design</span>
+                <span class="chip-check">✓</span>
+              </button>
+
+              <button type="button" class="service-chip-btn" data-service-id="amazon" data-color="#f59e0b">
+                <span class="chip-num">03</span>
+                <span class="chip-label">Amazon A+ Content</span>
+                <span class="chip-check">✓</span>
+              </button>
+
+              <button type="button" class="service-chip-btn" data-service-id="photography" data-color="#ec4899">
+                <span class="chip-num">04</span>
+                <span class="chip-label">Product Photography</span>
+                <span class="chip-check">✓</span>
+              </button>
+
+              <button type="button" class="service-chip-btn" data-service-id="software" data-color="#38bdf8">
+                <span class="chip-num">05</span>
+                <span class="chip-label">Custom Software &amp; ERP</span>
+                <span class="chip-check">✓</span>
+              </button>
+
+              <button type="button" class="service-chip-btn" data-service-id="marketing" data-color="#22c55e">
+                <span class="chip-num">06</span>
+                <span class="chip-label">Digital Marketing &amp; Paid Ads</span>
+                <span class="chip-check">✓</span>
+              </button>
+            </div>
+            <span class="field-error" id="errorServices">Please select at least one service</span>
+          </div>
+
+          <!-- Section 3: Investment Tier & Budget in Rupees (₹ INR) -->
+          <div class="form-section-group">
+            <div class="form-group-title">
+              <span class="step-num">03</span>
+              <span>Estimated Budget (₹ INR)</span>
+            </div>
+
+            <div class="budget-pills-selector" id="budgetPillsGrid">
+              <button type="button" class="budget-chip-btn" data-budget="₹25,000 – ₹50,000">₹25,000 – ₹50,000</button>
+              <button type="button" class="budget-chip-btn active" data-budget="₹50,000 – ₹1,00,000">₹50,000 – ₹1,00,000</button>
+              <button type="button" class="budget-chip-btn" data-budget="₹1,00,000 – ₹2,50,000">₹1,00,000 – ₹2,50,000</button>
+              <button type="button" class="budget-chip-btn" data-budget="₹2,50,000+">₹2,50,000+</button>
+              <button type="button" class="budget-chip-btn" id="customBudgetBtn" data-budget="custom">Custom Amount</button>
+            </div>
+
+            <!-- Custom Budget Input Field (hidden until Custom Amount is selected) -->
+            <div class="custom-budget-wrapper" id="customBudgetWrapper" style="display: none; margin-top: 14px;">
+              <div class="input-control custom-budget-control">
+                <span class="currency-symbol">₹</span>
+                <input type="text" id="customBudgetInput" placeholder="Enter your budget amount in ₹ (e.g. 75,000)" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4: Project Vision & Brief -->
+          <div class="form-section-group">
+            <div class="form-group-title">
+              <span class="step-num">04</span>
+              <span>Project Brief</span>
+            </div>
+
+            <div class="input-field-wrapper">
+              <label for="projectBrief">Tell us about your project, goals, and target timeline</label>
+              <div class="input-control">
+                <textarea id="projectBrief" name="projectBrief" rows="4" placeholder="Briefly describe your requirements, current challenges, and expectations..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Actions -->
+          <div class="form-action-bar">
+            <button type="submit" id="submitInquiryBtn" class="btn btn-accent form-primary-submit">
+              <span>Submit Project Inquiry</span>
+              <span class="btn-arrow">→</span>
+            </button>
+
+            <button type="button" id="whatsappDirectBtn" class="btn btn-whatsapp-direct">
+              <span class="wa-icon">💬</span>
+              <span>WhatsApp (+91 90981 73239)</span>
+            </button>
+          </div>
+
+        </form>
+
+        <!-- Confirmation Modal Overlay -->
+        <div class="inquiry-success-overlay" id="inquirySuccessOverlay" aria-hidden="true">
+          <div class="success-card-content">
+            <div class="success-icon-badge">✓</div>
+            <h3 class="success-title">Inquiry Received</h3>
+            <p class="success-lead">Thank you, <strong id="confirmName">Client</strong>. The Evolix Studio team will get in touch shortly.</p>
+            
+            <div class="success-summary-box" id="successSummaryBox">
+              <!-- Dynamically populated receipt -->
+            </div>
+
+            <div class="success-actions">
+              <a href="https://wa.me/919098173239" target="_blank" rel="noopener noreferrer" class="btn btn-accent" id="successWaLink">
+                <span>Continue on WhatsApp (+91 90981 73239) →</span>
+              </a>
+              <button type="button" class="btn btn-subtle" id="resetInquiryBtn">Submit Another Request</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Studio Info & Contact Channels -->
+      <div class="contact-info-col">
+
+        <!-- Studio Profile Card -->
+        <div class="studio-info-card">
+          <div class="studio-card-head">
+            <div class="studio-brand-logo">
+              <img src="/assets/evolix-logo.png" alt="EVOLIX STUDIO" />
+            </div>
+            <div>
+              <h2 class="studio-brand-name">EVOLIX STUDIO</h2>
+              <p class="studio-brand-tagline">Growth &amp; Technology Agency</p>
+            </div>
+          </div>
+
+          <p class="studio-bio-text">
+            We engineer high-performance websites, distinctive brand identities, ROI-driven marketing campaigns, and bespoke software systems for scaling businesses.
+          </p>
+
+          <!-- Live Studio Timezone Clocks (IST, Dubai, Kuwait) -->
+          <div class="studio-live-status-block">
+            <div class="timezones-row">
+              <div class="tz-chip">
+                <span class="tz-label">IST (India):</span>
+                <span class="tz-time" id="istClock">--:-- --</span>
+              </div>
+              <div class="tz-chip">
+                <span class="tz-label">Dubai (GST):</span>
+                <span class="tz-time" id="dubaiClock">--:-- --</span>
+              </div>
+              <div class="tz-chip">
+                <span class="tz-label">Kuwait (AST):</span>
+                <span class="tz-time" id="kuwaitClock">--:-- --</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTACT US -->
+        <div class="direct-channels-card">
+          <h3 class="channels-heading">CONTACT US</h3>
+
+          <div class="channel-items-list">
+
+            <!-- WhatsApp Direct -->
+            <a href="https://wa.me/919098173239" target="_blank" rel="noopener noreferrer" class="channel-row">
+              <div class="channel-icon-box">💬</div>
+              <div class="channel-info">
+                <span class="channel-type">WhatsApp</span>
+                <span class="channel-val">+91 90981 73239</span>
+              </div>
+              <span class="channel-action-tag">Message ↗</span>
+            </a>
+
+            <!-- Phone Direct -->
+            <a href="tel:+919098173239" class="channel-row">
+              <div class="channel-icon-box">📞</div>
+              <div class="channel-info">
+                <span class="channel-type">Direct Phone</span>
+                <span class="channel-val">+91 90981 73239</span>
+              </div>
+              <span class="channel-action-tag">Call ↗</span>
+            </a>
+
+            <!-- Email -->
+            <a href="mailto:evolixstudio@gmail.com" class="channel-row">
+              <div class="channel-icon-box">✉️</div>
+              <div class="channel-info">
+                <span class="channel-type">Email</span>
+                <span class="channel-val">evolixstudio@gmail.com</span>
+              </div>
+              <span class="channel-action-tag">Write ↗</span>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Social Media Links -->
+        <div class="social-links-card">
+          <h3 class="channels-heading">SOCIAL MEDIA</h3>
+
+          <div class="social-links-grid">
+            <a href="https://www.instagram.com/evolixstudio/" target="_blank" rel="noopener noreferrer" class="social-link-pill">
+              <span class="social-pill-icon">📸</span>
+              <span>Instagram</span>
+              <span class="pill-arrow">↗</span>
+            </a>
+
+            <a href="https://www.facebook.com/profile.php?id=61591762854131" target="_blank" rel="noopener noreferrer" class="social-link-pill">
+              <span class="social-pill-icon">🌐</span>
+              <span>Facebook</span>
+              <span class="pill-arrow">↗</span>
+            </a>
+
+            <div class="social-link-pill pill-disabled">
+              <span class="social-pill-icon">▶️</span>
+              <span>YouTube</span>
+              <span class="pill-tag">Soon</span>
+            </div>
+
+            <div class="social-link-pill pill-disabled">
+              <span class="social-pill-icon">✖</span>
+              <span>X (Twitter)</span>
+              <span class="pill-tag">Soon</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <img src="/assets/evolix-logo.png" alt="EVOLIX STUDIO" />
+          <span style="font-family: var(--font-mono); font-size: 15px; font-weight: 700;">EVOLIX STUDIO</span>
+        </a>
+        <p>A business growth and technology agency — websites, brand systems, conversion content, and custom software for modern brands and technology companies.</p>
+        
+        <div style="margin-top: 18px; display: flex; gap: 14px; flex-wrap: wrap;">
+          <a href="https://wa.me/919098173239" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 12px; color: var(--accent);">WhatsApp Direct ↗</a>
+          <a href="https://www.instagram.com/evolixstudio/" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">Instagram ↗</a>
+          <a href="https://www.facebook.com/profile.php?id=61591762854131" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">Facebook ↗</a>
+        </div>
+      </div>
+
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="/services.html">Website Development</a>
+          <a href="/services.html">Branding &amp; Identity</a>
+          <a href="/services.html">Amazon A+ Content</a>
+          <a href="/services.html">Product Photography</a>
+          <a href="/services.html">Custom Software</a>
+          <a href="/services.html">Digital Marketing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/work.html">Selected Work</a>
+          <a href="/services.html">All Services</a>
+          <a href="/contact.html">Contact &amp; Discovery</a>
+        </div>
+        <div class="footer-col">
+          <h4>Direct Channels</h4>
+          <a href="https://wa.me/919098173239" target="_blank" rel="noopener noreferrer">WhatsApp: +91 90981 73239</a>
+          <a href="tel:+919098173239">Phone: +91 90981 73239</a>
+          <a href="mailto:evolixstudio@gmail.com">evolixstudio@gmail.com</a>
+          <a href="/contact.html" style="color: var(--accent); margin-top: 6px;">Start a project →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> EVOLIX STUDIO. All rights reserved.</span>
+      <span>Designed &amp; Engineered in-house.</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+
+
+<!-- GSAP + Custom Contact & FlowField Engine -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="/js/contact.js"></script>
+</body>
+</html>

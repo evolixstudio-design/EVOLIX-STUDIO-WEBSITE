@@ -1,0 +1,99 @@
+<!-- Universal Global Page Transition Overlay -->
+<div class="global-page-transition" id="globalPageTransition" aria-hidden="true">
+  <span class="global-transition-word" id="globalTransitionWord">Services</span>
+</div>
+
+<header class="site-nav">
+  <div class="nav-container">
+    <a href="/" class="logo" data-transition="Evolix">
+      <img src="/assets/evolix-logo.png" alt="Evolix" />
+      <span>Evolix</span>
+    </a>
+
+    <!-- Top Navigation Bar: always visible & tap-friendly on mobile -->
+    <nav class="nav-links" data-page="{{page:key}}" id="mainNavLinks">
+      <a href="/" data-key="home" data-transition="Home">Home</a>
+      <a href="/services.html" data-key="services" data-transition="Services">Services</a>
+      <a href="/work.html" data-key="work" data-transition="Work">Work</a>
+      <a href="/contact.html" data-key="contact" data-transition="Contact">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle Light/Dark Theme">
+        <span class="theme-icon sun">☀️</span>
+        <span class="theme-icon moon">🌙</span>
+      </button>
+      <a href="/contact.html" class="btn btn-accent nav-cta" data-transition="Contact">Start a project</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  (function () {
+    // 1. Set active nav link
+    var nav = document.getElementById("mainNavLinks");
+    if (nav) {
+      var key = nav.getAttribute("data-page");
+      var link = nav.querySelector('a[data-key="' + key + '"]');
+      if (link) link.classList.add("active");
+    }
+
+    // 2. Theme toggle
+    var toggleBtn = document.getElementById("themeToggle");
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("evolix-theme", next);
+      });
+    }
+
+    // 3. Universal Global Page Transition Handler (across Home, Work, Services, Contact)
+    var overlay = document.getElementById("globalPageTransition");
+    var word = document.getElementById("globalTransitionWord");
+
+    document.addEventListener("click", function (e) {
+      var target = e.target.closest("a");
+      if (!target) return;
+
+      var href = target.getAttribute("href");
+      if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || target.target === "_blank") {
+        return;
+      }
+
+      // Check if clicking current page
+      var currentPath = window.location.pathname.toLowerCase();
+      var cleanHref = href.toLowerCase().split("?")[0].split("#")[0];
+      
+      if (
+        (cleanHref === "/" && (currentPath === "/" || currentPath.endsWith("index.html"))) ||
+        (cleanHref.indexOf("services") !== -1 && currentPath.indexOf("services") !== -1) ||
+        (cleanHref.indexOf("work") !== -1 && currentPath.indexOf("work") !== -1) ||
+        (cleanHref.indexOf("contact") !== -1 && currentPath.indexOf("contact") !== -1)
+      ) {
+        return;
+      }
+
+      // Intercept and animate
+      if (cleanHref === "/" || cleanHref.endsWith(".html") || cleanHref.startsWith("/services") || cleanHref.startsWith("/work") || cleanHref.startsWith("/contact")) {
+        e.preventDefault();
+
+        var label = target.getAttribute("data-transition");
+        if (!label) {
+          if (cleanHref.indexOf("services") !== -1) label = "Services";
+          else if (cleanHref.indexOf("work") !== -1) label = "Work";
+          else if (cleanHref.indexOf("contact") !== -1) label = "Contact";
+          else label = "Evolix";
+        }
+
+        if (word) word.textContent = label;
+        if (overlay) overlay.classList.add("active");
+
+        setTimeout(function () {
+          window.location.href = href;
+        }, 420);
+      }
+    });
+  })();
+</script>
