@@ -43,13 +43,13 @@
   function getAmplitudes() {
     const w = window.innerWidth;
     if (w < 480) {
-      return { rx: 70, ry: 40, rz: 60 };
+      return { rx: 65, ry: 35, rz: 50 };
     } else if (w < 768) {
-      return { rx: 95, ry: 50, rz: 80 };
+      return { rx: 85, ry: 45, rz: 70 };
     } else if (w < 1024) {
-      return { rx: 160, ry: 90, rz: 130 };
+      return { rx: 140, ry: 75, rz: 110 };
     } else {
-      return { rx: 245, ry: 135, rz: 190 };
+      return { rx: 215, ry: 115, rz: 150 };
     }
   }
 
@@ -73,41 +73,34 @@
       // 3D Positions:
       // X: Horizontal flow across hero
       // Y: Vertical subtle figure-8 loop
-      // Z: Depth (positive = in front of text, negative = behind text)
+      // Z: Depth (kept negative/neutral so cards orbit in depth behind typography)
       let x = Math.cos(theta) * rx;
-      let y = Math.sin(theta) * ry + Math.cos(theta * 2) * (ry * 0.22);
-      let z = Math.sin(theta + 0.35) * rz;
+      let y = Math.sin(theta) * ry + Math.cos(theta * 2) * (ry * 0.2);
+      let z = Math.sin(theta + 0.35) * (rz * 0.7) - 30;
 
       // 3D Rotations
-      let rotZ = Math.cos(theta - 0.4) * 14;
-      let rotY = -Math.sin(theta) * 16;
-      let rotX = Math.cos(theta * 2) * 8;
+      let rotZ = Math.cos(theta - 0.4) * 12;
+      let rotY = -Math.sin(theta) * 14;
+      let rotX = Math.cos(theta * 2) * 6;
 
       // Scale & Opacity based on depth (Z)
       const zNorm = (z + rz) / (rz * 2); // 0 (furthest) to 1 (closest)
-      let scale = 0.76 + zNorm * 0.36;   // Scale ranges 0.76x -> 1.12x
-      let opacity = 0.72 + zNorm * 0.28; // Opacity ranges 0.72 -> 1.0
+      let scale = 0.78 + zNorm * 0.32;   // Scale ranges 0.78x -> 1.10x
+      let opacity = 0.75 + zNorm * 0.25; // Opacity ranges 0.75 -> 1.0
 
       // Mouse sway application
-      x += mouseX * 28;
-      y += mouseY * 18;
-      rotY += mouseX * 8;
-      rotX -= mouseY * 8;
+      x += mouseX * 24;
+      y += mouseY * 15;
+      rotY += mouseX * 6;
+      rotX -= mouseY * 6;
 
-      // Z-Index relative to EVOLIX & STUDIO typography (which is at z-index: 10):
-      // When z > 0: foreground cards appear IN FRONT OF text (z-index 15..35)
-      // When z <= 0: background cards appear BEHIND text (z-index 1..8)
-      let zIndex;
-      if (z > 0) {
-        zIndex = Math.floor(15 + zNorm * 20);
-      } else {
-        zIndex = Math.floor(1 + zNorm * 8);
-      }
+      // Z-Index relative to typography:
+      let zIndex = Math.floor(2 + zNorm * 8);
 
       // Hover override
       if (activeHoverCard === card) {
-        z += 75;
-        scale *= 1.1;
+        z = 60;
+        scale *= 1.12;
         zIndex = 100;
         opacity = 1.0;
         rotX = 0;

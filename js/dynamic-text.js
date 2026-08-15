@@ -72,19 +72,36 @@
         }
       }
 
-      // Intersection Observer — activate when section is visible in viewport
+      function resetToIconic() {
+        stopCycle();
+        currentIndex = 0;
+        isTransitioning = false;
+        wordEl.classList.remove("rolling-out", "rolling-in");
+        wordEl.textContent = phrases[0];
+      }
+
+      // Intersection Observer — activate when section is centered in viewport
       if ("IntersectionObserver" in window) {
         var observer = new IntersectionObserver(
           function (entries) {
             entries.forEach(function (entry) {
               if (entry.isIntersecting) {
-                if (!intervalId) startCycle();
+                if (!intervalId) {
+                  // Ensure starting with phrase 0 "Something Iconic."
+                  wordEl.textContent = phrases[0];
+                  currentIndex = 0;
+                  startCycle();
+                }
               } else {
-                stopCycle();
+                resetToIconic();
               }
             });
           },
-          { threshold: 0.2 }
+          { 
+            // Shrink top and bottom trigger bounds by 25% each, so it only fires when in the middle of the screen
+            rootMargin: "-25% 0px -25% 0px",
+            threshold: 0.1
+          }
         );
 
         observer.observe(section);

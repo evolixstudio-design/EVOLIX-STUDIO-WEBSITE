@@ -1,0 +1,27 @@
+<!-- ============ GLOBAL PROJECT LIGHTBOX MODAL WINDOW ============ -->
+<div class="project-lightbox-modal" id="projectLightbox" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="lightbox-dialog" id="lightboxDialog">
+    <div class="lightbox-header">
+      <div class="lightbox-title-area">
+        <h3 class="lightbox-project-title" id="lightboxTitle">Project Preview</h3>
+        <span class="lightbox-badge" id="lightboxBadge">Live Platform</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <span class="lightbox-counter" id="lightboxCounter">1 / 1</span>
+        <button class="lightbox-close-btn" id="lightboxCloseBtn" aria-label="Close Project Gallery">✕</button>
+      </div>
+    </div>
+
+    <div class="lightbox-stage">
+      <img src="" alt="Project Full Preview" class="lightbox-main-img" id="lightboxMainImg" />
+      <button class="lightbox-nav-btn prev" id="lightboxPrevBtn" aria-label="Previous Image">‹</button>
+      <button class="lightbox-nav-btn next" id="lightboxNextBtn" aria-label="Next Image">›</button>
+    </div>
+
+    <div class="lightbox-footer">
+      <div class="lightbox-thumbnails" id="lightboxThumbnails">
+        <!-- Dynamically injected thumbnails -->
+      </div>
+    </div>
+  </div>
+</div>

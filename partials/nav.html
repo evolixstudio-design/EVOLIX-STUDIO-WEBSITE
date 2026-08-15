@@ -10,12 +10,14 @@
       <span>Evolix</span>
     </a>
 
-    <!-- Top Navigation Bar: always visible & tap-friendly on mobile -->
-    <nav class="nav-links" data-page="{{page:key}}" id="mainNavLinks">
-      <a href="/" data-key="home" data-transition="Home">Home</a>
-      <a href="/services.html" data-key="services" data-transition="Services">Services</a>
-      <a href="/work.html" data-key="work" data-transition="Work">Work</a>
-      <a href="/contact.html" data-key="contact" data-transition="Contact">Contact</a>
+    <!-- KokonutUI Morphic Navbar -->
+    <nav class="morphic-nav-wrapper" data-page="{{page:key}}" id="mainNavLinks">
+      <div class="morphic-nav-glass">
+        <a href="/" class="morphic-nav-link" data-key="home" data-transition="Home">Home</a>
+        <a href="/services.html" class="morphic-nav-link" data-key="services" data-transition="Services">Services</a>
+        <a href="/work.html" class="morphic-nav-link" data-key="work" data-transition="Work">Work</a>
+        <a href="/contact.html" class="morphic-nav-link" data-key="contact" data-transition="Contact">Contact</a>
+      </div>
     </nav>
 
     <div class="nav-right">
@@ -30,15 +32,57 @@
 
 <script>
   (function () {
-    // 1. Set active nav link
+    // KokonutUI Morphic Navbar Interactive Controller
     var nav = document.getElementById("mainNavLinks");
-    if (nav) {
-      var key = nav.getAttribute("data-page");
-      var link = nav.querySelector('a[data-key="' + key + '"]');
-      if (link) link.classList.add("active");
+    if (!nav) return;
+    var currentKey = nav.getAttribute("data-page") || "home";
+    var links = Array.prototype.slice.call(nav.querySelectorAll(".morphic-nav-link"));
+
+    function renderMorphicState(activeKey) {
+      var activeIdx = -1;
+      links.forEach(function (link, idx) {
+        if (link.getAttribute("data-key") === activeKey) {
+          activeIdx = idx;
+        }
+      });
+
+      links.forEach(function (link, idx) {
+        link.className = "morphic-nav-link";
+        var isCurrent = (idx === activeIdx);
+        var isFirst = (idx === 0);
+        var isLast = (idx === links.length - 1);
+        var prevIsActive = (activeIdx !== -1 && idx - 1 === activeIdx);
+        var nextIsActive = (activeIdx !== -1 && idx + 1 === activeIdx);
+
+        if (isCurrent) {
+          link.classList.add("is-active");
+        } else {
+          if (prevIsActive || isFirst) {
+            link.classList.add("rounded-l-xl");
+          }
+          if (nextIsActive || isLast) {
+            link.classList.add("rounded-r-xl");
+          }
+        }
+      });
     }
 
-    // 2. Theme toggle
+    // Initial render for active page
+    renderMorphicState(currentKey);
+
+    // Dynamic hover morphing
+    links.forEach(function (link) {
+      link.addEventListener("mouseenter", function () {
+        var key = link.getAttribute("data-key");
+        renderMorphicState(key);
+      });
+    });
+
+    nav.addEventListener("mouseleave", function () {
+      renderMorphicState(currentKey);
+    });
+
+    // Theme toggle
     var toggleBtn = document.getElementById("themeToggle");
     if (toggleBtn) {
       toggleBtn.addEventListener("click", function () {
@@ -49,7 +93,7 @@
       });
     }
 
-    // 3. Universal Global Page Transition Handler (across Home, Work, Services, Contact)
+    // Universal Global Page Transition Handler (across Home, Work, Services, Contact)
     var overlay = document.getElementById("globalPageTransition");
     var word = document.getElementById("globalTransitionWord");
 
@@ -79,6 +123,13 @@
       if (cleanHref === "/" || cleanHref.endsWith(".html") || cleanHref.startsWith("/services") || cleanHref.startsWith("/work") || cleanHref.startsWith("/contact")) {
         e.preventDefault();
 
+        // Immediately update morphic nav state for instant responsive feedback
+        var targetKey = target.getAttribute("data-key");
+        if (targetKey) {
+          currentKey = targetKey;
+          renderMorphicState(targetKey);
+        }
+
         var label = target.getAttribute("data-transition");
         if (!label) {
           if (cleanHref.indexOf("services") !== -1) label = "Services";
@@ -92,7 +143,7 @@
 
         setTimeout(function () {
           window.location.href = href;
-        }, 420);
+        }, 280);
       }
     });
   })();

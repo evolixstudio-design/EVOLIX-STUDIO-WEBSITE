@@ -313,10 +313,19 @@
   border-color: #cbd5e1;
 }
 
-.service-chip-btn .chip-num {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
+.service-chip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s ease;
+}
+
+.service-chip-btn:hover .service-chip-icon {
+  transform: scale(1.15);
 }
 
 .service-chip-btn .chip-label {
@@ -342,6 +351,11 @@
   border-color: var(--accent);
   box-shadow: 0 0 16px rgba(204, 63, 72, 0.2);
   color: var(--text);
+}
+
+.service-chip-btn.active .service-chip-icon {
+  color: var(--accent);
+  transform: scale(1.1);
 }
 
 .service-chip-btn.active .chip-num {
@@ -769,16 +783,28 @@
 }
 
 .channel-icon-box {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: var(--bg-raised);
   border: 1px solid var(--line);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  color: var(--accent);
   flex-shrink: 0;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.channel-row:hover .channel-icon-box {
+  transform: scale(1.08);
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.channel-icon-box svg {
+  display: block;
 }
 
 .channel-info {
@@ -866,7 +892,15 @@
 }
 
 .social-pill-icon {
-  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.social-pill-icon svg {
+  display: block;
 }
 
 .pill-arrow {

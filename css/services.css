@@ -398,6 +398,49 @@
   gap: 8px;
 }
 
+/* Light Theme Refinements for Showreel Window */
+[data-theme="light"] .services-showreel-card {
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(0, 0, 0, 0.04);
+  border-color: var(--line);
+}
+
+[data-theme="light"] .showreel-ambient-glow {
+  background: radial-gradient(circle at center, rgba(204, 63, 72, 0.08) 0%, transparent 65%);
+}
+
+[data-theme="light"] .showreel-top-bar {
+  background: rgba(245, 246, 249, 0.96);
+  border-bottom: 1px solid var(--line);
+}
+
+[data-theme="light"] .showreel-badge {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--text);
+}
+
+[data-theme="light"] .showreel-bottom-bar {
+  background: rgba(245, 246, 249, 0.96);
+  border-top: 1px solid var(--line);
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .showreel-video-box {
+  background: #e2e8f0;
+}
+
+[data-theme="light"] .showreel-overlay-content {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.72) 55%, transparent 100%);
+}
+
+[data-theme="light"] .reel-title {
+  color: var(--headline-color, #0f172a);
+}
+
+[data-theme="light"] .reel-sub {
+  color: var(--text-muted, #475569);
+}
+
 /* ============================================
    SERVICES LIST OVERVIEW
    ============================================ */
@@ -1081,62 +1124,79 @@
 
 /* ============ MORE SERVICES (Bottom Quick-Launcher) ============ */
 .svc-more-section {
-  padding-bottom: 40px;
+  padding-bottom: 60px;
 }
 
 .svc-more-list {
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 980px) {
+  .svc-more-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .svc-more-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
 
 .svc-more-row {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 24px 8px;
-  border-bottom: 1px solid var(--line);
-  background: transparent;
-  border-left: none;
-  border-right: none;
-  border-top: none;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm, 12px);
+  background: var(--bg-raised);
   text-decoration: none;
   color: var(--text);
   cursor: pointer;
   text-align: left;
   font: inherit;
-  transition: color 0.2s ease, padding-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
 .svc-more-row:hover {
-  padding-left: 18px;
-  background: var(--bg-raised);
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 30px rgba(204, 63, 72, 0.12), 0 0 0 1px rgba(204, 63, 72, 0.2) inset;
 }
 
 .svc-more-num {
   font-family: var(--font-mono);
   font-size: 13px;
+  font-weight: 700;
   color: var(--accent);
-  min-width: 28px;
+  min-width: 24px;
 }
 
 .svc-more-title {
   font-family: var(--font-display);
-  font-size: clamp(22px, 3vw, 36px);
+  font-size: clamp(16px, 1.6vw, 21px);
   font-weight: 700;
   letter-spacing: -0.015em;
   flex: 1;
+  color: var(--headline-color, var(--text));
 }
 
 .svc-more-arrow {
-  font-size: 22px;
+  font-size: 18px;
   color: var(--text-muted);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease;
 }
 
 .svc-more-row:hover .svc-more-arrow {
-  transform: translate(4px, -4px);
+  transform: translate(3px, -3px);
   color: var(--accent);
 }
 
