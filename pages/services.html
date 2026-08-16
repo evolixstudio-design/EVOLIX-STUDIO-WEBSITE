@@ -93,6 +93,8 @@
 
 {{partial:nav}}
 
+<main id="main-content">
+
 <!-- KokonutUI ShapeHero Floating Background -->
 <div class="shape-hero-backdrop" id="shapeHeroBackdrop" aria-hidden="true">
   <div class="shape-ambient-glow"></div>
@@ -322,74 +324,92 @@
 
     <!-- ============================================
          STAGE 2: SPLIT-SCREEN SERVICE DETAIL VIEW
-         (Left: Sticky Navigation & Scope | Right: Interactive Visual Media Stage)
          ============================================ -->
-    <div class="service-detail-view" id="serviceDetailView" style="display: none;">
+    <div class="services-detail-stage" id="servicesDetailStage" style="display: none;">
 
-      <!-- Return to all services button -->
-      <div class="detail-back-bar">
-        <button class="btn-back-overview" id="btnBackOverview">
-          <span class="back-arrow">←</span>
+      <!-- Detail Navigation Bar -->
+      <div class="detail-header-bar">
+        <button class="back-to-list-btn" id="backToListBtn" aria-label="Back to all services">
+          <span>←</span>
           <span>Back to All Services</span>
         </button>
+
+        <div class="detail-switcher-pills">
+          <button class="pill-btn active" data-index="0">01 Web Dev</button>
+          <button class="pill-btn" data-index="1">02 Branding</button>
+          <button class="pill-btn" data-index="2">03 Amazon A+</button>
+          <button class="pill-btn" data-index="3">04 Photography</button>
+          <button class="pill-btn" data-index="4">05 Software</button>
+          <button class="pill-btn" data-index="5">06 Marketing</button>
+        </div>
+
+        <div class="detail-pagination">
+          <button class="page-arrow prev" id="prevServiceBtn" aria-label="Previous Service">‹</button>
+          <span class="page-counter" id="pageCounter">01 / 06</span>
+          <button class="page-arrow next" id="nextServiceBtn" aria-label="Next Service">›</button>
+        </div>
       </div>
 
       <!-- Two-Column Interactive Stage -->
-      <div class="service-detail-grid">
+      <div class="detail-split-grid">
 
-        <!-- LEFT COLUMN: Sticky Info & Scope Breakdown -->
-        <div class="detail-info-col">
-          <div class="detail-sticky-pane">
-            <div class="detail-meta-pill" id="detailCategoryPill">SERVICE 01 // CAPABILITY</div>
-            <h1 class="detail-service-title" id="detailTitle">Website Development</h1>
-            <p class="detail-service-pitch" id="detailPitch">
-              High-performance, modern websites built for conversion. From e-commerce platforms to bespoke corporate portals, engineered with clean code, lightning speeds, and fluid animations.
-            </p>
+        <!-- LEFT COLUMN: Info & Scope Breakdown -->
+        <div class="detail-info-col" id="detailInfoCol">
+          <div class="detail-eyebrow">
+            <span class="detail-tag" id="detailTag">Web &amp; Digital</span>
+            <span class="detail-scope">Service Deep Dive</span>
+          </div>
 
-            <div class="detail-scope-card">
-              <h3 class="scope-heading">Detailed Scope &amp; Deliverables</h3>
-              <ul class="scope-list" id="detailScopeList">
-                <li>Bespoke responsive web design tailored to your brand identity</li>
-                <li>Fast performance architecture with sub-second page loads</li>
-                <li>Custom CMS integration for effortless content management</li>
-                <li>Advanced technical SEO schema and OpenGraph optimization</li>
-                <li>Interactive micro-animations and smooth scroll interactions</li>
-                <li>Continuous post-launch maintenance &amp; analytics tracking</li>
-              </ul>
-            </div>
+          <h2 class="detail-title" id="detailTitle">Website Development</h2>
 
-            <div class="detail-cta-box">
-              <a href="/contact.html?service=website" class="btn btn-accent detail-inquire-btn" id="detailInquireBtn">
-                Start a Website Project →
-              </a>
-            </div>
+          <p class="detail-lead" id="detailLead">
+            We engineer ultra-fast, visually stunning websites that turn visitors into loyal customers. From headless e-commerce architectures and marketing landing pages to full-scale web platforms, every site is crafted with obsessive attention to speed, responsiveness, SEO, and visual elegance.
+          </p>
+
+          <div class="detail-deliverables">
+            <div class="deliverables-heading">Scope &amp; Key Deliverables</div>
+            <ul class="deliverables-list" id="deliverablesList">
+              <li><span class="bullet">✦</span> Custom UX/UI Design &amp; Wireframing</li>
+              <li><span class="bullet">✦</span> High-Performance Responsive Frontend</li>
+              <li><span class="bullet">✦</span> Modern Web Applications &amp; Next.js</li>
+              <li><span class="bullet">✦</span> E-Commerce &amp; High-Conversion Checkouts</li>
+              <li><span class="bullet">✦</span> CMS Integration &amp; Headless Architecture</li>
+              <li><span class="bullet">✦</span> SEO &amp; Core Web Vitals Optimization</li>
+            </ul>
+          </div>
+
+          <div class="detail-actions">
+            <a href="/contact.html?service=web" class="btn btn-accent detail-cta-btn">Start a Project →</a>
+            <a href="/work.html" class="btn detail-work-btn">View Portfolio Details ↗</a>
           </div>
         </div>
 
         <!-- RIGHT COLUMN: Interactive Visual Frame & Tech Specs -->
-        <div class="detail-visual-col">
-          <div class="detail-visual-frame" id="detailVisualFrame">
-
+        <div class="detail-media-col" id="detailMediaCol">
+          <div class="media-showcase-frame">
+            <div class="frame-ambient-glow"></div>
             <div class="frame-top-bar">
               <div class="window-dots">
                 <span></span><span></span><span></span>
               </div>
-              <div class="frame-status-badge" id="frameStatusBadge">
-                <span class="pulse-dot"></span>
-                <span>PROJECT SHOWCASE // PRODUCTION</span>
+              <div class="frame-badge">
+                <span class="badge-live-dot"></span>
+                <span id="badgeText">Interactive Preview</span>
               </div>
             </div>
 
-            <!-- Visual Media Container (Image Carousel) -->
-            <div class="frame-media-container" id="frameMediaContainer">
-              <img id="detailMainImage" src="/assets/projects/web.webp" alt="Website Development Showcase" width="800" height="500" />
+            <!-- Media Container -->
+            <div class="video-container">
+              <video class="service-video-player" id="serviceVideo" loop muted playsinline></video>
+              <div class="media-poster-layer">
+                <img id="posterImage" src="/assets/hero-cards/06.webp" alt="Website Development" width="800" height="500" />
+              </div>
             </div>
 
             <div class="frame-bottom-bar">
               <div class="spec-chip" id="specChip1">Resolution: 4K Retina</div>
               <div class="spec-chip" id="specChip2">Tech: Next.js + GSAP</div>
             </div>
-
           </div>
         </div>
 
@@ -727,11 +747,13 @@
   </div>
 </section>
 
+</main>
+
 {{partial:lightbox}}
 
 {{partial:footer}}
 
-<!-- GSAP 3.12 CDN & Loader -->
+<!-- GSAP 3.12 CDN for interactive service exploration -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="/js/loader.js"></script>
 <script src="/js/services.js"></script>

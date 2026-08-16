@@ -584,6 +584,132 @@
 }
 
 /* ============================================
+   SERVICES BENTO GRID OVERVIEW
+   ============================================ */
+.services-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 960px) {
+  .services-bento-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .services-bento-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.svc-bento-card {
+  position: relative;
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 32px 28px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.svc-bento-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(204, 63, 72, 0.15);
+}
+
+[data-theme="light"] .svc-bento-card:hover {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), 0 0 25px rgba(204, 63, 72, 0.1);
+}
+
+.svc-card-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.svc-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.svc-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+
+.svc-deliverable-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  color: var(--text-muted);
+}
+
+.svc-bento-card .svc-name {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--headline-color);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* Visually hide description on screen, but keep in DOM for SEO */
+.svc-bento-card .svc-desc {
+  display: none !important;
+}
+
+.svc-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  margin-top: auto;
+}
+
+.svc-action-link {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s ease;
+}
+
+.svc-bento-card:hover .svc-action-link {
+  transform: translateX(4px);
+}
+
+/* ============================================
    CINEMATIC FULLSCREEN VIEWPORT KINETIC OVERLAY
    (Dead-center across entire viewport, boxless)
    ============================================ */

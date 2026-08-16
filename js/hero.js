@@ -133,16 +133,6 @@
     requestAnimationFrame(renderFrame);
   }
 
-  // Parallax scroll shift
-  window.addEventListener("scroll", () => {
-    if (!isHeroVisible) return;
-    const scContainer = document.getElementById("cardStackContainer");
-    if (scContainer) {
-      const scrollY = window.scrollY;
-      scContainer.style.transform = `translate(-50%, -50%) translateY(${scrollY * 0.15}px)`;
-    }
-  }, { passive: true });
-
   isLoopScheduled = true;
   requestAnimationFrame(renderFrame);
 })();

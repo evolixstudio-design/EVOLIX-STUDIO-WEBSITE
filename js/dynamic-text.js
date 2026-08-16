@@ -48,15 +48,16 @@
           wordEl.classList.remove("rolling-out");
           wordEl.classList.add("rolling-in");
 
-          // Force browser reflow to apply starting state
-          void wordEl.offsetHeight;
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              // 4. Slide into center position
+              wordEl.classList.remove("rolling-in");
 
-          // 4. Slide into center position
-          wordEl.classList.remove("rolling-in");
-
-          setTimeout(function () {
-            isTransitioning = false;
-          }, TRANSITION_DURATION);
+              setTimeout(function () {
+                isTransitioning = false;
+              }, TRANSITION_DURATION);
+            });
+          });
         }, TRANSITION_DURATION * 0.7);
       }
 

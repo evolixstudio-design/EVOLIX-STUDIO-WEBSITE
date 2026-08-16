@@ -66,7 +66,7 @@
 <link rel="stylesheet" href="/css/home.css" />
 <link rel="stylesheet" href="/css/wheel.css" />
 </head>
-<body data-page-word="HOME">
+<body data-page-word="EVOLIX">
 
 <div id="page-loader" aria-hidden="true">
   <div class="loader-inner">
@@ -80,25 +80,20 @@
 </div>
 
 
-<!-- Universal Global Page Transition Overlay -->
-<div class="global-page-transition" id="globalPageTransition" aria-hidden="true">
-  <span class="global-transition-word" id="globalTransitionWord">Services</span>
-</div>
-
 <header class="site-nav">
   <div class="nav-container">
-    <a href="/" class="logo" data-transition="Evolix">
-      <img src="/assets/evolix-logo.webp" alt="Evolix Studio Digital Agency Logo" width="28" height="28" />
+    <a href="/" class="logo">
+      <img src="/assets/evolix-logo.webp" alt="Evolix Studio Digital Agency Logo" width="32" height="32" style="aspect-ratio:1/1; object-fit:contain;" />
       <span>Evolix</span>
     </a>
 
     <!-- KokonutUI Morphic Navbar -->
     <nav class="morphic-nav-wrapper" data-page="home" id="mainNavLinks">
       <div class="morphic-nav-glass">
-        <a href="/" class="morphic-nav-link" data-key="home" data-transition="Home">Home</a>
-        <a href="/services.html" class="morphic-nav-link" data-key="services" data-transition="Services">Services</a>
-        <a href="/work.html" class="morphic-nav-link" data-key="work" data-transition="Work">Work</a>
-        <a href="/contact.html" class="morphic-nav-link" data-key="contact" data-transition="Contact">Contact</a>
+        <a href="/" class="morphic-nav-link" data-key="home">Home</a>
+        <a href="/services.html" class="morphic-nav-link" data-key="services">Services</a>
+        <a href="/work.html" class="morphic-nav-link" data-key="work">Work</a>
+        <a href="/contact.html" class="morphic-nav-link" data-key="contact">Contact</a>
       </div>
     </nav>
 
@@ -107,7 +102,7 @@
         <span class="theme-icon sun">☀️</span>
         <span class="theme-icon moon">🌙</span>
       </button>
-      <a href="/contact.html" class="btn btn-accent nav-cta" data-transition="Contact">Start a project</a>
+      <a href="/contact.html" class="btn btn-accent nav-cta">Start a project</a>
     </div>
   </div>
 </header>
@@ -174,63 +169,11 @@
         localStorage.setItem("evolix-theme", next);
       });
     }
-
-    // Universal Global Page Transition Handler (across Home, Work, Services, Contact)
-    var overlay = document.getElementById("globalPageTransition");
-    var word = document.getElementById("globalTransitionWord");
-
-    document.addEventListener("click", function (e) {
-      var target = e.target.closest("a");
-      if (!target) return;
-
-      var href = target.getAttribute("href");
-      if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || target.target === "_blank") {
-        return;
-      }
-
-      // Check if clicking current page
-      var currentPath = window.location.pathname.toLowerCase();
-      var cleanHref = href.toLowerCase().split("?")[0].split("#")[0];
-      
-      if (
-        (cleanHref === "/" && (currentPath === "/" || currentPath.endsWith("index.html"))) ||
-        (cleanHref.indexOf("services") !== -1 && currentPath.indexOf("services") !== -1) ||
-        (cleanHref.indexOf("work") !== -1 && currentPath.indexOf("work") !== -1) ||
-        (cleanHref.indexOf("contact") !== -1 && currentPath.indexOf("contact") !== -1)
-      ) {
-        return;
-      }
-
-      // Intercept and animate
-      if (cleanHref === "/" || cleanHref.endsWith(".html") || cleanHref.startsWith("/services") || cleanHref.startsWith("/work") || cleanHref.startsWith("/contact")) {
-        e.preventDefault();
-
-        // Immediately update morphic nav state for instant responsive feedback
-        var targetKey = target.getAttribute("data-key");
-        if (targetKey) {
-          currentKey = targetKey;
-          renderMorphicState(targetKey);
-        }
-
-        var label = target.getAttribute("data-transition");
-        if (!label) {
-          if (cleanHref.indexOf("services") !== -1) label = "Services";
-          else if (cleanHref.indexOf("work") !== -1) label = "Work";
-          else if (cleanHref.indexOf("contact") !== -1) label = "Contact";
-          else label = "Evolix";
-        }
-
-        if (word) word.textContent = label;
-        if (overlay) overlay.classList.add("active");
-
-        setTimeout(function () {
-          window.location.href = href;
-        }, 280);
-      }
-    });
   })();
 </script>
 
+
+<main id="main-content">
 
 <!-- KokonutUI ShapeHero Floating Background -->
 <div class="shape-hero-backdrop" id="shapeHeroBackdrop" aria-hidden="true">
@@ -353,59 +296,43 @@
 
       <div class="wheel-viewport" id="wheelViewport">
         <div class="wheel-cylinder" id="wheelCylinder">
-          <a href="/services.html" class="wheel-row" data-color="white">
-            <img src="/assets/hero-cards/06.webp" alt="Webdesign" class="wheel-thumb" width="40" height="40" />
+          <a href="/services.html" class="wheel-row" data-color="white" data-transition="Services" aria-label="Web Design and Development Services">
+            <img src="/assets/hero-cards/06.webp" alt="" aria-hidden="true" class="wheel-thumb" width="52" height="52" loading="eager" />
             <span class="wheel-text">WEBDESIGN</span>
           </a>
-          <a href="/services.html" class="wheel-row" data-color="red">
-            <img src="/assets/hero-cards/04.webp" alt="SMM" class="wheel-thumb" width="40" height="40" />
+          <a href="/services.html" class="wheel-row" data-color="red" data-transition="Services" aria-label="Social Media Marketing Services">
+            <img src="/assets/hero-cards/04.webp" alt="" aria-hidden="true" class="wheel-thumb" width="52" height="52" loading="eager" />
             <span class="wheel-text">SMM</span>
           </a>
-          <a href="/services.html" class="wheel-row" data-color="white">
-            <img src="/assets/hero-cards/03.webp" alt="SEO" class="wheel-thumb" width="40" height="40" />
+          <a href="/services.html" class="wheel-row" data-color="white" data-transition="Services" aria-label="Search Engine Optimization Services">
+            <img src="/assets/hero-cards/03.webp" alt="" aria-hidden="true" class="wheel-thumb" width="52" height="52" loading="eager" />
             <span class="wheel-text">SEO</span>
           </a>
-          <a href="/services.html" class="wheel-row" data-color="red">
-            <img src="/assets/hero-cards/05.webp" alt="3D Renders" class="wheel-thumb" width="40" height="40" />
+          <a href="/services.html" class="wheel-row" data-color="red" data-transition="Services" aria-label="3D Product Render Services">
+            <img src="/assets/hero-cards/05.webp" alt="" aria-hidden="true" class="wheel-thumb" width="52" height="52" loading="eager" />
             <span class="wheel-text">3D RENDERS</span>
           </a>
-          <a href="/services.html" class="wheel-row" data-color="white">
-            <img src="/assets/hero-cards/09.webp" alt="Motion" class="wheel-thumb" width="40" height="40" />
-            <span class="wheel-text">MOTION</span>
+          <a href="/services.html" class="wheel-row" data-color="white" data-transition="Services" aria-label="Motion CGI and Animation Services">
+            <img src="/assets/hero-cards/09.webp" alt="" aria-hidden="true" class="wheel-thumb" width="52" height="52" loading="eager" />
+            <span class="wheel-text">MOTION CGI</span>
           </a>
-          <a href="/services.html" class="wheel-row" data-color="red">
-            <img src="/assets/hero-cards/02.webp" alt="Branding" class="wheel-thumb" width="40" height="40" />
+          <a href="/services.html" class="wheel-row" data-color="red" data-transition="Services" aria-label="Brand Strategy and Identity Services">
+            <img src="/assets/hero-cards/02.webp" alt="" aria-hidden="true" class="wheel-thumb" width="52" height="52" loading="eager" />
             <span class="wheel-text">BRANDING</span>
           </a>
-          <a href="/services.html" class="wheel-row" data-color="white">
-            <img src="/assets/hero-cards/01.webp" alt="Software" class="wheel-thumb" width="40" height="40" />
+          <a href="/services.html" class="wheel-row" data-color="white" data-transition="Services" aria-label="Custom Software and ERP Development Services">
+            <img src="/assets/hero-cards/01.webp" alt="" aria-hidden="true" class="wheel-thumb" width="52" height="52" loading="eager" />
             <span class="wheel-text">SOFTWARE</span>
           </a>
-          <a href="/services.html" class="wheel-row" data-color="red">
-            <img src="/assets/hero-cards/07.webp" alt="Marketing" class="wheel-thumb" width="40" height="40" />
+          <a href="/services.html" class="wheel-row" data-color="red" data-transition="Services" aria-label="Digital Marketing and Performance Services">
+            <img src="/assets/hero-cards/07.webp" alt="" aria-hidden="true" class="wheel-thumb" width="52" height="52" loading="eager" />
             <span class="wheel-text">MARKETING</span>
-          </a>
-          <a href="/services.html" class="wheel-row" data-color="white">
-            <img src="/assets/hero-cards/06.webp" alt="Webdesign" class="wheel-thumb" width="40" height="40" />
-            <span class="wheel-text">WEBDESIGN</span>
-          </a>
-          <a href="/services.html" class="wheel-row" data-color="red">
-            <img src="/assets/hero-cards/04.webp" alt="SMM" class="wheel-thumb" width="40" height="40" />
-            <span class="wheel-text">SMM</span>
-          </a>
-          <a href="/services.html" class="wheel-row" data-color="white">
-            <img src="/assets/hero-cards/03.webp" alt="SEO" class="wheel-thumb" width="40" height="40" />
-            <span class="wheel-text">SEO</span>
-          </a>
-          <a href="/services.html" class="wheel-row" data-color="red">
-            <img src="/assets/hero-cards/08.webp" alt="Branding" class="wheel-thumb" width="40" height="40" />
-            <span class="wheel-text">BRANDING</span>
           </a>
         </div>
       </div>
 
       <div class="wheel-side-label wheel-right">
-        <span class="since-text">Since 2024</span>
+        <span class="since-text">Since 2025</span>
       </div>
     </div>
   </div>
@@ -657,6 +584,8 @@
   </div>
 </section>
 
+</main>
+
 <!-- ============ GLOBAL PROJECT LIGHTBOX MODAL WINDOW ============ -->
 <div class="project-lightbox-modal" id="projectLightbox" aria-hidden="true" role="dialog" aria-modal="true">
   <div class="lightbox-dialog" id="lightboxDialog">
@@ -672,7 +601,7 @@
     </div>
 
     <div class="lightbox-stage">
-      <img src="" alt="Project Full Preview" class="lightbox-main-img" id="lightboxMainImg" />
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800'%3E%3C/svg%3E" alt="Project Full Preview" class="lightbox-main-img" id="lightboxMainImg" width="1200" height="800" />
       <button class="lightbox-nav-btn prev" id="lightboxPrevBtn" aria-label="Previous Image">‹</button>
       <button class="lightbox-nav-btn next" id="lightboxNextBtn" aria-label="Next Image">›</button>
     </div>
@@ -691,13 +620,13 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a href="/" class="logo">
-          <img src="/assets/evolix-logo.webp" alt="EVOLIX STUDIO Logo" width="32" height="32" />
+          <img src="/assets/evolix-logo.webp" alt="EVOLIX STUDIO Logo" width="32" height="32" style="aspect-ratio:1/1; object-fit:contain;" />
           <span style="font-family: var(--font-mono); font-size: 15px; font-weight: 700;">EVOLIX STUDIO</span>
         </a>
         <p>A business growth and technology agency — websites, brand systems, conversion content, and custom software for modern brands and technology companies.</p>
         
         <div style="margin-top: 18px; display: flex; gap: 14px; flex-wrap: wrap;">
-          <a href="https://wa.me/919098173239" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 12px; color: var(--accent);">WhatsApp Direct ↗</a>
+          <a href="https://wa.me/919098173239" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 600;">WhatsApp Direct ↗</a>
           <a href="https://www.instagram.com/evolixstudio/" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">Instagram ↗</a>
           <a href="https://www.facebook.com/profile.php?id=61591762854131" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">Facebook ↗</a>
         </div>
@@ -705,7 +634,7 @@
 
       <div class="footer-cols">
         <div class="footer-col">
-          <h4>Services</h4>
+          <h3 class="footer-col-title">Services</h3>
           <a href="/services.html">Website Development</a>
           <a href="/services.html">Branding &amp; Identity</a>
           <a href="/services.html">Amazon A+ Content</a>
@@ -714,18 +643,18 @@
           <a href="/services.html">Digital Marketing</a>
         </div>
         <div class="footer-col">
-          <h4>Studio</h4>
+          <h3 class="footer-col-title">Studio</h3>
           <a href="/">Home</a>
           <a href="/work.html">Selected Work</a>
           <a href="/services.html">All Services</a>
           <a href="/contact.html">Contact &amp; Discovery</a>
         </div>
         <div class="footer-col">
-          <h4>Direct Channels</h4>
+          <h3 class="footer-col-title">Direct Channels</h3>
           <a href="https://wa.me/919098173239" target="_blank" rel="noopener noreferrer">WhatsApp: +91 90981 73239</a>
           <a href="tel:+919098173239">Phone: +91 90981 73239</a>
           <a href="mailto:evolixstudio@gmail.com">evolixstudio@gmail.com</a>
-          <a href="/contact.html" style="color: var(--accent); margin-top: 6px;">Start a project →</a>
+          <a href="/contact.html" class="footer-start-project" style="margin-top: 6px;">Start a project →</a>
         </div>
       </div>
     </div>

@@ -1,5 +1,7 @@
 /* ============================================
-   EVOLIX — EXACT 3D WHEEL-SPIN SERVICES COMPONENT
+   EVOLIX — TRUE 3D VERTICAL CYLINDER WHEEL
+   Autonomous 3D vertical spinning drum with items in one row
+   Zero scroll trapping, smooth continuous rotation
    ============================================ */
 
 .wheel-section {
@@ -13,16 +15,16 @@
 .wheel-statement-wrap {
   text-align: center;
   max-width: 860px;
-  margin: 0 auto 48px;
+  margin: 0 auto 44px;
   padding: 0 16px;
 }
 
 .wheel-statement {
   font-family: var(--font-display, 'Space Grotesk'), -apple-system, sans-serif;
   font-size: clamp(20px, 3.2vw, 34px);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.38;
-  color: var(--text, #ffffff);
+  color: var(--headline-color, var(--text));
   letter-spacing: -0.015em;
   margin: 0;
 }
@@ -30,29 +32,28 @@
 .wheel-stage-container {
   position: relative;
   width: 100%;
-  max-width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  min-height: 560px;
+  min-height: 520px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px 0 50px;
+  padding: 20px 0 40px;
 }
 
 .wheel-viewport {
   position: relative;
   width: 100%;
   max-width: 100%;
-  height: 540px;
+  height: 500px;
   perspective: 900px;
   perspective-origin: 50% 50%;
   transform-style: preserve-3d;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: grab;
   user-select: none;
-  touch-action: pan-x;
+  touch-action: pan-y;
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
@@ -69,10 +70,6 @@
   );
 }
 
-.wheel-viewport:active {
-  cursor: grabbing;
-}
-
 .wheel-cylinder {
   position: relative;
   width: 100%;
@@ -81,13 +78,15 @@
   pointer-events: none;
 }
 
+/* Each row: Image + text in ONE horizontal line, rotating vertically in 3D */
 .wheel-row {
   position: absolute;
   left: 50%;
   top: 50%;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 22px;
+  justify-content: center;
+  gap: 20px;
   text-decoration: none;
   cursor: pointer;
   transform-style: preserve-3d;
@@ -101,31 +100,32 @@
 }
 
 .wheel-row:hover {
-  filter: brightness(1.28) drop-shadow(0 0 16px rgba(255, 56, 56, 0.4));
+  filter: drop-shadow(0 0 20px rgba(204, 63, 72, 0.45));
 }
 
 .wheel-thumb {
-  width: 74px;
-  height: 74px;
-  border-radius: 18px;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
   object-fit: cover;
   flex-shrink: 0;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75), 0 0 0 1.5px rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45), 0 0 0 1.5px rgba(255, 255, 255, 0.18);
   background: #141414;
   pointer-events: none;
+  aspect-ratio: 1 / 1;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
 
 .wheel-row:hover .wheel-thumb {
   transform: scale(1.08);
-  box-shadow: 0 12px 35px rgba(255, 56, 56, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 30px rgba(204, 63, 72, 0.45), 0 0 0 2px var(--accent);
 }
 
 .wheel-text {
   font-family: var(--font-display, 'Space Grotesk'), sans-serif;
   font-style: italic;
   font-weight: 900;
-  font-size: clamp(38px, 6vw, 76px);
+  font-size: clamp(34px, 5.5vw, 70px);
   line-height: 0.95;
   letter-spacing: -0.03em;
   text-transform: uppercase;
@@ -133,16 +133,19 @@
 }
 
 .wheel-row[data-color="white"] .wheel-text {
-  color: #ffffff;
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  color: var(--headline-color, #0f172a);
 }
 
-[data-theme="light"] .wheel-row[data-color="white"] .wheel-text {
-  color: var(--headline-color, #0f172a);
-  text-shadow: none;
+[data-theme="dark"] .wheel-row[data-color="white"] .wheel-text {
+  color: #ffffff;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
 }
 
 .wheel-row[data-color="red"] .wheel-text {
+  color: #b91c1c;
+}
+
+[data-theme="dark"] .wheel-row[data-color="red"] .wheel-text {
   color: #ff3838;
   text-shadow: 0 4px 24px rgba(255, 56, 56, 0.35);
 }
@@ -150,7 +153,7 @@
 /* Side Labels */
 .wheel-side-label {
   position: absolute;
-  bottom: 24px;
+  bottom: 16px;
   z-index: 10;
   pointer-events: auto;
 }
@@ -171,20 +174,27 @@
 
 .badge-red {
   display: inline-block;
-  background: #ff3838;
+  background: #b91c1c;
   color: #ffffff;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: 6px;
-  box-shadow: 0 4px 16px rgba(255, 56, 56, 0.45);
-  letter-spacing: 0.02em;
+  box-shadow: 0 4px 14px rgba(185, 28, 28, 0.4);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .badge-red {
+  background: #cc3f48;
+  box-shadow: 0 4px 16px rgba(204, 63, 72, 0.5);
 }
 
 .since-text {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 13.5px;
+  font-weight: 600;
   color: var(--text-muted);
   letter-spacing: 0.06em;
 }
@@ -192,22 +202,22 @@
 /* Responsive */
 @media (max-width: 900px) {
   .wheel-stage-container {
-    min-height: 480px;
+    min-height: 460px;
   }
   .wheel-viewport {
-    height: 460px;
+    height: 440px;
     perspective: 750px;
   }
   .wheel-thumb {
-    width: 60px;
-    height: 60px;
-    border-radius: 14px;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
   }
   .wheel-row {
     gap: 16px;
   }
   .wheel-text {
-    font-size: clamp(30px, 6.5vw, 54px);
+    font-size: clamp(26px, 6vw, 48px);
   }
 }
 
@@ -219,23 +229,23 @@
     font-size: 19px;
   }
   .wheel-stage-container {
-    min-height: 420px;
-    padding-bottom: 70px;
+    min-height: 400px;
+    padding-bottom: 60px;
   }
   .wheel-viewport {
-    height: 380px;
+    height: 360px;
     perspective: 600px;
   }
   .wheel-thumb {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
   }
   .wheel-row {
     gap: 12px;
   }
   .wheel-text {
-    font-size: clamp(24px, 7vw, 38px);
+    font-size: clamp(22px, 6.5vw, 36px);
   }
   .wheel-side-label.wheel-left {
     bottom: 0;

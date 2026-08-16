@@ -156,7 +156,8 @@
   var allServicesReel = document.getElementById("allServicesReel");
   var showreelPlayBtn = document.getElementById("showreelPlayBtn");
   var servicesListWrapper = document.getElementById("servicesListWrapper");
-  var listItems = Array.prototype.slice.call(document.querySelectorAll(".svc-item"));
+  var bentoGrid = document.getElementById("servicesBentoGrid");
+  var listItems = Array.prototype.slice.call(document.querySelectorAll(".svc-bento-card, .svc-item, [data-service-index]"));
 
   // Kinetic Viewport Overlay
   var kineticOverlay = document.getElementById("kineticOverlay");
@@ -305,7 +306,7 @@
       });
 
       // 1. Fade out overview stage smoothly
-      tl.to([servicesHeader, showreelCard, servicesListWrapper], {
+      tl.to([servicesHeader, showreelCard, servicesListWrapper, bentoGrid].filter(Boolean), {
         opacity: 0,
         y: -30,
         duration: 0.4,
@@ -435,7 +436,7 @@
     if (prefersReducedMotion || typeof gsap === "undefined") {
       detailStage.style.display = "none";
       overviewStage.style.display = "block";
-      [servicesHeader, showreelCard, servicesListWrapper].forEach(function (el) {
+      [servicesHeader, showreelCard, servicesListWrapper, bentoGrid].filter(Boolean).forEach(function (el) {
         if (el) {
           el.style.opacity = "1";
           el.style.transform = "none";
@@ -464,19 +465,21 @@
     tlBack.set(detailStage, { display: "none" });
     tlBack.set(overviewStage, { display: "block" });
 
-    // Stagger Header, Showreel, and Service rows back in
+    // Stagger Header, Showreel, and Bento cards back in
     tlBack.fromTo(
       servicesHeader,
       { y: -30, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" }
     );
 
-    tlBack.fromTo(
-      showreelCard,
-      { y: 25, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" },
-      "-=0.3"
-    );
+    if (showreelCard) {
+      tlBack.fromTo(
+        showreelCard,
+        { y: 25, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" },
+        "-=0.3"
+      );
+    }
 
     tlBack.fromTo(
       listItems,
@@ -499,7 +502,11 @@
 
   // 1. Service List Items Click & Keyboard
   listItems.forEach(function (item) {
-    var idx = parseInt(item.getAttribute("data-index"), 10);
+    var rawIdx = item.getAttribute("data-service-index") || item.getAttribute("data-index") || item.getAttribute("data-i");
+    var idx = parseInt(rawIdx, 10);
+    if (isNaN(idx)) return;
+
+    item.style.cursor = "pointer";
 
     item.addEventListener("click", function () {
       activateServiceWithKineticDrop(idx);

@@ -36,10 +36,13 @@
     "/assets/hero-cards/09.webp"
   ];
 
-  var THROTTLE_MS = 100;
-  var lastSpawn = 0;
   var cardIndex = 0;
   var isHeroVisible = true;
+  var activeCards = [];
+  var MAX_ACTIVE_CARDS = 4; // At most 3-4 images in the cursor trail
+  var lastX = 0;
+  var lastY = 0;
+  var MIN_MOVE_DIST = 50; // Distance in pixels before spawning next card
 
   // IntersectionObserver to pause work hero cards when out of viewport
   if ("IntersectionObserver" in window) {
@@ -49,6 +52,28 @@
       });
     }, { threshold: 0.05 });
     heroObserver.observe(heroSection);
+  }
+
+  function removeCardSmoothly(card) {
+    if (!card) return;
+    if (card._autoTimer) {
+      clearTimeout(card._autoTimer);
+      card._autoTimer = null;
+    }
+    if (window.gsap && !prefersReducedMotion) {
+      gsap.to(card, {
+        scale: 0.75,
+        opacity: 0,
+        y: "+=18",
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: function () {
+          if (card.parentNode) card.parentNode.removeChild(card);
+        }
+      });
+    } else {
+      if (card.parentNode) card.parentNode.removeChild(card);
+    }
   }
 
   function spawnCard(x, y, isAmbient) {
@@ -68,7 +93,7 @@
     var isMobile = window.innerWidth < 768;
     var halfW = isMobile ? 80 : 130;
     var halfH = isMobile ? 55 : 90;
-    var rotation = (Math.random() - 0.5) * (isMobile ? 18 : 26);
+    var rotation = (Math.random() - 0.5) * (isMobile ? 18 : 24);
 
     if (window.gsap && !prefersReducedMotion) {
       gsap.set(card, {
@@ -79,49 +104,62 @@
         opacity: 0,
       });
 
-      var duration = isAmbient ? 0.7 : 0.45;
+      // Quick snappy spring pop
       gsap.to(card, {
         scale: 1,
         opacity: isAmbient ? 0.85 : 0.95,
-        duration: duration,
-        ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+        duration: 0.28,
+        ease: "back.out(1.3)",
       });
 
-      var driftY = (Math.random() - 0.5) * 35 + 15;
-      var delay = isAmbient ? 2.4 : 0.75;
-      var fadeDuration = isAmbient ? 1.2 : 0.85;
+      if (!isAmbient) {
+        activeCards.push(card);
 
-      gsap.to(card, {
-        opacity: 0,
-        y: "+=" + driftY,
-        duration: fadeDuration,
-        delay: delay,
-        ease: "power2.out",
-        onComplete: function () {
-          if (card.parentNode) card.parentNode.removeChild(card);
+        // Maintain at most 3-4 images in the cursor trail
+        while (activeCards.length > MAX_ACTIVE_CARDS) {
+          var oldCard = activeCards.shift();
+          removeCardSmoothly(oldCard);
         }
-      });
+
+        // Safety fade out after 1.1s if cursor stops
+        card._autoTimer = setTimeout(function () {
+          var idx = activeCards.indexOf(card);
+          if (idx !== -1) activeCards.splice(idx, 1);
+          removeCardSmoothly(card);
+        }, 1100);
+      } else {
+        // Ambient background cards
+        gsap.to(card, {
+          opacity: 0,
+          y: "+=25",
+          duration: 0.8,
+          delay: 1.5,
+          ease: "power2.out",
+          onComplete: function () {
+            if (card.parentNode) card.parentNode.removeChild(card);
+          }
+        });
+      }
     } else {
       card.style.left = (x - halfW) + "px";
       card.style.top = (y - halfH) + "px";
       setTimeout(function () {
         if (card.parentNode) card.parentNode.removeChild(card);
-      }, 1500);
+      }, 900);
     }
   }
 
-  // ─── Ambient Continuous Loop so Hero is Always Alive (Mobile & Desktop) ───
+  // ─── Ambient Floating Loop (Mobile & Desktop) ───
   function runAmbientFloatingLoop() {
     if (prefersReducedMotion) return;
 
     function triggerAmbient() {
-      if (isHeroVisible) {
+      if (isHeroVisible && activeCards.length === 0) {
         var rect = heroSection.getBoundingClientRect();
         var width = rect.width || window.innerWidth;
         var height = rect.height || 500;
         var isMobile = width < 768;
 
-        // Pick positions around outer edges so center text stays clear
         var positions = isMobile ? [
           { x: width * 0.22, y: height * 0.28 },
           { x: width * 0.78, y: height * 0.32 },
@@ -141,34 +179,34 @@
         spawnCard(pos.x + jitterX, pos.y + jitterY, true);
       }
 
-      var nextDelay = (window.innerWidth < 768 ? 2200 : 1800) + Math.random() * 800;
+      var nextDelay = (window.innerWidth < 768 ? 2400 : 2000) + Math.random() * 800;
       setTimeout(triggerAmbient, nextDelay);
     }
 
-    // Seed initial cards on entry
     setTimeout(function () {
       var rect = heroSection.getBoundingClientRect();
       var w = rect.width || window.innerWidth;
       var h = rect.height || 500;
       spawnCard(w * 0.2, h * 0.38, true);
-      setTimeout(function () { spawnCard(w * 0.8, h * 0.62, true); }, 600);
+      setTimeout(function () { spawnCard(w * 0.8, h * 0.62, true); }, 500);
       setTimeout(triggerAmbient, 1800);
-    }, 400);
+    }, 350);
   }
 
   runAmbientFloatingLoop();
 
-  // ─── Interactive Mousemove & Touch Spawn ───
+  // ─── Interactive Mousemove & Touch Spawn with Distance Threshold ───
   function handlePointerMove(clientX, clientY) {
-    var now = Date.now();
-    if (now - lastSpawn < THROTTLE_MS) return;
-    lastSpawn = now;
-
     var rect = heroSection.getBoundingClientRect();
     var x = clientX - rect.left;
     var y = clientY - rect.top;
 
-    if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+    if (x < 0 || x > rect.width || y < 0 || y > rect.height) return;
+
+    var dist = Math.hypot(x - lastX, y - lastY);
+    if (dist >= MIN_MOVE_DIST) {
+      lastX = x;
+      lastY = y;
       spawnCard(x, y, false);
     }
   }
@@ -218,75 +256,90 @@
   var lightbox = document.getElementById("projectLightbox");
   var lightboxTitle = document.getElementById("lightboxTitle");
   var lightboxBadge = document.getElementById("lightboxBadge");
-  var lightboxCounter = document.getElementById("lightboxCounter");
+  var lightboxDeliverables = document.getElementById("lightboxDeliverables");
+  var lightboxDescription = document.getElementById("lightboxDescription");
   var lightboxMainImg = document.getElementById("lightboxMainImg");
-  var lightboxPrevBtn = document.getElementById("lightboxPrevBtn");
-  var lightboxNextBtn = document.getElementById("lightboxNextBtn");
-  var lightboxThumbnails = document.getElementById("lightboxThumbnails");
-  var lightboxCloseBtn = document.getElementById("lightboxCloseBtn");
+  var lightboxClose = document.getElementById("lightboxClose");
+  var lightboxBackdrop = document.getElementById("lightboxBackdrop");
+  var lightboxCta = document.getElementById("lightboxCta");
 
-  var currentImages = [];
-  var currentImgIndex = 0;
+  var PROJECT_DETAILS = {
+    remedies: {
+      title: "Indian Remedies",
+      badge: "Full-Stack E-Commerce",
+      desc: "Comprehensive digital transformation for an Ayurvedic wellness brand. Engineered a high-converting web storefront, product packaging identity, and custom CMS architecture.",
+      deliverables: ["Custom UI/UX", "High-Speed Headless Frontend", "Payment Gateway & Analytics", "Mobile Optimization"],
+      image: "/assets/projects/web.webp",
+      cta: "/contact.html?service=website"
+    },
+    elytek: {
+      title: "Elytek Tech",
+      badge: "Brand Identity & Web",
+      desc: "Sleek hardware identity and product showcase website for an innovative smart-tech company, blending precision 3D renders with interactive interfaces.",
+      deliverables: ["Brand Strategy & Guidelines", "3D CGI Product Renders", "Responsive Web App", "Interactive 3D Stage"],
+      image: "/assets/projects/branding.webp",
+      cta: "/contact.html?service=branding"
+    },
+    shieldmax: {
+      title: "Shield Max",
+      badge: "Amazon Premium A+",
+      desc: "Top-tier Amazon Enhanced Brand Content (EBC) modules, comparison tables, and infographic storyboards driving record listing conversion rates.",
+      deliverables: ["A+ Brand Story Modules", "Comparison Matrix", "Mobile-First Graphics", "Listing Architecture"],
+      image: "/assets/projects/amazon.webp",
+      cta: "/contact.html?service=amazon"
+    },
+    sonora: {
+      title: "Sonora Elite",
+      badge: "Product Photography & CGI",
+      desc: "Precision studio lighting, macro hardware stills, and 3D visual effects for a luxury audio electronics line.",
+      deliverables: ["4K Studio Stills", "Lifestyle Staging", "Exploded View CGI", "Post Retouching"],
+      image: "/assets/projects/photo.webp",
+      cta: "/contact.html?service=photography"
+    },
+    hyperion: {
+      title: "Hyperion Operations",
+      badge: "Custom ERP & Automation",
+      desc: "Custom inventory management portal and logistics automation suite handling multi-channel orders with sub-second response times.",
+      deliverables: ["Custom ERP Architecture", "Inventory Dashboard", "Webhook Automation", "Role-Based Access"],
+      image: "/assets/projects/software.webp",
+      cta: "/contact.html?service=software"
+    },
+    arcadia: {
+      title: "Arcadia Collective",
+      badge: "Performance Marketing",
+      desc: "Multi-channel paid media campaign, performance funnel design, and data-driven ad creative generating 4.2x ROAS in 90 days.",
+      deliverables: ["Meta & Google Ad Strategy", "Conversion Funnels", "Creative Ad Sets", "Attribution Analytics"],
+      image: "/assets/projects/marketing.webp",
+      cta: "/contact.html?service=marketing"
+    }
+  };
 
-  function openLightbox(title, badge, images, startIndex) {
-    if (!lightbox || !images || images.length === 0) return;
-    currentImages = images;
-    currentImgIndex = startIndex || 0;
+  function openLightbox(projectKey) {
+    var data = PROJECT_DETAILS[projectKey];
+    if (!data || !lightbox) return;
 
-    if (lightboxTitle) lightboxTitle.textContent = title;
-    if (lightboxBadge) lightboxBadge.textContent = badge || "Portfolio";
+    if (lightboxTitle) lightboxTitle.textContent = data.title;
+    if (lightboxBadge) lightboxBadge.textContent = data.badge;
+    if (lightboxDescription) lightboxDescription.textContent = data.desc;
+    if (lightboxMainImg) {
+      lightboxMainImg.src = data.image;
+      lightboxMainImg.alt = data.title;
+    }
+    if (lightboxCta) lightboxCta.href = data.cta;
 
-    // Build thumbnails
-    if (lightboxThumbnails) {
-      lightboxThumbnails.innerHTML = "";
-      currentImages.forEach(function (src, idx) {
-        var thumb = document.createElement("div");
-        thumb.className = "lightbox-thumb" + (idx === currentImgIndex ? " active" : "");
-        var img = document.createElement("img");
-        img.src = src;
-        img.alt = title + " - Image " + (idx + 1);
-        thumb.appendChild(img);
-        thumb.addEventListener("click", function (e) {
-          e.stopPropagation();
-          setLightboxImage(idx);
-        });
-        lightboxThumbnails.appendChild(thumb);
+    if (lightboxDeliverables) {
+      lightboxDeliverables.innerHTML = "";
+      data.deliverables.forEach(function (d) {
+        var span = document.createElement("span");
+        span.className = "lb-tag";
+        span.textContent = d;
+        lightboxDeliverables.appendChild(span);
       });
     }
 
-    setLightboxImage(currentImgIndex);
     lightbox.classList.add("active");
     lightbox.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
-  }
-
-  function setLightboxImage(index) {
-    if (!currentImages.length) return;
-    currentImgIndex = (index + currentImages.length) % currentImages.length;
-
-    if (lightboxMainImg) {
-      lightboxMainImg.style.opacity = "0.3";
-      lightboxMainImg.src = currentImages[currentImgIndex];
-      lightboxMainImg.onload = function () {
-        lightboxMainImg.style.opacity = "1";
-      };
-    }
-
-    if (lightboxCounter) {
-      lightboxCounter.textContent = (currentImgIndex + 1) + " / " + currentImages.length;
-    }
-
-    if (lightboxThumbnails) {
-      var thumbs = lightboxThumbnails.querySelectorAll(".lightbox-thumb");
-      thumbs.forEach(function (th, i) {
-        if (i === currentImgIndex) {
-          th.classList.add("active");
-          th.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-        } else {
-          th.classList.remove("active");
-        }
-      });
-    }
   }
 
   function closeLightbox() {
@@ -296,65 +349,21 @@
     document.body.style.overflow = "";
   }
 
-  if (lightbox) {
-    if (lightboxCloseBtn) lightboxCloseBtn.addEventListener("click", closeLightbox);
+  var triggerBtns = Array.prototype.slice.call(document.querySelectorAll(".open-project-modal-btn"));
+  triggerBtns.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      var key = btn.getAttribute("data-project-key");
+      openLightbox(key);
+    });
+  });
 
-    if (lightboxPrevBtn) {
-      lightboxPrevBtn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        setLightboxImage(currentImgIndex - 1);
-      });
+  if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
+  if (lightboxBackdrop) lightboxBackdrop.addEventListener("click", closeLightbox);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && lightbox && lightbox.classList.contains("active")) {
+      closeLightbox();
     }
-
-    if (lightboxNextBtn) {
-      lightboxNextBtn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        setLightboxImage(currentImgIndex + 1);
-      });
-    }
-
-    lightbox.addEventListener("click", function (e) {
-      if (e.target === lightbox) closeLightbox();
-    });
-
-    document.addEventListener("keydown", function (e) {
-      if (!lightbox.classList.contains("active")) return;
-      if (e.key === "Escape") closeLightbox();
-      else if (e.key === "ArrowLeft") setLightboxImage(currentImgIndex - 1);
-      else if (e.key === "ArrowRight") setLightboxImage(currentImgIndex + 1);
-    });
-
-    projectCards.forEach(function (card) {
-      var carouselContainer = card.querySelector(".project-carousel-container");
-      var titleEl = card.querySelector(".project-card-title");
-      var badgeEl = card.querySelector(".card-floating-badge");
-      var title = titleEl ? titleEl.textContent.trim() : "Project Details";
-      var badge = badgeEl ? badgeEl.textContent.trim() : "Live Project";
-
-      var slideImgs = Array.prototype.slice.call(card.querySelectorAll(".carousel-slide img"));
-      var imageUrls = slideImgs.map(function (img) { return img.getAttribute("src"); });
-
-      if (carouselContainer) {
-        carouselContainer.addEventListener("click", function (e) {
-          if (e.target.closest(".carousel-btn") || e.target.closest(".carousel-indicators")) return;
-          var activeSlide = carouselContainer.querySelector(".carousel-slide:hover") || slideImgs[0];
-          var startIdx = 0;
-          if (activeSlide) {
-            var activeImg = activeSlide.querySelector("img") || activeSlide;
-            var activeSrc = activeImg.getAttribute("src");
-            startIdx = Math.max(0, imageUrls.indexOf(activeSrc));
-          }
-          openLightbox(title, badge, imageUrls, startIdx);
-        });
-      }
-
-      if (titleEl) {
-        titleEl.style.cursor = "pointer";
-        titleEl.addEventListener("click", function () {
-          openLightbox(title, badge, imageUrls, 0);
-        });
-      }
-    });
-  }
-
+  });
 })();

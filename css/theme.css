@@ -406,13 +406,15 @@ p { margin: 0; color: var(--text-muted); }
 .footer-brand p { max-width: 320px; font-size: 14.5px; }
 
 .footer-cols { display: flex; gap: 64px; flex-wrap: wrap; }
+.footer-col-title,
+.footer-col h3,
 .footer-col h4 {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 500;
+  color: var(--text);
+  font-weight: 700;
   margin-bottom: 14px;
 }
 .footer-col a {
@@ -423,6 +425,19 @@ p { margin: 0; color: var(--text-muted); }
   opacity: 0.85;
 }
 .footer-col a:hover { color: var(--accent); opacity: 1; }
+
+.footer-start-project {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-block;
+}
+[data-theme="light"] .footer-start-project {
+  color: #b91c1c !important;
+}
+[data-theme="dark"] .footer-start-project {
+  color: #f87171 !important;
+}
 
 /* ============ DYNAMIC TEXT CTA SECTION (KOKONUTUI) ============ */
 .dynamic-cta-section {
@@ -742,12 +757,19 @@ p { margin: 0; color: var(--text-muted); }
   border: 1px solid var(--line);
 }
 
-.featured-project-card[data-theme="web"] .project-card-tag { color: #38bdf8; border-color: rgba(56,189,248,0.25); background: rgba(56,189,248,0.08); }
-.featured-project-card[data-theme="brand"] .project-card-tag { color: #fb7185; border-color: rgba(251,113,133,0.25); background: rgba(251,113,133,0.08); }
-.featured-project-card[data-theme="amazon"] .project-card-tag { color: #fbbf24; border-color: rgba(251,191,36,0.25); background: rgba(251,191,36,0.08); }
-.featured-project-card[data-theme="photo"] .project-card-tag { color: #c084fc; border-color: rgba(192,132,252,0.25); background: rgba(192,132,252,0.08); }
-.featured-project-card[data-theme="software"] .project-card-tag { color: #34d399; border-color: rgba(52,211,153,0.25); background: rgba(52,211,153,0.08); }
-.featured-project-card[data-theme="3d"] .project-card-tag { color: #fb923c; border-color: rgba(251,146,60,0.25); background: rgba(251,146,60,0.08); }
+.featured-project-card[data-theme="web"] .project-card-tag { color: #0369a1; border-color: rgba(3,105,161,0.3); background: rgba(3,105,161,0.1); font-weight: 700; }
+.featured-project-card[data-theme="brand"] .project-card-tag { color: #be123c; border-color: rgba(190,18,60,0.3); background: rgba(190,18,60,0.1); font-weight: 700; }
+.featured-project-card[data-theme="amazon"] .project-card-tag { color: #b45309; border-color: rgba(180,83,9,0.3); background: rgba(180,83,9,0.1); font-weight: 700; }
+.featured-project-card[data-theme="photo"] .project-card-tag { color: #7e22ce; border-color: rgba(126,34,206,0.3); background: rgba(126,34,206,0.1); font-weight: 700; }
+.featured-project-card[data-theme="software"] .project-card-tag { color: #047857; border-color: rgba(4,120,87,0.3); background: rgba(4,120,87,0.1); font-weight: 700; }
+.featured-project-card[data-theme="3d"] .project-card-tag { color: #c2410c; border-color: rgba(194,65,12,0.3); background: rgba(194,65,12,0.1); font-weight: 700; }
+
+[data-theme="dark"] .featured-project-card[data-theme="web"] .project-card-tag { color: #38bdf8; border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.12); }
+[data-theme="dark"] .featured-project-card[data-theme="brand"] .project-card-tag { color: #fb7185; border-color: rgba(251,113,133,0.3); background: rgba(251,113,133,0.12); }
+[data-theme="dark"] .featured-project-card[data-theme="amazon"] .project-card-tag { color: #fbbf24; border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.12); }
+[data-theme="dark"] .featured-project-card[data-theme="photo"] .project-card-tag { color: #c084fc; border-color: rgba(192,132,252,0.3); background: rgba(192,132,252,0.12); }
+[data-theme="dark"] .featured-project-card[data-theme="software"] .project-card-tag { color: #34d399; border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.12); }
+[data-theme="dark"] .featured-project-card[data-theme="3d"] .project-card-tag { color: #fb923c; border-color: rgba(251,146,60,0.3); background: rgba(251,146,60,0.12); }
 
 .project-card-title {
   font-family: var(--font-display);
@@ -932,53 +954,19 @@ p { margin: 0; color: var(--text-muted); }
 }
 
 /* ============================================
-   KOKONUTUI / MODERN TEXT SHIMMER EFFECT
+   KOKONUTUI / MODERN TEXT ACCENT EFFECT
    ============================================ */
 .text-shimmer {
-  background: linear-gradient(
-    110deg,
-    var(--headline-color, #0f172a) 0%,
-    var(--headline-color, #0f172a) 35%,
-    var(--accent, #cc3f48) 46%,
-    #ffffff 50%,
-    var(--accent, #cc3f48) 54%,
-    var(--headline-color, #0f172a) 65%,
-    var(--headline-color, #0f172a) 100%
-  );
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: textShimmerSweep 3.2s linear infinite;
   display: inline-block;
-  will-change: background-position;
+  color: var(--headline-color, #0f172a);
+}
+
+[data-theme="light"] .text-shimmer {
+  color: #0f172a;
 }
 
 [data-theme="dark"] .text-shimmer {
-  background: linear-gradient(
-    110deg,
-    #ffffff 0%,
-    #ffffff 35%,
-    #ff6b6b 46%,
-    #ffffff 50%,
-    #ff9e9e 54%,
-    #ffffff 65%,
-    #ffffff 100%
-  );
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: textShimmerSweep 3.2s linear infinite;
-}
-
-@keyframes textShimmerSweep {
-  0% {
-    background-position: 200% center;
-  }
-  100% {
-    background-position: -200% center;
-  }
+  color: #ffffff;
 }
 
 /* ============================================
