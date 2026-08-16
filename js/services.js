@@ -24,7 +24,7 @@
         "SEO & Core Web Vitals Optimization"
       ],
       mediaType: "image",
-      mediaSrc: "/assets/hero-cards/06.png",
+      mediaSrc: "/assets/hero-cards/06.webp",
       videoSrc: "",
       captionTitle: "Web Development Platform",
       captionSub: "Engineered by Evolix Studio",
@@ -47,7 +47,7 @@
         "Brand Strategy & Market Positioning"
       ],
       mediaType: "image",
-      mediaSrc: "/assets/hero-cards/02.png",
+      mediaSrc: "/assets/hero-cards/02.webp",
       videoSrc: "",
       captionTitle: "Brand Identity Design",
       captionSub: "Identity System by Evolix",
@@ -70,7 +70,7 @@
         "Competitor & Category Benchmarking"
       ],
       mediaType: "image",
-      mediaSrc: "/assets/hero-cards/08.png",
+      mediaSrc: "/assets/hero-cards/08.webp",
       videoSrc: "",
       captionTitle: "Amazon A+ Enhanced Content",
       captionSub: "Listing Architecture by Evolix",
@@ -93,7 +93,7 @@
         "High-End Retouching & Color Grading"
       ],
       mediaType: "image",
-      mediaSrc: "/assets/hero-cards/01.png",
+      mediaSrc: "/assets/hero-cards/01.webp",
       videoSrc: "",
       captionTitle: "Studio Product Photography",
       captionSub: "Visual Production by Evolix",
@@ -116,7 +116,7 @@
         "Real-Time Business Intelligence & Analytics"
       ],
       mediaType: "image",
-      mediaSrc: "/assets/hero-cards/07.png",
+      mediaSrc: "/assets/hero-cards/07.webp",
       videoSrc: "",
       captionTitle: "Custom Software Architecture",
       captionSub: "Engineered by Evolix Studio",
@@ -139,7 +139,7 @@
         "Live ROAS & Attribution Analytics"
       ],
       mediaType: "image",
-      mediaSrc: "/assets/hero-cards/03.png",
+      mediaSrc: "/assets/hero-cards/03.webp",
       videoSrc: "",
       captionTitle: "Digital Growth Campaign",
       captionSub: "Media Strategy by Evolix",
@@ -684,6 +684,17 @@
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: true });
 
+    // IntersectionObserver to pause when off-screen
+    if ("IntersectionObserver" in window) {
+      var shapeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          isRunning = entry.isIntersecting;
+          if (isRunning) requestAnimationFrame(renderLoop);
+        });
+      }, { threshold: 0.02 });
+      shapeObserver.observe(backdrop);
+    }
+
     function renderLoop() {
       if (!isRunning) return;
 
@@ -700,7 +711,9 @@
         shape.style.transform = "translate3d(" + tx.toFixed(2) + "px, " + ty.toFixed(2) + "px, 0) rotate(calc(var(--rot, 0deg) + " + extraRot.toFixed(2) + "deg))";
       });
 
-      requestAnimationFrame(renderLoop);
+      if (isRunning) {
+        requestAnimationFrame(renderLoop);
+      }
     }
 
     renderLoop();

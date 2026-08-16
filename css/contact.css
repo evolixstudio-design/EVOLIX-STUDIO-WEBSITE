@@ -126,6 +126,7 @@
 .contact-headline .highlight-text {
   background: linear-gradient(135deg, var(--headline-color) 15%, #fca5a5 55%, var(--accent) 85%, var(--gold) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

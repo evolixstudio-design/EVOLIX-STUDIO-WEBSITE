@@ -5,6 +5,9 @@
 (function () {
   "use strict";
 
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) return;
+
   function initMovableShapes() {
     var backdrop = document.getElementById("shapeHeroBackdrop");
     if (!backdrop) return;
@@ -17,6 +20,7 @@
     var currentX = 0;
     var currentY = 0;
     var isRunning = true;
+    var isLoopScheduled = false;
 
     // Per-shape depth, displacement scale, and rotation sensitivity
     var shapeConfigs = [
@@ -45,7 +49,22 @@
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: true });
 
+    // IntersectionObserver to pause when scrolled out of view
+    if ("IntersectionObserver" in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          isRunning = entry.isIntersecting;
+          if (isRunning && !isLoopScheduled) {
+            isLoopScheduled = true;
+            requestAnimationFrame(renderLoop);
+          }
+        });
+      }, { threshold: 0.02 });
+      observer.observe(backdrop);
+    }
+
     function renderLoop() {
+      isLoopScheduled = false;
       if (!isRunning) return;
 
       // Smooth lerp easing towards cursor position
@@ -68,10 +87,12 @@
           "deg))";
       });
 
+      isLoopScheduled = true;
       requestAnimationFrame(renderLoop);
     }
 
-    renderLoop();
+    isLoopScheduled = true;
+    requestAnimationFrame(renderLoop);
   }
 
   if (document.readyState === "loading") {

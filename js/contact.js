@@ -90,9 +90,9 @@
 
     function getParticleCount() {
       var w = window.innerWidth;
-      if (w <= 600) return 1200;
-      if (w <= 1024) return 2200;
-      return 3000;
+      if (w <= 600) return 280;
+      if (w <= 1024) return 650;
+      return 1400;
     }
 
     function spawnParticle() {

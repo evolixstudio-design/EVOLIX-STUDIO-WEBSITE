@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://evolix-studio.in/sitemap.xml

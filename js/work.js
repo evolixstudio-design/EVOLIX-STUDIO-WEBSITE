@@ -1,7 +1,7 @@
 // ============================================================
 // EVOLIX — WORK PAGE INTERACTION
-// Large cursor/touch trail visual cards, project card reveals,
-// and scroll-triggered animations.
+// Ambient floating visual cards, touch/cursor trail,
+// category filters, and project lightbox controller.
 // ============================================================
 
 (function () {
@@ -11,164 +11,179 @@
 
   // ─── Silky smooth page headline entry ───
   var headline = document.querySelector(".work-hero-headline");
-  var heroSub = document.querySelector(".work-hero-sub");
 
-  if (window.gsap && !prefersReducedMotion) {
-    if (headline) {
-      gsap.fromTo(headline, 
-        { y: -50, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.85, ease: "cubic-bezier(0.16, 1, 0.3, 1)" }
-      );
-    }
-    if (heroSub) {
-      gsap.fromTo(heroSub, 
-        { y: -20, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.75, delay: 0.15, ease: "cubic-bezier(0.16, 1, 0.3, 1)" }
-      );
-    }
+  if (window.gsap && !prefersReducedMotion && headline) {
+    gsap.fromTo(headline, 
+      { y: -30, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 0.85, ease: "cubic-bezier(0.16, 1, 0.3, 1)" }
+    );
   }
 
-  // ─── Large Interactive Trail Cards in Hero ───
+  // ─── Hero Floating Visual Cards & Interactive Trail ───
   var heroZone = document.getElementById("heroTrailZone");
   var heroSection = document.getElementById("workHero");
   if (!heroZone || !heroSection) return;
 
   var cardImages = [
-    "/assets/hero-cards/01.png",
-    "/assets/hero-cards/08.png",
-    "/assets/hero-cards/06.png",
-    "/assets/hero-cards/02.png",
-    "/assets/hero-cards/05.png",
-    "/assets/hero-cards/07.png",
-    "/assets/hero-cards/03.png",
-    "/assets/hero-cards/04.png",
-    "/assets/hero-cards/09.png"
+    "/assets/hero-cards/01.webp",
+    "/assets/hero-cards/08.webp",
+    "/assets/hero-cards/06.webp",
+    "/assets/hero-cards/02.webp",
+    "/assets/hero-cards/05.webp",
+    "/assets/hero-cards/07.webp",
+    "/assets/hero-cards/03.webp",
+    "/assets/hero-cards/04.webp",
+    "/assets/hero-cards/09.webp"
   ];
 
-  var THROTTLE_MS = 120;
+  var THROTTLE_MS = 100;
   var lastSpawn = 0;
   var cardIndex = 0;
-  var isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  var isHeroVisible = true;
 
-  function spawnCard(x, y) {
+  // IntersectionObserver to pause work hero cards when out of viewport
+  if ("IntersectionObserver" in window) {
+    var heroObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        isHeroVisible = entry.isIntersecting;
+      });
+    }, { threshold: 0.05 });
+    heroObserver.observe(heroSection);
+  }
+
+  function spawnCard(x, y, isAmbient) {
+    if (!isHeroVisible) return;
+
     var card = document.createElement("div");
     card.className = "trail-card";
     
     var img = document.createElement("img");
     img.src = cardImages[cardIndex % cardImages.length];
-    img.alt = "Portfolio Visual";
+    img.alt = "Evolix Showcase Visual";
     img.loading = "eager";
     card.appendChild(img);
     heroZone.appendChild(card);
     cardIndex++;
 
-    var rotation = (Math.random() - 0.5) * 26;
+    var isMobile = window.innerWidth < 768;
+    var halfW = isMobile ? 80 : 130;
+    var halfH = isMobile ? 55 : 90;
+    var rotation = (Math.random() - 0.5) * (isMobile ? 18 : 26);
 
     if (window.gsap && !prefersReducedMotion) {
-      // Center card on mouse (offset by half width ~140, half height ~100)
       gsap.set(card, {
-        x: x - 140,
-        y: y - 100,
+        x: x - halfW,
+        y: y - halfH,
         rotation: rotation,
-        scale: 0.65,
+        scale: isAmbient ? 0.8 : 0.6,
         opacity: 0,
       });
 
-      // Smooth expansion
+      var duration = isAmbient ? 0.7 : 0.45;
       gsap.to(card, {
         scale: 1,
-        opacity: 0.95,
-        duration: 0.45,
+        opacity: isAmbient ? 0.85 : 0.95,
+        duration: duration,
         ease: "cubic-bezier(0.16, 1, 0.3, 1)",
       });
 
-      // Gentle drift and fade out
-      var driftY = (Math.random() - 0.5) * 40 + 20;
+      var driftY = (Math.random() - 0.5) * 35 + 15;
+      var delay = isAmbient ? 2.4 : 0.75;
+      var fadeDuration = isAmbient ? 1.2 : 0.85;
+
       gsap.to(card, {
         opacity: 0,
         y: "+=" + driftY,
-        duration: 0.8,
-        delay: 0.65,
+        duration: fadeDuration,
+        delay: delay,
         ease: "power2.out",
         onComplete: function () {
           if (card.parentNode) card.parentNode.removeChild(card);
         }
       });
     } else {
-      card.style.left = (x - 140) + "px";
-      card.style.top = (y - 100) + "px";
+      card.style.left = (x - halfW) + "px";
+      card.style.top = (y - halfH) + "px";
       setTimeout(function () {
         if (card.parentNode) card.parentNode.removeChild(card);
-      }, 1200);
+      }, 1500);
     }
   }
 
-  // Pre-populate hero with initial visual cards on desktop only
-  function seedInitialHeroCards() {
-    if (prefersReducedMotion || window.innerWidth < 768) return;
-    var rect = heroSection.getBoundingClientRect();
-    var width = rect.width || window.innerWidth;
-    var height = rect.height || 600;
+  // ─── Ambient Continuous Loop so Hero is Always Alive (Mobile & Desktop) ───
+  function runAmbientFloatingLoop() {
+    if (prefersReducedMotion) return;
 
-    var seeds = [
-      { x: width * 0.72, y: height * 0.35, delay: 0.2 },
-      { x: width * 0.55, y: height * 0.62, delay: 0.35 },
-      { x: width * 0.82, y: height * 0.70, delay: 0.5 }
-    ];
+    function triggerAmbient() {
+      if (isHeroVisible) {
+        var rect = heroSection.getBoundingClientRect();
+        var width = rect.width || window.innerWidth;
+        var height = rect.height || 500;
+        var isMobile = width < 768;
 
-    seeds.forEach(function (seed) {
-      setTimeout(function () {
-        spawnCard(seed.x, seed.y);
-      }, seed.delay * 1000);
-    });
-  }
+        // Pick positions around outer edges so center text stays clear
+        var positions = isMobile ? [
+          { x: width * 0.22, y: height * 0.28 },
+          { x: width * 0.78, y: height * 0.32 },
+          { x: width * 0.25, y: height * 0.72 },
+          { x: width * 0.75, y: height * 0.68 }
+        ] : [
+          { x: width * 0.18, y: height * 0.38 },
+          { x: width * 0.82, y: height * 0.36 },
+          { x: width * 0.24, y: height * 0.66 },
+          { x: width * 0.76, y: height * 0.64 }
+        ];
 
-  // Bind mouse interactions on desktop (disabled on touch/mobile to prevent covering text)
-  if (!prefersReducedMotion && !isTouchDevice && window.innerWidth >= 768) {
-    heroSection.addEventListener("mousemove", function (e) {
-      var now = Date.now();
-      if (now - lastSpawn < THROTTLE_MS) return;
-      lastSpawn = now;
+        var pos = positions[Math.floor(Math.random() * positions.length)];
+        var jitterX = (Math.random() - 0.5) * (isMobile ? 30 : 60);
+        var jitterY = (Math.random() - 0.5) * (isMobile ? 25 : 50);
+
+        spawnCard(pos.x + jitterX, pos.y + jitterY, true);
+      }
+
+      var nextDelay = (window.innerWidth < 768 ? 2200 : 1800) + Math.random() * 800;
+      setTimeout(triggerAmbient, nextDelay);
+    }
+
+    // Seed initial cards on entry
+    setTimeout(function () {
       var rect = heroSection.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var y = e.clientY - rect.top;
-      spawnCard(x, y);
-    });
-
-    setTimeout(seedInitialHeroCards, 300);
+      var w = rect.width || window.innerWidth;
+      var h = rect.height || 500;
+      spawnCard(w * 0.2, h * 0.38, true);
+      setTimeout(function () { spawnCard(w * 0.8, h * 0.62, true); }, 600);
+      setTimeout(triggerAmbient, 1800);
+    }, 400);
   }
 
-  // ─── Scroll-triggered reveal for project cards ───
-  var entries = document.querySelectorAll(".project-entry");
-  if (entries.length && window.gsap && !prefersReducedMotion) {
-    gsap.set(entries, { y: 45, opacity: 0 });
+  runAmbientFloatingLoop();
 
-    var observer = new IntersectionObserver(
-      function (items) {
-        items.forEach(function (item) {
-          if (item.isIntersecting) {
-            gsap.to(item.target, {
-              y: 0,
-              opacity: 1,
-              duration: 0.8,
-              ease: "cubic-bezier(0.16, 1, 0.3, 1)",
-            });
-            observer.unobserve(item.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
+  // ─── Interactive Mousemove & Touch Spawn ───
+  function handlePointerMove(clientX, clientY) {
+    var now = Date.now();
+    if (now - lastSpawn < THROTTLE_MS) return;
+    lastSpawn = now;
 
-    entries.forEach(function (entry) {
-      observer.observe(entry);
-    });
-  } else if (entries.length) {
-    entries.forEach(function (el) {
-      el.style.opacity = "1";
-      el.style.transform = "none";
-    });
+    var rect = heroSection.getBoundingClientRect();
+    var x = clientX - rect.left;
+    var y = clientY - rect.top;
+
+    if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+      spawnCard(x, y, false);
+    }
   }
+
+  heroSection.addEventListener("mousemove", function (e) {
+    if (!prefersReducedMotion) {
+      handlePointerMove(e.clientX, e.clientY);
+    }
+  }, { passive: true });
+
+  heroSection.addEventListener("touchmove", function (e) {
+    if (!prefersReducedMotion && e.touches && e.touches[0]) {
+      handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
 
   // ─── Interactive Category Filter Tabs ───
   var filterBtns = Array.prototype.slice.call(document.querySelectorAll(".filter-tab-btn"));
@@ -187,7 +202,7 @@
           if (category === "all" || cardCat === category) {
             card.style.display = "flex";
             if (window.gsap && !prefersReducedMotion) {
-              gsap.fromTo(card, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" });
+              gsap.fromTo(card, { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" });
             } else {
               card.style.opacity = "1";
             }
@@ -261,7 +276,6 @@
       lightboxCounter.textContent = (currentImgIndex + 1) + " / " + currentImages.length;
     }
 
-    // Update active thumb
     if (lightboxThumbnails) {
       var thumbs = lightboxThumbnails.querySelectorAll(".lightbox-thumb");
       thumbs.forEach(function (th, i) {
@@ -283,9 +297,7 @@
   }
 
   if (lightbox) {
-    if (lightboxCloseBtn) {
-      lightboxCloseBtn.addEventListener("click", closeLightbox);
-    }
+    if (lightboxCloseBtn) lightboxCloseBtn.addEventListener("click", closeLightbox);
 
     if (lightboxPrevBtn) {
       lightboxPrevBtn.addEventListener("click", function (e) {
@@ -302,9 +314,7 @@
     }
 
     lightbox.addEventListener("click", function (e) {
-      if (e.target === lightbox) {
-        closeLightbox();
-      }
+      if (e.target === lightbox) closeLightbox();
     });
 
     document.addEventListener("keydown", function (e) {
@@ -314,7 +324,6 @@
       else if (e.key === "ArrowRight") setLightboxImage(currentImgIndex + 1);
     });
 
-    // Attach click listeners to all project cards on work page
     projectCards.forEach(function (card) {
       var carouselContainer = card.querySelector(".project-carousel-container");
       var titleEl = card.querySelector(".project-card-title");
@@ -325,13 +334,9 @@
       var slideImgs = Array.prototype.slice.call(card.querySelectorAll(".carousel-slide img"));
       var imageUrls = slideImgs.map(function (img) { return img.getAttribute("src"); });
 
-      // Click on carousel container opens lightbox
       if (carouselContainer) {
         carouselContainer.addEventListener("click", function (e) {
-          // If clicked prev/next or dots, ignore modal trigger
-          if (e.target.closest(".carousel-btn") || e.target.closest(".carousel-indicators")) {
-            return;
-          }
+          if (e.target.closest(".carousel-btn") || e.target.closest(".carousel-indicators")) return;
           var activeSlide = carouselContainer.querySelector(".carousel-slide:hover") || slideImgs[0];
           var startIdx = 0;
           if (activeSlide) {
@@ -343,7 +348,6 @@
         });
       }
 
-      // Also attach to card title
       if (titleEl) {
         titleEl.style.cursor = "pointer";
         titleEl.addEventListener("click", function () {

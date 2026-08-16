@@ -1105,21 +1105,160 @@
 
 /* ============ CLIENT MARQUEE OVERRIDES ============ */
 .svc-client-marquee {
-  margin-top: 40px;
+  margin-top: 50px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-card);
+  overflow: hidden;
+  position: relative;
 }
 
 .svc-client-track {
+  display: flex;
+  align-items: center;
+  gap: 18px;
   font-family: var(--font-mono) !important;
-  font-size: 15px !important;
-  letter-spacing: 0.18em;
-}
-
-.svc-client-track span {
-  color: var(--text) !important;
+  font-size: 13px !important;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  will-change: transform;
 }
 
 .svc-client-marquee:hover .svc-client-track {
   animation-play-state: paused;
+}
+
+.brand-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand-chip:hover {
+  transform: translateY(-2px) scale(1.04);
+}
+
+.chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.chip-sep {
+  color: var(--text-muted);
+  opacity: 0.45;
+  font-size: 10px;
+}
+
+/* Individual Project Colors */
+.brand-remedies {
+  color: #10b981 !important;
+  border-color: rgba(16, 185, 129, 0.35);
+  background: rgba(16, 185, 129, 0.1);
+}
+.brand-remedies .chip-dot {
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.brand-krishna {
+  color: #f59e0b !important;
+  border-color: rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.1);
+}
+.brand-krishna .chip-dot {
+  background: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+}
+
+.brand-nagarwala {
+  color: #6366f1 !important;
+  border-color: rgba(99, 102, 241, 0.35);
+  background: rgba(99, 102, 241, 0.1);
+}
+.brand-nagarwala .chip-dot {
+  background: #6366f1;
+  box-shadow: 0 0 8px #6366f1;
+}
+
+.brand-nut {
+  color: #e2a03f !important;
+  border-color: rgba(226, 160, 63, 0.35);
+  background: rgba(226, 160, 63, 0.1);
+}
+.brand-nut .chip-dot {
+  background: #e2a03f;
+  box-shadow: 0 0 8px #e2a03f;
+}
+
+.brand-elytek {
+  color: #06b6d4 !important;
+  border-color: rgba(6, 182, 212, 0.35);
+  background: rgba(6, 182, 212, 0.1);
+}
+.brand-elytek .chip-dot {
+  background: #06b6d4;
+  box-shadow: 0 0 8px #06b6d4;
+}
+
+.brand-jafanat {
+  color: #f97316 !important;
+  border-color: rgba(249, 115, 22, 0.35);
+  background: rgba(249, 115, 22, 0.1);
+}
+.brand-jafanat .chip-dot {
+  background: #f97316;
+  box-shadow: 0 0 8px #f97316;
+}
+
+.brand-shield {
+  color: #ef4444 !important;
+  border-color: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.1);
+}
+.brand-shield .chip-dot {
+  background: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+}
+
+.brand-arcadia {
+  color: #a855f7 !important;
+  border-color: rgba(168, 85, 247, 0.35);
+  background: rgba(168, 85, 247, 0.1);
+}
+.brand-arcadia .chip-dot {
+  background: #a855f7;
+  box-shadow: 0 0 8px #a855f7;
+}
+
+.brand-sonora {
+  color: #f43f5e !important;
+  border-color: rgba(244, 63, 94, 0.35);
+  background: rgba(244, 63, 94, 0.1);
+}
+.brand-sonora .chip-dot {
+  background: #f43f5e;
+  box-shadow: 0 0 8px #f43f5e;
+}
+
+.brand-hyperion {
+  color: #ec4899 !important;
+  border-color: rgba(236, 72, 153, 0.35);
+  background: rgba(236, 72, 153, 0.1);
+}
+.brand-hyperion .chip-dot {
+  background: #ec4899;
+  box-shadow: 0 0 8px #ec4899;
 }
 
 /* ============ MORE SERVICES (Bottom Quick-Launcher) ============ */

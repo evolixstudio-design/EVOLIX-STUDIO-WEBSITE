@@ -2,12 +2,94 @@
 <html lang="en">
 <head>
 {{partial:head}}
-<title>Services — Evolix Studio</title>
-<meta name="description" content="Evolix services — website development, branding, Amazon A+ content, product photography, custom software, and digital marketing for hardware and retail brands." />
+<title>Services | Website Development, Branding, Software &amp; Marketing | Evolix</title>
+<meta name="description" content="Explore Evolix Studio's six core services: website development, branding &amp; identity, Amazon A+ content, product photography, custom software, and digital marketing." />
+<link rel="canonical" href="https://evolix-studio.in/services" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Evolix Studio" />
+<meta property="og:title" content="Services | Website Development, Branding, Software &amp; Marketing | Evolix" />
+<meta property="og:description" content="Six specialized services for modern brands and technology companies: web, branding, Amazon A+ content, product photography, software, and digital marketing." />
+<meta property="og:url" content="https://evolix-studio.in/services" />
+<meta property="og:image" content="https://evolix-studio.in/assets/og-cover.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Services | Website Development, Branding, Software &amp; Marketing | Evolix" />
+<meta name="twitter:description" content="Six specialized services for modern brands and technology companies." />
+<meta name="twitter:image" content="https://evolix-studio.in/assets/og-cover.jpg" />
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Evolix Studio Services",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Website Development",
+      "url": "https://evolix-studio.in/services"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Branding & Identity",
+      "url": "https://evolix-studio.in/services"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Amazon A+ Content",
+      "url": "https://evolix-studio.in/services"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Product Photography",
+      "url": "https://evolix-studio.in/services"
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "name": "Custom Software",
+      "url": "https://evolix-studio.in/services"
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "name": "Digital Marketing",
+      "url": "https://evolix-studio.in/services"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://evolix-studio.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Services",
+      "item": "https://evolix-studio.in/services"
+    }
+  ]
+}
+</script>
+
 <link rel="stylesheet" href="/css/home.css" />
 <link rel="stylesheet" href="/css/services.css" />
 </head>
-<body>
+<body data-page-word="SERVICES">
+
+{{partial:loader}}
 
 {{partial:nav}}
 
@@ -70,272 +152,237 @@
               <span>ALL SERVICES SHOWREEL // 2026</span>
             </div>
           </div>
-
-          <div class="showreel-video-box" id="showreelBox">
-            <!-- Showreel Video Element (placeholder ready for user's reel video) -->
-            <video id="allServicesReel" class="showreel-video-element" playsinline muted loop autoplay preload="auto">
-              <source src="" type="video/mp4">
-            </video>
-
-            <!-- Showreel Visual Canvas / Poster -->
-            <div class="showreel-poster-layer">
-              <img src="/assets/hero-cards/05.png" alt="Evolix All Services Showreel" id="showreelPoster" />
-              <div class="showreel-overlay-content">
-                <button class="showreel-play-btn" id="showreelPlayBtn" aria-label="Play All Services Reel">
-                  <span class="play-icon">▶</span>
-                  <span class="pause-icon">❚❚</span>
-                </button>
-                <div class="showreel-caption">
-                  <span class="reel-tag">VIDEO REEL PLACEHOLDER</span>
-                  <h3 class="reel-title">Evolix Studio — Reel in Motion</h3>
-                  <p class="reel-sub">Watch our end-to-end capabilities across web, software, 3D, and brand design.</p>
-                </div>
-              </div>
+          <div class="showreel-placeholder">
+            <div class="showreel-play-btn" aria-label="Play showreel">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </div>
-          </div>
-
-          <div class="showreel-bottom-bar">
-            <span class="reel-spec">Reel Duration: 0:45</span>
-            <span class="reel-spec">Select a service below for interactive deep-dive</span>
+            <div class="showreel-tags">
+              <span>Websites</span><span>Branding</span><span>Amazon A+</span><span>Photography</span><span>Custom Software</span><span>Digital Marketing</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- ============ 6 SERVICES LIST ============ -->
-      <div class="services-list-wrapper" id="servicesListWrapper">
-        <div class="service-list-header">
-          <span class="col-num">#</span>
-          <span class="col-name">Service</span>
-          <span class="col-desc">Scope</span>
-          <span class="col-action">Explore</span>
+      <!-- ============ 6 DETAILED SERVICE BENTO CARDS ============ -->
+      <div class="services-bento-grid" id="servicesBentoGrid">
+
+        <!-- Card 01: Website Development -->
+        <div class="svc-bento-card" data-service-index="0" data-service-key="website">
+          <div class="svc-card-gradient"></div>
+          <div class="svc-card-glow"></div>
+          <div class="svc-card-content">
+            <div class="svc-card-top">
+              <span class="svc-num">01</span>
+              <span class="svc-deliverable-badge">Production Ready</span>
+            </div>
+            <h2 class="svc-name">Website Development</h2>
+            <p class="svc-desc">
+              High-performance, modern websites built for conversion. From e-commerce platforms to bespoke corporate portals, engineered with clean code, lightning speeds, and fluid animations.
+            </p>
+            <div class="svc-tags">
+              <span>Full-Stack Web</span>
+              <span>E-Commerce</span>
+              <span>Performance SEO</span>
+              <span>Responsive UI</span>
+            </div>
+            <div class="svc-card-footer">
+              <span class="svc-action-link">Explore Website Capabilities →</span>
+            </div>
+          </div>
         </div>
 
-        <ul class="services-items-grid" id="servicesGrid">
-          <!-- 01 Website Development -->
-          <li class="svc-item" data-index="0" tabindex="0" role="button" aria-label="Explore Website Development">
-            <div class="svc-col svc-col-num">
-              <span class="svc-badge-num">01</span>
+        <!-- Card 02: Branding & Identity -->
+        <div class="svc-bento-card" data-service-index="1" data-service-key="branding">
+          <div class="svc-card-gradient"></div>
+          <div class="svc-card-glow"></div>
+          <div class="svc-card-content">
+            <div class="svc-card-top">
+              <span class="svc-num">02</span>
+              <span class="svc-deliverable-badge">Complete Identity</span>
             </div>
-            <div class="svc-col svc-col-main">
-              <h2 class="svc-name">Website Development</h2>
-              <span class="svc-tag">Web &amp; Digital</span>
+            <h2 class="svc-name">Branding &amp; Identity</h2>
+            <p class="svc-desc">
+              Distinct brand identities that command attention. We craft logos, color systems, typography hierarchy, brand guidelines, and visual language that set you apart in competitive markets.
+            </p>
+            <div class="svc-tags">
+              <span>Logo &amp; Mark</span>
+              <span>Design System</span>
+              <span>Brand Guidelines</span>
+              <span>Visual Language</span>
             </div>
-            <div class="svc-col svc-col-desc">
-              <p class="svc-brief">High-performance, responsive websites built to convert — from bespoke landing pages to full web platforms.</p>
+            <div class="svc-card-footer">
+              <span class="svc-action-link">Explore Branding Capabilities →</span>
             </div>
-            <div class="svc-col svc-col-action">
-              <span class="svc-action-btn">
-                <span class="btn-text">View Service</span>
-                <span class="btn-arrow">→</span>
-              </span>
-            </div>
-          </li>
+          </div>
+        </div>
 
-          <!-- 02 Branding -->
-          <li class="svc-item" data-index="1" tabindex="0" role="button" aria-label="Explore Branding">
-            <div class="svc-col svc-col-num">
-              <span class="svc-badge-num">02</span>
+        <!-- Card 03: Amazon A+ Content -->
+        <div class="svc-bento-card" data-service-index="2" data-service-key="amazon">
+          <div class="svc-card-gradient"></div>
+          <div class="svc-card-glow"></div>
+          <div class="svc-card-content">
+            <div class="svc-card-top">
+              <span class="svc-num">03</span>
+              <span class="svc-deliverable-badge">Conversion Focused</span>
             </div>
-            <div class="svc-col svc-col-main">
-              <h2 class="svc-name">Branding</h2>
-              <span class="svc-tag">Visual Identity</span>
+            <h2 class="svc-name">Amazon A+ Content</h2>
+            <p class="svc-desc">
+              Engineered Amazon storefronts and enhanced brand content (EBC) designed to maximize click-throughs, elevate perceived product value, and directly boost listing conversion rates.
+            </p>
+            <div class="svc-tags">
+              <span>EBC / A+ Modules</span>
+              <span>Comparison Charts</span>
+              <span>Infographics</span>
+              <span>Storefront Design</span>
             </div>
-            <div class="svc-col svc-col-desc">
-              <p class="svc-brief">Complete identity systems — logo, color palette, typography, and guidelines — built to make your brand iconic.</p>
+            <div class="svc-card-footer">
+              <span class="svc-action-link">Explore Amazon A+ Capabilities →</span>
             </div>
-            <div class="svc-col svc-col-action">
-              <span class="svc-action-btn">
-                <span class="btn-text">View Service</span>
-                <span class="btn-arrow">→</span>
-              </span>
-            </div>
-          </li>
+          </div>
+        </div>
 
-          <!-- 03 Amazon A+ Content -->
-          <li class="svc-item" data-index="2" tabindex="0" role="button" aria-label="Explore Amazon A+ Content">
-            <div class="svc-col svc-col-num">
-              <span class="svc-badge-num">03</span>
+        <!-- Card 04: Product Photography -->
+        <div class="svc-bento-card" data-service-index="3" data-service-key="photography">
+          <div class="svc-card-gradient"></div>
+          <div class="svc-card-glow"></div>
+          <div class="svc-card-content">
+            <div class="svc-card-top">
+              <span class="svc-num">04</span>
+              <span class="svc-deliverable-badge">High-End Studio</span>
             </div>
-            <div class="svc-col svc-col-main">
-              <h2 class="svc-name">Amazon A+ Content</h2>
-              <span class="svc-tag">Marketplace &amp; E-Com</span>
+            <h2 class="svc-name">Product Photography</h2>
+            <p class="svc-desc">
+              Studio-grade product photography, lifestyle captures, and 3D rendering for e-commerce, catalog, packaging, and marketing collateral with precise lighting and color grading.
+            </p>
+            <div class="svc-tags">
+              <span>Studio Stills</span>
+              <span>Lifestyle Shots</span>
+              <span>Macro Details</span>
+              <span>Post-Production Retouch</span>
             </div>
-            <div class="svc-col svc-col-desc">
-              <p class="svc-brief">Enhanced brand content and product listing modules engineered to boost conversions on the Amazon shelf.</p>
+            <div class="svc-card-footer">
+              <span class="svc-action-link">Explore Photography Capabilities →</span>
             </div>
-            <div class="svc-col svc-col-action">
-              <span class="svc-action-btn">
-                <span class="btn-text">View Service</span>
-                <span class="btn-arrow">→</span>
-              </span>
-            </div>
-          </li>
+          </div>
+        </div>
 
-          <!-- 04 Product Photography -->
-          <li class="svc-item" data-index="3" tabindex="0" role="button" aria-label="Explore Product Photography">
-            <div class="svc-col svc-col-num">
-              <span class="svc-badge-num">04</span>
+        <!-- Card 05: Custom Software -->
+        <div class="svc-bento-card" data-service-index="4" data-service-key="software">
+          <div class="svc-card-gradient"></div>
+          <div class="svc-card-glow"></div>
+          <div class="svc-card-content">
+            <div class="svc-card-top">
+              <span class="svc-num">05</span>
+              <span class="svc-deliverable-badge">Enterprise Grade</span>
             </div>
-            <div class="svc-col svc-col-main">
-              <h2 class="svc-name">Product Photography</h2>
-              <span class="svc-tag">Studio &amp; Visuals</span>
+            <h2 class="svc-name">Custom Software</h2>
+            <p class="svc-desc">
+              Bespoke business applications, custom ERPs, internal tool dashboards, and automation systems engineered to eliminate operational bottlenecks and scale seamlessly.
+            </p>
+            <div class="svc-tags">
+              <span>Custom ERP / CRM</span>
+              <span>Business Portals</span>
+              <span>Workflow Automation</span>
+              <span>API Integrations</span>
             </div>
-            <div class="svc-col svc-col-desc">
-              <p class="svc-brief">Studio-quality product photography capturing every precision detail — styled, lit, and shot to sell.</p>
+            <div class="svc-card-footer">
+              <span class="svc-action-link">Explore Software Capabilities →</span>
             </div>
-            <div class="svc-col svc-col-action">
-              <span class="svc-action-btn">
-                <span class="btn-text">View Service</span>
-                <span class="btn-arrow">→</span>
-              </span>
-            </div>
-          </li>
+          </div>
+        </div>
 
-          <!-- 05 Custom Software -->
-          <li class="svc-item" data-index="4" tabindex="0" role="button" aria-label="Explore Custom Software">
-            <div class="svc-col svc-col-num">
-              <span class="svc-badge-num">05</span>
+        <!-- Card 06: Digital Marketing -->
+        <div class="svc-bento-card" data-service-index="5" data-service-key="marketing">
+          <div class="svc-card-gradient"></div>
+          <div class="svc-card-glow"></div>
+          <div class="svc-card-content">
+            <div class="svc-card-top">
+              <span class="svc-num">06</span>
+              <span class="svc-deliverable-badge">Growth &amp; ROAS</span>
             </div>
-            <div class="svc-col svc-col-main">
-              <h2 class="svc-name">Custom Software</h2>
-              <span class="svc-tag">Engineering &amp; Ops</span>
+            <h2 class="svc-name">Digital Marketing</h2>
+            <p class="svc-desc">
+              Performance marketing and multi-channel acquisition funnels. Paid ads (Meta, Google, Amazon), search engine optimization, content strategy, and data-driven growth.
+            </p>
+            <div class="svc-tags">
+              <span>Paid Performance Ads</span>
+              <span>Conversion Funnels</span>
+              <span>Technical SEO</span>
+              <span>Campaign Analytics</span>
             </div>
-            <div class="svc-col svc-col-desc">
-              <p class="svc-brief">Internal tools, inventory management systems, customer portals, and automated workflows tailored to your operations.</p>
+            <div class="svc-card-footer">
+              <span class="svc-action-link">Explore Marketing Capabilities →</span>
             </div>
-            <div class="svc-col svc-col-action">
-              <span class="svc-action-btn">
-                <span class="btn-text">View Service</span>
-                <span class="btn-arrow">→</span>
-              </span>
-            </div>
-          </li>
+          </div>
+        </div>
 
-          <!-- 06 Digital Marketing -->
-          <li class="svc-item" data-index="5" tabindex="0" role="button" aria-label="Explore Digital Marketing">
-            <div class="svc-col svc-col-num">
-              <span class="svc-badge-num">06</span>
-            </div>
-            <div class="svc-col svc-col-main">
-              <h2 class="svc-name">Digital Marketing</h2>
-              <span class="svc-tag">Growth &amp; Paid Media</span>
-            </div>
-            <div class="svc-col svc-col-desc">
-              <p class="svc-brief">Targeted ad campaigns, funnel optimization, and conversion funnels built to drive tangible revenue growth.</p>
-            </div>
-            <div class="svc-col svc-col-action">
-              <span class="svc-action-btn">
-                <span class="btn-text">View Service</span>
-                <span class="btn-arrow">→</span>
-              </span>
-            </div>
-          </li>
-        </ul>
       </div>
 
     </div>
 
     <!-- ============================================
-         STAGE 2: DETAIL VIEW REPLACEMENT
-         (Replaces the main services view with clicked service deep-dive)
+         STAGE 2: SPLIT-SCREEN SERVICE DETAIL VIEW
+         (Left: Sticky Navigation & Scope | Right: Interactive Visual Media Stage)
          ============================================ -->
-    <div class="services-detail-stage" id="servicesDetailStage" style="display: none;">
+    <div class="service-detail-view" id="serviceDetailView" style="display: none;">
 
-      <!-- Detail Navigation Header Bar -->
-      <div class="detail-header-bar">
-        <button class="back-to-list-btn" id="backToListBtn" aria-label="Back to all services">
+      <!-- Return to all services button -->
+      <div class="detail-back-bar">
+        <button class="btn-back-overview" id="btnBackOverview">
           <span class="back-arrow">←</span>
-          <span>All Services</span>
+          <span>Back to All Services</span>
         </button>
-        
-        <div class="detail-switcher-pills" id="detailPills">
-          <button class="pill-btn active" data-index="0">01 Web</button>
-          <button class="pill-btn" data-index="1">02 Brand</button>
-          <button class="pill-btn" data-index="2">03 Amazon</button>
-          <button class="pill-btn" data-index="3">04 Photo</button>
-          <button class="pill-btn" data-index="4">05 Software</button>
-          <button class="pill-btn" data-index="5">06 Marketing</button>
-        </div>
-
-        <div class="detail-pagination">
-          <button class="page-arrow prev" id="prevServiceBtn" title="Previous Service" aria-label="Previous Service">←</button>
-          <span class="page-counter" id="pageCounter">01 / 06</span>
-          <button class="page-arrow next" id="nextServiceBtn" title="Next Service" aria-label="Next Service">→</button>
-        </div>
       </div>
 
-      <!-- Split Grid: Left Description / Right Video Showcase -->
-      <div class="detail-split-grid">
+      <!-- Two-Column Interactive Stage -->
+      <div class="service-detail-grid">
 
-        <!-- Left Column: Service Details -->
-        <div class="detail-info-col" id="detailInfoCol">
-          <div class="detail-eyebrow">
-            <span class="detail-tag" id="detailTag">Web &amp; Digital</span>
-            <span class="detail-scope">Service Deep Dive</span>
-          </div>
+        <!-- LEFT COLUMN: Sticky Info & Scope Breakdown -->
+        <div class="detail-info-col">
+          <div class="detail-sticky-pane">
+            <div class="detail-meta-pill" id="detailCategoryPill">SERVICE 01 // CAPABILITY</div>
+            <h1 class="detail-service-title" id="detailTitle">Website Development</h1>
+            <p class="detail-service-pitch" id="detailPitch">
+              High-performance, modern websites built for conversion. From e-commerce platforms to bespoke corporate portals, engineered with clean code, lightning speeds, and fluid animations.
+            </p>
 
-          <h2 class="detail-title" id="detailTitle">Website Development</h2>
+            <div class="detail-scope-card">
+              <h3 class="scope-heading">Detailed Scope &amp; Deliverables</h3>
+              <ul class="scope-list" id="detailScopeList">
+                <li>Bespoke responsive web design tailored to your brand identity</li>
+                <li>Fast performance architecture with sub-second page loads</li>
+                <li>Custom CMS integration for effortless content management</li>
+                <li>Advanced technical SEO schema and OpenGraph optimization</li>
+                <li>Interactive micro-animations and smooth scroll interactions</li>
+                <li>Continuous post-launch maintenance &amp; analytics tracking</li>
+              </ul>
+            </div>
 
-          <p class="detail-lead" id="detailLead">
-            We engineer ultra-fast, visually stunning websites that turn visitors into loyal customers. From headless e-commerce architectures and marketing landing pages to full-scale web platforms, every site is crafted with obsessive attention to speed, responsiveness, SEO, and visual elegance.
-          </p>
-
-          <!-- Key Deliverables List -->
-          <div class="detail-deliverables">
-            <h3 class="deliverables-heading">What We Deliver</h3>
-            <ul class="deliverables-list" id="deliverablesList">
-              <li><span class="bullet">✦</span> Custom UX/UI Design &amp; Wireframing</li>
-              <li><span class="bullet">✦</span> High-Performance Responsive Frontend</li>
-              <li><span class="bullet">✦</span> Modern Web Applications &amp; Next.js</li>
-              <li><span class="bullet">✦</span> E-Commerce &amp; High-Conversion Checkouts</li>
-              <li><span class="bullet">✦</span> CMS Integration &amp; Headless Architecture</li>
-              <li><span class="bullet">✦</span> SEO &amp; Core Web Vitals Optimization</li>
-            </ul>
-          </div>
-
-          <!-- Action Buttons -->
-          <div class="detail-actions">
-            <a href="/contact.html" class="btn btn-accent detail-cta-btn">Start this project →</a>
-            <a href="/work.html" class="btn detail-work-btn">See related work</a>
+            <div class="detail-cta-box">
+              <a href="/contact.html?service=website" class="btn btn-accent detail-inquire-btn" id="detailInquireBtn">
+                Start a Website Project →
+              </a>
+            </div>
           </div>
         </div>
 
-        <!-- Right Column: Video & Media Showcase -->
-        <div class="detail-media-col" id="detailMediaCol">
-          <div class="media-showcase-frame" id="mediaShowcaseFrame">
-            
-            <div class="frame-ambient-glow" id="ambientGlow"></div>
+        <!-- RIGHT COLUMN: Interactive Visual Frame & Tech Specs -->
+        <div class="detail-visual-col">
+          <div class="detail-visual-frame" id="detailVisualFrame">
 
             <div class="frame-top-bar">
               <div class="window-dots">
                 <span></span><span></span><span></span>
               </div>
-              <div class="frame-badge" id="mediaBadge">
-                <span class="badge-live-dot"></span>
-                <span id="badgeText">Interactive Preview</span>
+              <div class="frame-status-badge" id="frameStatusBadge">
+                <span class="pulse-dot"></span>
+                <span>PROJECT SHOWCASE // PRODUCTION</span>
               </div>
             </div>
 
-            <div class="video-container" id="videoContainer">
-              <video id="serviceVideo" class="service-video-player" playsinline muted loop autoplay preload="auto">
-                <source src="" type="video/mp4">
-                Your browser does not support HTML5 video.
-              </video>
-
-              <div class="media-poster-layer" id="mediaPoster">
-                <img id="posterImage" src="/assets/hero-cards/06.png" alt="Service Showcase" />
-              </div>
-
-              <div class="video-controls-overlay">
-                <button class="video-play-toggle" id="videoToggleBtn" aria-label="Toggle Play/Pause">
-                  <span class="icon-pause">❚❚</span>
-                  <span class="icon-play">▶</span>
-                </button>
-                <div class="video-caption">
-                  <span class="caption-title" id="captionTitle">Web Development Platform</span>
-                  <span class="caption-sub">Engineered by Evolix Studio</span>
-                </div>
-              </div>
+            <!-- Visual Media Container (Image Carousel) -->
+            <div class="frame-media-container" id="frameMediaContainer">
+              <img id="detailMainImage" src="/assets/projects/web.webp" alt="Website Development Showcase" width="800" height="500" />
             </div>
 
             <div class="frame-bottom-bar">
@@ -356,8 +403,47 @@
 <!-- ============ CLIENT LOGO MARQUEE ============ -->
 <div class="marquee svc-client-marquee" id="svcMarquee">
   <div class="marquee-track svc-client-track">
-    <span>INDIAN REMEDIES</span> · <span>KRISHNA TOOLS</span> · <span>NAGARWALA</span> · <span>NUT DELICACY</span> · <span>ELYTEK</span> · <span>AL JAFANAT CATERS</span> · <span>SHIELD MAX</span> · <span>ARCADIA</span> · <span>SONORA ELITE</span> · <span>HYPERION</span> ·
-    <span>INDIAN REMEDIES</span> · <span>KRISHNA TOOLS</span> · <span>NAGARWALA</span> · <span>NUT DELICACY</span> · <span>ELYTEK</span> · <span>AL JAFANAT CATERS</span> · <span>SHIELD MAX</span> · <span>ARCADIA</span> · <span>SONORA ELITE</span> · <span>HYPERION</span> ·
+    <span class="brand-chip brand-remedies"><span class="chip-dot"></span>INDIAN REMEDIES</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-krishna"><span class="chip-dot"></span>KRISHNA TOOLS</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-nagarwala"><span class="chip-dot"></span>NAGARWALA</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-nut"><span class="chip-dot"></span>NUT DELICACY</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-elytek"><span class="chip-dot"></span>ELYTEK</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-jafanat"><span class="chip-dot"></span>AL JAFANAT CATERS</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-shield"><span class="chip-dot"></span>SHIELD MAX</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-arcadia"><span class="chip-dot"></span>ARCADIA</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-sonora"><span class="chip-dot"></span>SONORA ELITE</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-hyperion"><span class="chip-dot"></span>HYPERION</span>
+    <span class="chip-sep">✦</span>
+    <!-- Repeat for infinite marquee loop -->
+    <span class="brand-chip brand-remedies"><span class="chip-dot"></span>INDIAN REMEDIES</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-krishna"><span class="chip-dot"></span>KRISHNA TOOLS</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-nagarwala"><span class="chip-dot"></span>NAGARWALA</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-nut"><span class="chip-dot"></span>NUT DELICACY</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-elytek"><span class="chip-dot"></span>ELYTEK</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-jafanat"><span class="chip-dot"></span>AL JAFANAT CATERS</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-shield"><span class="chip-dot"></span>SHIELD MAX</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-arcadia"><span class="chip-dot"></span>ARCADIA</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-sonora"><span class="chip-dot"></span>SONORA ELITE</span>
+    <span class="chip-sep">✦</span>
+    <span class="brand-chip brand-hyperion"><span class="chip-dot"></span>HYPERION</span>
+    <span class="chip-sep">✦</span>
   </div>
 </div>
 
@@ -379,14 +465,14 @@
         <div class="project-carousel-container">
           <span class="card-floating-badge"><span class="live-dot"></span>Live E-Commerce Website</span>
           <div class="project-carousel-track">
-            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/01.png" alt="Indian Remedies Ayurvedic Platform" loading="eager" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/02.png" alt="Indian Remedies Product Showcase" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/03.png" alt="Indian Remedies Herbal Collections" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/04.png" alt="Indian Remedies Formulation Guide" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/05.png" alt="Indian Remedies Doctor Consultation" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/06.png" alt="Indian Remedies Customer Reviews" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/07.png" alt="Indian Remedies Checkout Flow" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/08.png" alt="Indian Remedies Brand Story" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/01.webp" alt="Indian Remedies Ayurvedic Platform" loading="eager" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/02.webp" alt="Indian Remedies Product Showcase" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/03.webp" alt="Indian Remedies Herbal Collections" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/04.webp" alt="Indian Remedies Formulation Guide" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/05.webp" alt="Indian Remedies Doctor Consultation" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/06.webp" alt="Indian Remedies Customer Reviews" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/07.webp" alt="Indian Remedies Checkout Flow" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/indian-remedies/08.webp" alt="Indian Remedies Brand Story" loading="lazy" width="800" height="500" /></div>
           </div>
           <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
           <button class="carousel-btn next" aria-label="Next Slide">›</button>
@@ -416,12 +502,12 @@
         <div class="project-carousel-container">
           <span class="card-floating-badge"><span class="live-dot" style="background:#10b981; box-shadow:0 0 8px #10b981;"></span>Production CRM Suite</span>
           <div class="project-carousel-track">
-            <div class="carousel-slide"><img src="/assets/work/software/crm/01.png" alt="Evolix CRM Client Dashboard" loading="eager" /></div>
-            <div class="carousel-slide"><img src="/assets/work/software/crm/02.png" alt="Evolix CRM Sales Pipeline" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/software/crm/03.png" alt="Evolix CRM Lead Management" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/software/crm/04.png" alt="Evolix CRM Task Allocation" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/software/crm/05.png" alt="Evolix CRM Analytics Reports" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/software/crm/06.png" alt="Evolix CRM Contact Records" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/crm/01.webp" alt="Evolix CRM Client Dashboard" loading="eager" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/crm/02.webp" alt="Evolix CRM Sales Pipeline" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/crm/03.webp" alt="Evolix CRM Lead Management" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/crm/04.webp" alt="Evolix CRM Task Allocation" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/crm/05.webp" alt="Evolix CRM Analytics Reports" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/crm/06.webp" alt="Evolix CRM Contact Records" loading="lazy" width="800" height="500" /></div>
           </div>
           <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
           <button class="carousel-btn next" aria-label="Next Slide">›</button>
@@ -449,12 +535,12 @@
         <div class="project-carousel-container">
           <span class="card-floating-badge"><span class="live-dot"></span>Live Machinery Portal</span>
           <div class="project-carousel-track">
-            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/01.png" alt="Krishna Tools Industrial Equipment" loading="eager" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/02.png" alt="Krishna Tools Machine Catalog" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/03.png" alt="Krishna Tools Power Tools" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/04.png" alt="Krishna Tools Technical Specs" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/05.png" alt="Krishna Tools Quotation Pipeline" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/06.png" alt="Krishna Tools Wholesale Inquiries" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/01.webp" alt="Krishna Tools Industrial Equipment" loading="eager" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/02.webp" alt="Krishna Tools Machine Catalog" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/03.webp" alt="Krishna Tools Power Tools" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/04.webp" alt="Krishna Tools Technical Specs" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/05.webp" alt="Krishna Tools Quotation Pipeline" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/krishna-tools/06.webp" alt="Krishna Tools Wholesale Inquiries" loading="lazy" width="800" height="500" /></div>
           </div>
           <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
           <button class="carousel-btn next" aria-label="Next Slide">›</button>
@@ -482,13 +568,13 @@
         <div class="project-carousel-container">
           <span class="card-floating-badge"><span class="live-dot" style="background:#10b981; box-shadow:0 0 8px #10b981;"></span>Security Operations ERP</span>
           <div class="project-carousel-track">
-            <div class="carousel-slide"><img src="/assets/work/software/shield-max/01.png" alt="Shield Max Operations Suite" loading="eager" /></div>
-            <div class="carousel-slide"><img src="/assets/work/software/shield-max/02.png" alt="Shield Max Personnel Rosters" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/software/shield-max/03.png" alt="Shield Max Shift Scheduling" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/software/shield-max/04.png" alt="Shield Max Attendance Verification" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/software/shield-max/05.png" alt="Shield Max Incident Logging" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/software/shield-max/06.png" alt="Shield Max Client Invoicing" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/software/shield-max/07.png" alt="Shield Max Executive Overview" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/01.webp" alt="Shield Max Operations Suite" loading="eager" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/02.webp" alt="Shield Max Personnel Rosters" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/03.webp" alt="Shield Max Shift Scheduling" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/04.webp" alt="Shield Max Attendance Verification" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/05.webp" alt="Shield Max Incident Logging" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/06.webp" alt="Shield Max Client Invoicing" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/software/shield-max/07.webp" alt="Shield Max Executive Overview" loading="lazy" width="800" height="500" /></div>
           </div>
           <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
           <button class="carousel-btn next" aria-label="Next Slide">›</button>
@@ -517,12 +603,12 @@
         <div class="project-carousel-container">
           <span class="card-floating-badge"><span class="live-dot"></span>Live Commercial Portal</span>
           <div class="project-carousel-track">
-            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/01.png" alt="Nagarwala Building Material Portal" loading="eager" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/02.png" alt="Nagarwala Architectural Supplies" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/03.png" alt="Nagarwala Material Catalog" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/04.png" alt="Nagarwala Structural Supply Categories" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/05.png" alt="Nagarwala Bulk Inquiries" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/06.png" alt="Nagarwala Contractor Partner Portal" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/01.webp" alt="Nagarwala Building Material Portal" loading="eager" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/02.webp" alt="Nagarwala Architectural Supplies" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/03.webp" alt="Nagarwala Material Catalog" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/04.webp" alt="Nagarwala Structural Supply Categories" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/05.webp" alt="Nagarwala Bulk Inquiries" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/work/website/nagarwala/06.webp" alt="Nagarwala Contractor Partner Portal" loading="lazy" width="800" height="500" /></div>
           </div>
           <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
           <button class="carousel-btn next" aria-label="Next Slide">›</button>
@@ -550,9 +636,9 @@
         <div class="project-carousel-container">
           <span class="card-floating-badge"><span class="live-dot" style="background:#f43f5e; box-shadow:0 0 8px #f43f5e;"></span>Brand Architecture</span>
           <div class="project-carousel-track">
-            <div class="carousel-slide"><img src="/assets/projects/branding.jpg" alt="Arcadia Brand Identity" loading="eager" /></div>
-            <div class="carousel-slide"><img src="/assets/hero-cards/02.png" alt="Arcadia Packaging" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="/assets/hero-cards/08.png" alt="Arcadia Digital Guidelines" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="/assets/projects/branding.webp" alt="Arcadia Brand Identity" loading="eager" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/hero-cards/02.webp" alt="Arcadia Packaging" loading="lazy" width="800" height="500" /></div>
+            <div class="carousel-slide"><img src="/assets/hero-cards/08.webp" alt="Arcadia Digital Guidelines" loading="lazy" width="800" height="500" /></div>
           </div>
           <button class="carousel-btn prev" aria-label="Previous Slide">‹</button>
           <button class="carousel-btn next" aria-label="Next Slide">›</button>
@@ -645,8 +731,9 @@
 
 {{partial:footer}}
 
-<!-- GSAP 3.12 CDN -->
+<!-- GSAP 3.12 CDN & Loader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="/js/loader.js"></script>
 <script src="/js/services.js"></script>
 <script src="/js/carousel.js"></script>
 <script src="/js/dynamic-text.js"></script>
