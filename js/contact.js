@@ -88,21 +88,23 @@
       return THEMES[currentThemeKey] || THEMES.ember;
     }
 
+    var isFlowFieldVisible = true;
+
     function getParticleCount() {
       var w = window.innerWidth;
-      if (w <= 600) return 280;
-      if (w <= 1024) return 650;
-      return 1400;
+      if (w <= 600) return 70;
+      if (w <= 1024) return 180;
+      return 380;
     }
 
     function spawnParticle() {
       var cfg = getActiveConfig();
-      var maxLife = 200 + Math.floor(Math.random() * 320);
+      var maxLife = 180 + Math.floor(Math.random() * 260);
       return {
         x: Math.random() * width,
         y: Math.random() * height,
-        speed: 1.1 + Math.random() * 2.2,
-        size: 0.85 + Math.random() * 1.35,
+        speed: 1.0 + Math.random() * 1.8,
+        size: 0.85 + Math.random() * 1.25,
         brightness: 0.9 + Math.random() * 0.25,
         hue: cfg.hueStart + Math.random() * cfg.hueRange,
         life: Math.floor(Math.random() * maxLife),
@@ -111,7 +113,7 @@
     }
 
     function resize() {
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       width = window.innerWidth;
       height = window.innerHeight;
 
@@ -135,6 +137,11 @@
     }
 
     function render() {
+      if (!isFlowFieldVisible) {
+        animId = null;
+        return;
+      }
+
       time++;
       var cfg = getActiveConfig();
       var light = isLightTheme();
@@ -202,12 +209,18 @@
       animId = requestAnimationFrame(render);
     }
 
+    function startFlowField() {
+      if (!animId && isFlowFieldVisible && !prefersReducedMotion) {
+        animId = requestAnimationFrame(render);
+      }
+    }
+
     // Mouse flow listener
     window.addEventListener("mousemove", function (e) {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
       mouse.active = true;
-    });
+    }, { passive: true });
 
     window.addEventListener("mouseleave", function () {
       mouse.active = false;
@@ -226,6 +239,20 @@
       mouse.active = false;
     });
 
+    // IntersectionObserver to sleep when offscreen
+    var heroEl = document.getElementById("contactHero");
+    if ("IntersectionObserver" in window && heroEl) {
+      var heroObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          isFlowFieldVisible = entry.isIntersecting;
+          if (isFlowFieldVisible) {
+            startFlowField();
+          }
+        });
+      }, { threshold: 0.05 });
+      heroObs.observe(heroEl);
+    }
+
     // Theme Mutation Observer
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
@@ -243,10 +270,10 @@
     observer.observe(document.documentElement, { attributes: true });
 
     resize();
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", resize, { passive: true });
 
     if (!prefersReducedMotion) {
-      render();
+      startFlowField();
     } else {
       // Single static render for reduced motion
       render();
@@ -395,7 +422,7 @@
   if (whatsappDirectBtn) {
     whatsappDirectBtn.addEventListener("click", function () {
       var payload = buildWhatsAppPayload();
-      var waUrl = "https://wa.me/919098173239?text=" + payload;
+      var waUrl = "https://api.whatsapp.com/send?phone=919098173239&text=" + payload;
       window.open(waUrl, "_blank");
     });
   }
@@ -431,7 +458,7 @@
       var payload = buildWhatsAppPayload();
       var waLink = document.getElementById("successWaLink");
       if (waLink) {
-        waLink.href = "https://wa.me/919098173239?text=" + payload;
+        waLink.href = "https://api.whatsapp.com/send?phone=919098173239&text=" + payload;
       }
 
       // Trigger Success Overlay
@@ -459,22 +486,25 @@
   }
 
   // ============================================================
-  // 3. URL QUERY STRING PRE-SELECTION
+  // 3. URL QUERY STRING & HASH PRE-SELECTION
   // ============================================================
   function handleUrlServicePreselection() {
     var urlParams = new URLSearchParams(window.location.search);
-    var serviceParam = urlParams.get("service");
+    var hashParam = (window.location.hash || "").replace(/^#/, "").toLowerCase();
+    var serviceParam = urlParams.get("service") || hashParam;
     if (!serviceParam) return;
 
     serviceParam = serviceParam.toLowerCase();
     var matchedPill = servicePills.find(function (pill) {
       var sId = pill.getAttribute("data-service-id");
-      return sId && (sId.toLowerCase() === serviceParam || serviceParam.indexOf(sId) !== -1);
+      return sId && (sId.toLowerCase() === serviceParam || serviceParam.indexOf(sId) !== -1 || (sId === "web" && serviceParam === "website"));
     });
 
     if (matchedPill) {
       setTimeout(function () {
-        matchedPill.click();
+        if (!matchedPill.classList.contains("active")) {
+          matchedPill.click();
+        }
         var formCard = document.getElementById("contactFormCard");
         if (formCard) {
           formCard.scrollIntoView({ behavior: "smooth", block: "center" });

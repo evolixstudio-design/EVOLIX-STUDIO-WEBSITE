@@ -1,0 +1,16 @@
+# Evolix Studio
+> Digital Agency for Website Development, Branding, Custom Software, Amazon A+ Content, Product Photography, and Digital Marketing.
+
+## About
+Evolix Studio is a modern digital agency engineering high-performance websites, custom software, ERPs, brand systems, and performance marketing campaigns for growing companies.
+
+## Core Pages
+- [Home](https://evolix-studio.in/): Overview of agency capabilities, interactive services wheel, and featured client work.
+- [Services](https://evolix-studio.in/services): Detailed scope and deliverables across Web Development, Branding & Identity, Amazon A+ Content, Product Photography, Custom Software, and Digital Marketing.
+- [Work](https://evolix-studio.in/work): Selected client case studies including Indian Remedies, Krishna Tools, Nagarwala, Evolix CRM, Shield Max, and Arcadia.
+- [Contact](https://evolix-studio.in/contact): Discovery intake form and project inquiries.
+
+## Contact Information
+- Website: https://evolix-studio.in/
+- Email: evolixstudio@gmail.com
+- WhatsApp / Phone: +91 90981 73239

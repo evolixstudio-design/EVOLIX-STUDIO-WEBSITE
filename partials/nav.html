@@ -1,6 +1,6 @@
 <header class="site-nav">
   <div class="nav-container">
-    <a href="/" class="logo">
+    <a href="/" class="logo" aria-label="Evolix Studio Home">
       <img src="/assets/evolix-logo.webp" alt="Evolix Studio Digital Agency Logo" width="32" height="32" style="aspect-ratio:1/1; object-fit:contain;" />
       <span>Evolix</span>
     </a>
@@ -9,18 +9,38 @@
     <nav class="morphic-nav-wrapper" data-page="{{page:key}}" id="mainNavLinks">
       <div class="morphic-nav-glass">
         <a href="/" class="morphic-nav-link" data-key="home">Home</a>
-        <a href="/services.html" class="morphic-nav-link" data-key="services">Services</a>
-        <a href="/work.html" class="morphic-nav-link" data-key="work">Work</a>
-        <a href="/contact.html" class="morphic-nav-link" data-key="contact">Contact</a>
+        <a href="/services" class="morphic-nav-link" data-key="services">Services</a>
+        <a href="/work" class="morphic-nav-link" data-key="work">Work</a>
+        <a href="/contact" class="morphic-nav-link" data-key="contact">Contact</a>
       </div>
     </nav>
 
     <div class="nav-right">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle Light/Dark Theme">
-        <span class="theme-icon sun">☀️</span>
-        <span class="theme-icon moon">🌙</span>
+      <!-- KokonutUI Switch Button -->
+      <button class="kokonut-switch-btn" id="themeToggle" type="button" aria-label="Toggle Light and Dark Theme" title="Toggle Theme">
+        <div class="kokonut-switch-inner">
+          <svg class="kokonut-sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+          <span class="kokonut-switch-label">
+            <span class="label-light">Light<span class="label-glow-line"></span></span>
+            <span class="label-dark">Dark<span class="label-glow-line"></span></span>
+            <span class="label-spacer">Light</span>
+          </span>
+        </div>
+        <span class="kokonut-sheen-sweep"></span>
+        <span class="kokonut-sheen-radial"></span>
       </button>
-      <a href="/contact.html" class="btn btn-accent nav-cta">Start a project</a>
+
+      <a href="/contact" class="btn btn-accent nav-cta">Start a project</a>
     </div>
   </div>
 </header>
@@ -77,7 +97,7 @@
       renderMorphicState(currentKey);
     });
 
-    // Theme toggle
+    // KokonutUI Theme Switcher Handler
     var toggleBtn = document.getElementById("themeToggle");
     if (toggleBtn) {
       toggleBtn.addEventListener("click", function () {
@@ -89,3 +109,4 @@
     }
   })();
 </script>
+

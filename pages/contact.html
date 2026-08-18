@@ -13,8 +13,110 @@
 <meta property="og:image" content="https://evolix-studio.in/assets/og-cover.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Start a Project | Contact Evolix Studio" />
-<meta name="twitter:description" content="Tell Evolix Studio what you're building and explore the right digital, creative, software, or marketing solution." />
 <meta name="twitter:image" content="https://evolix-studio.in/assets/og-cover.jpg" />
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Start a Project | Contact Evolix Studio",
+  "url": "https://evolix-studio.in/contact",
+  "description": "Contact Evolix Studio to start a project in website development, branding, custom software, Amazon content, product photography, or digital marketing.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Evolix Studio",
+    "url": "https://evolix-studio.in/",
+    "email": "evolixstudio@gmail.com",
+    "telephone": "+919098173239",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+919098173239",
+      "contactType": "Customer Support",
+      "availableLanguage": ["English", "Hindi"]
+    }
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://evolix-studio.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Contact",
+      "item": "https://evolix-studio.in/contact"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How soon can we kick off a new project?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Following your initial discovery inquiry and requirements briefing, we organize a 30-minute scope alignment session. Upon agreement on milestones and technical architecture, project kickoffs typically commence within 24 to 48 hours."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the standard engagement workflow?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We operate in 4 agile phases: Strategy & Wireframing, High-Fidelity UI/UX & Prototyping, Production Engineering (clean code, Core Web Vitals optimization), and Launch QA followed by analytics and growth support."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you sign Non-Disclosure Agreements (NDAs)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Client confidentiality, proprietary algorithms, brand assets, and business data are treated with the highest enterprise-level security. We are pleased to execute mutual NDAs prior to in-depth technical discussions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What industries and client scales do you work with?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We partner with ambitious startups, scaling direct-to-consumer (D2C) brands, manufacturing distributors, B2B commercial suppliers, and technology companies worldwide requiring specialized web, branding, and custom software systems."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What deliverables do we receive upon project completion?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You receive 100% intellectual property ownership, complete source code repositories, design Figma source files, vector assets, API documentation, and comprehensive video walkthroughs for seamless internal handoff."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer post-launch maintenance & SLA support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. We provide dedicated monthly maintenance agreements covering security patches, Core Web Vitals performance tuning, server uptime monitoring, continuous SEO tracking, and feature expansion."
+      }
+    }
+  ]
+}
+</script>
+
 <link rel="stylesheet" href="/css/contact.css" />
 </head>
 <body data-page-word="CONTACT">
@@ -39,7 +141,7 @@
   <div class="container contact-container">
 
     <!-- Top Headline Banner -->
-    <div class="contact-header" id="contactHeader">
+    <header class="contact-header" id="contactHeader">
       <div class="contact-eyebrow">
         <span class="eyebrow-dot">✦</span>
         <span>Contact Evolix Studio</span>
@@ -48,13 +150,13 @@
       <p class="contact-subhead">
         We are a full-service digital marketing, branding, web development, and technology agency. Tell us about your project and let's scale your brand together.
       </p>
-    </div>
+    </header>
 
     <!-- Main Split Grid: Discovery Form + Studio Info -->
     <div class="contact-split-grid">
 
       <!-- LEFT: Discovery Intake Form -->
-      <div class="contact-form-card" id="contactFormCard">
+      <article class="contact-form-card" id="contactFormCard">
 
         <form id="evolixContactForm" class="evolix-discovery-form" novalidate>
 
@@ -239,7 +341,7 @@
             </div>
 
             <div class="success-actions">
-              <a href="https://wa.me/919098173239" target="_blank" rel="noopener noreferrer" class="btn btn-accent" id="successWaLink">
+              <a href="https://api.whatsapp.com/send?phone=919098173239" target="_blank" rel="nofollow noopener noreferrer" class="btn btn-accent" id="successWaLink">
                 <span>Continue on WhatsApp (+91 90981 73239) →</span>
               </a>
               <button type="button" class="btn btn-subtle" id="resetInquiryBtn">Submit Another Request</button>
@@ -247,10 +349,10 @@
           </div>
         </div>
 
-      </div>
+      </article>
 
       <!-- RIGHT: Studio Info & Contact Channels -->
-      <div class="contact-info-col">
+      <aside class="contact-info-col">
 
         <!-- Studio Profile Card -->
         <div class="studio-info-card">
@@ -294,7 +396,7 @@
           <div class="channel-items-list">
 
             <!-- WhatsApp Direct -->
-            <a href="https://wa.me/919098173239" target="_blank" rel="noopener noreferrer" class="channel-row">
+            <a href="https://api.whatsapp.com/send?phone=919098173239" target="_blank" rel="nofollow noopener noreferrer" class="channel-row">
               <div class="channel-icon-box">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.95 1.36-.5.06-1.12.08-3.64-.96-3.23-1.33-5.3-4.63-5.46-4.85-.16-.22-1.3-1.73-1.3-3.3 0-1.57.82-2.34 1.11-2.66.29-.32.64-.4.85-.4.21 0 .43 0 .61.01.2.01.46-.07.72.55.26.63.9 2.2.98 2.36.08.16.13.35.03.56-.11.21-.16.34-.32.53-.16.19-.34.42-.48.56-.16.16-.33.33-.14.66.19.33.85 1.4 1.82 2.27 1.25 1.11 2.3 1.46 2.63 1.62.33.16.52.13.72-.09.2-.23.85-.99 1.08-1.33.23-.34.46-.28.77-.17.31.11 1.98.93 2.32 1.1.34.17.57.26.65.4.08.14.08.83-.16 1.51z"/></svg>
               </div>
@@ -337,7 +439,7 @@
           <h3 class="channels-heading">SOCIAL MEDIA</h3>
 
           <div class="social-links-grid">
-            <a href="https://www.instagram.com/evolixstudio/" target="_blank" rel="noopener noreferrer" class="social-link-pill">
+            <a href="https://www.instagram.com/evolixstudio/" target="_blank" rel="nofollow noopener noreferrer" class="social-link-pill">
               <span class="social-pill-icon">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               </span>
@@ -345,7 +447,7 @@
               <span class="pill-arrow">↗</span>
             </a>
 
-            <a href="https://www.facebook.com/profile.php?id=61591762854131" target="_blank" rel="noopener noreferrer" class="social-link-pill">
+            <a href="https://www.facebook.com/profile.php?id=61591762854131" target="_blank" rel="nofollow noopener noreferrer" class="social-link-pill">
               <span class="social-pill-icon">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               </span>
@@ -371,10 +473,78 @@
           </div>
         </div>
 
-      </div>
+      </aside>
 
     </div>
 
+  </div>
+</section>
+
+<!-- ============ FREQUENTLY ASKED QUESTIONS & COLLABORATION ============ -->
+<section class="section contact-faq-section" id="contactFaq">
+  <div class="container">
+    <header class="faq-header">
+      <div class="eyebrow">Engagement &amp; Process</div>
+      <h2>Frequently Asked Questions</h2>
+      <p>Everything you need to know about starting a project, onboarding timelines, deliverables, and confidentiality agreements with Evolix Studio.</p>
+    </header>
+
+    <div class="faq-grid">
+      <article class="faq-card">
+        <h3 class="faq-q"><span class="faq-num">01.</span> How soon can we kick off a new project?</h3>
+        <p class="faq-a">Following your initial discovery inquiry and requirements briefing, we organize a 30-minute scope alignment session. Upon agreement on milestones and technical architecture, project kickoffs typically commence within 24 to 48 hours.</p>
+      </article>
+
+      <article class="faq-card">
+        <h3 class="faq-q"><span class="faq-num">02.</span> What is the standard engagement workflow?</h3>
+        <p class="faq-a">We operate in 4 agile phases: Strategy &amp; Wireframing, High-Fidelity UI/UX &amp; Prototyping, Production Engineering (clean code, Core Web Vitals optimization), and Launch QA followed by analytics and growth support.</p>
+      </article>
+
+      <article class="faq-card">
+        <h3 class="faq-q"><span class="faq-num">03.</span> Do you sign Non-Disclosure Agreements (NDAs)?</h3>
+        <p class="faq-a">Absolutely. Client confidentiality, proprietary algorithms, brand assets, and business data are treated with the highest enterprise-level security. We are pleased to execute mutual NDAs prior to in-depth technical discussions.</p>
+      </article>
+
+      <article class="faq-card">
+        <h3 class="faq-q"><span class="faq-num">04.</span> What industries and client scales do you work with?</h3>
+        <p class="faq-a">We partner with ambitious startups, scaling direct-to-consumer (D2C) brands, manufacturing distributors, B2B commercial suppliers, and technology companies worldwide requiring specialized web, branding, and custom software systems.</p>
+      </article>
+
+      <article class="faq-card">
+        <h3 class="faq-q"><span class="faq-num">05.</span> What deliverables do we receive upon project completion?</h3>
+        <p class="faq-a">You receive 100% intellectual property ownership, complete source code repositories, design Figma source files, vector assets, API documentation, and comprehensive video walkthroughs for seamless internal handoff.</p>
+      </article>
+
+      <article class="faq-card">
+        <h3 class="faq-q"><span class="faq-num">06.</span> Do you offer post-launch maintenance &amp; SLA support?</h3>
+        <p class="faq-a">Yes. We provide dedicated monthly maintenance agreements covering security patches, Core Web Vitals performance tuning, server uptime monitoring, continuous SEO tracking, and feature expansion.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENGAGEMENT STANDARDS & COLLABORATION ============ -->
+<section class="section contact-guide-section" style="padding-top:0;">
+  <div class="container">
+    <div class="overview-grid">
+      <article class="overview-card">
+        <div class="overview-card-num">STAGE 01 // DISCOVERY &amp; ARCHITECTURE</div>
+        <h3 class="overview-card-title">Initial Scope Alignment &amp; Technical Roadmapping</h3>
+        <p class="overview-card-text">Every partnership begins with a thorough deep dive into your commercial objectives, target audience demographics, competitive market landscape, and technical specifications. We define exact project milestones, deliverables, tech stacks, and timelines to guarantee seamless delivery without unexpected scope creep.</p>
+      </article>
+
+      <article class="overview-card">
+        <div class="overview-card-num">STAGE 02 // UI/UX DESIGN &amp; BRANDING</div>
+        <h3 class="overview-card-title">Interactive Design Systems &amp; Visual Direction</h3>
+        <p class="overview-card-text">Our design team creates bespoke design prototypes, high-conversion user interfaces, custom typography systems, and comprehensive brand guideline kits in Figma. Clients participate in collaborative feedback iterations ensuring 100% aesthetic alignment prior to engineering execution.</p>
+      </article>
+
+      <article class="overview-card">
+        <div class="overview-card-num">STAGE 03 // ENGINEERING &amp; QA</div>
+        <h3 class="overview-card-title">Full-Stack Development &amp; Core Web Vitals</h3>
+        <p class="overview-card-text">We engineer responsive frontend layouts, custom CMS backends, API integrations, and secure database pipelines with strict adherence to Web Standards, mobile responsiveness, semantic accessibility, and 95+ Core Web Vitals performance benchmarks across all viewports.</p>
+      </article>
+    </div>
   </div>
 </section>
 

@@ -1,11 +1,15 @@
-// build.js — stitches pages/*.html with partials/*.html into static root HTML files.
+// build.js — stitches pages/*.html with partials/*.html, minifies CSS/JS assets, and generates production HTML.
 // Usage: node build.js
 const fs = require("fs");
 const path = require("path");
+const CleanCSS = require("clean-css");
+const Terser = require("terser");
 
 const ROOT = __dirname;
 const PAGES_DIR = path.join(ROOT, "pages");
 const PARTIALS_DIR = path.join(ROOT, "partials");
+const CSS_DIR = path.join(ROOT, "css");
+const JS_DIR = path.join(ROOT, "js");
 
 function loadPartials() {
   const partials = {};
@@ -19,7 +23,69 @@ function loadPartials() {
   return partials;
 }
 
-// Replaces {{partial:name}} tokens, and supports {{active:pagekey}} for nav highlighting.
+// Minify all CSS files
+function minifyAllCSS() {
+  if (!fs.existsSync(CSS_DIR)) return;
+  const cleanCSS = new CleanCSS({
+    level: {
+      1: {
+        all: true
+      },
+      2: {
+        all: true
+      }
+    }
+  });
+
+  const files = fs.readdirSync(CSS_DIR).filter((f) => f.endsWith(".css") && !f.endsWith(".min.css"));
+  for (const file of files) {
+    const srcPath = path.join(CSS_DIR, file);
+    const content = fs.readFileSync(srcPath, "utf8");
+    const minified = cleanCSS.minify(content).styles;
+    const minPath = path.join(CSS_DIR, file.replace(/\.css$/, ".min.css"));
+    fs.writeFileSync(minPath, minified, "utf8");
+    console.log(`  minified CSS: ${file} -> ${path.basename(minPath)}`);
+  }
+}
+
+// Minify all JS files
+async function minifyAllJS() {
+  if (!fs.existsSync(JS_DIR)) return;
+  const files = fs.readdirSync(JS_DIR).filter((f) => f.endsWith(".js") && !f.endsWith(".min.js"));
+  for (const file of files) {
+    const srcPath = path.join(JS_DIR, file);
+    const content = fs.readFileSync(srcPath, "utf8");
+    try {
+      const minified = await Terser.minify(content, {
+        compress: {
+          drop_console: false
+        },
+        mangle: true
+      });
+      const minPath = path.join(JS_DIR, file.replace(/\.js$/, ".min.js"));
+      fs.writeFileSync(minPath, minified.code || content, "utf8");
+      console.log(`  minified JS:  ${file} -> ${path.basename(minPath)}`);
+    } catch (err) {
+      console.error(`  error minifying ${file}:`, err);
+    }
+  }
+}
+
+// Replaces {{partial:name}} tokens, rewrites CSS/JS links to .min versions, and supports {{page:key}}
+
+
+
+
+// Production HTML Minifier
+function minifyHTML(html) {
+  return html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/[ \t]+/g, " ")
+    .replace(/^\s+|\s+$/gm, "")
+    .replace(/\n+/g, "\n")
+    .replace(/>\s+</g, "><");
+}
+
 function render(html, partials, pageKey) {
   let out = html.replace(/\{\{partial:([a-zA-Z0-9_-]+)\}\}/g, (_, name) => {
     if (!partials[name]) {
@@ -29,10 +95,20 @@ function render(html, partials, pageKey) {
     return partials[name];
   });
   out = out.replace(/\{\{page:key\}\}/g, pageKey);
+
+  // Switch local CSS and JS references to minified versions
+  out = out.replace(/href=["']\/css\/([a-zA-Z0-9_-]+?)(\.min)?\.css["']/g, 'href="/css/$1.min.css"');
+  out = out.replace(/src=["']\/js\/([a-zA-Z0-9_-]+?)(\.min)?\.js["']/g, 'src="/js/$1.min.js"');
+
   return out;
 }
 
-function build() {
+async function build() {
+  console.log("Minifying assets...");
+  minifyAllCSS();
+  await minifyAllJS();
+
+  console.log("\nBuilding pages...");
   const partials = loadPartials();
   if (!fs.existsSync(PAGES_DIR)) {
     console.error("No pages/ directory found.");
@@ -49,10 +125,10 @@ function build() {
     // Two passes so a partial (e.g. nav) can itself reference {{page:key}} for active-state.
     rendered = render(rendered, partials, pageKey);
     const outName = pageKey === "home" ? "index.html" : `${pageKey}.html`;
-    fs.writeFileSync(path.join(ROOT, outName), rendered);
+    fs.writeFileSync(path.join(ROOT, outName), minifyHTML(rendered));
     console.log(`  built ${outName}`);
   }
-  console.log(`\nDone. ${files.length} page(s) built.`);
+  console.log(`\nDone. ${files.length} page(s) built and all CSS/JS assets minified.`);
 }
 
 build();

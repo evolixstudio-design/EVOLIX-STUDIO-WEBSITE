@@ -62,39 +62,42 @@
     });
   });
 
-  // Responsive 3D amplitudes
-  function getAmplitudes() {
+  // Responsive 3D amplitudes cached
+  let amps = { rx: 215, ry: 115, rz: 150 };
+  function updateAmplitudes() {
     const w = window.innerWidth;
     if (w < 480) {
-      return { rx: 65, ry: 35, rz: 50 };
+      amps = { rx: 65, ry: 35, rz: 50 };
     } else if (w < 768) {
-      return { rx: 85, ry: 45, rz: 70 };
+      amps = { rx: 85, ry: 45, rz: 70 };
     } else if (w < 1024) {
-      return { rx: 140, ry: 75, rz: 110 };
+      amps = { rx: 140, ry: 75, rz: 110 };
     } else {
-      return { rx: 215, ry: 115, rz: 150 };
+      amps = { rx: 215, ry: 115, rz: 150 };
     }
   }
+  updateAmplitudes();
+  window.addEventListener("resize", updateAmplitudes, { passive: true });
 
   function renderFrame() {
     isLoopScheduled = false;
     if (!isHeroVisible) return;
 
     progress += speed;
-    if (progress > Math.PI * 2 * 1000) progress -= Math.PI * 2 * 1000;
+    if (progress > 6283.18) progress -= 6283.18;
 
     // Smooth lerp for mouse sway
-    mouseX += (targetMouseX - mouseX) * 0.05;
-    mouseY += (targetMouseY - mouseY) * 0.05;
+    mouseX += (targetMouseX - mouseX) * 0.06;
+    mouseY += (targetMouseY - mouseY) * 0.06;
 
-    const amps = getAmplitudes();
     const rx = amps.rx;
     const ry = amps.ry;
     const rz = amps.rz;
 
-    cards.forEach((card, i) => {
+    for (let i = 0; i < totalCards; i++) {
+      const card = cards[i];
       // Phase offset for even distribution along 3D loop
-      const theta = progress + (i * Math.PI * 2) / totalCards;
+      const theta = progress + (i * 6.283185) / totalCards;
 
       let x = Math.cos(theta) * rx;
       let y = Math.sin(theta) * ry + Math.cos(theta * 2) * (ry * 0.2);
@@ -127,10 +130,12 @@
       card.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) rotateZ(${rotZ.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
       card.style.zIndex = zIndex;
       card.style.opacity = opacity.toFixed(2);
-    });
+    }
 
-    isLoopScheduled = true;
-    requestAnimationFrame(renderFrame);
+    if (isHeroVisible) {
+      isLoopScheduled = true;
+      requestAnimationFrame(renderFrame);
+    }
   }
 
   isLoopScheduled = true;

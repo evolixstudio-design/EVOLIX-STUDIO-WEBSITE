@@ -10,5 +10,9 @@
   },
   "keywords": [],
   "author": "Evolix Studio",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "terser": "^5.50.0"
+  }
 }

@@ -267,6 +267,9 @@
     padding: 2px 6px;
     bottom: 6px;
     left: 6px;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(10, 10, 10, 0.88);
   }
   .hero-services-list {
     font-size: 11px;
@@ -491,3 +494,60 @@
 }
 .cta-headline .outline { color: transparent; -webkit-text-stroke: 1.5px var(--text); }
 .cta-sub { margin: 24px auto 36px; max-width: 460px; font-size: 15.5px; }
+
+/* ============ AGENCY OVERVIEW / MANIFESTO ============ */
+.home-overview-section {
+  padding: 80px 0 60px;
+  position: relative;
+  z-index: 5;
+}
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+@media (max-width: 900px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+.overview-card {
+  padding: 32px 28px;
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+[data-theme="light"] .overview-card {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+.overview-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+.overview-card-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 14px;
+  font-weight: 700;
+}
+.overview-card-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--headline-color);
+  margin: 0 0 12px;
+  letter-spacing: -0.015em;
+}
+.overview-card-text {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0;
+}
+

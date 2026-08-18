@@ -204,7 +204,8 @@
     if (x < 0 || x > rect.width || y < 0 || y > rect.height) return;
 
     var dist = Math.hypot(x - lastX, y - lastY);
-    if (dist >= MIN_MOVE_DIST) {
+    var threshold = window.innerWidth < 768 ? 36 : MIN_MOVE_DIST;
+    if (dist >= threshold) {
       lastX = x;
       lastY = y;
       spawnCard(x, y, false);
@@ -217,11 +218,32 @@
     }
   }, { passive: true });
 
-  heroSection.addEventListener("touchmove", function (e) {
-    if (!prefersReducedMotion && e.touches && e.touches[0]) {
-      handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
+  // Touch handlers for mobile: lock scroll when dragging inside hero to allow playful card trail
+  heroSection.addEventListener("touchstart", function (e) {
+    if (e.touches && e.touches.length === 1) {
+      var t = e.touches[0];
+      var rect = heroSection.getBoundingClientRect();
+      lastX = t.clientX - rect.left;
+      lastY = t.clientY - rect.top;
+      spawnCard(lastX, lastY, false);
     }
   }, { passive: true });
+
+  heroSection.addEventListener("touchmove", function (e) {
+    if (e.touches && e.touches.length === 1) {
+      var t = e.touches[0];
+      var rect = heroSection.getBoundingClientRect();
+      var x = t.clientX - rect.left;
+      var y = t.clientY - rect.top;
+
+      if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+        handlePointerMove(t.clientX, t.clientY);
+      }
+    }
+  }, { passive: false });
 
   // ─── Interactive Category Filter Tabs ───
   var filterBtns = Array.prototype.slice.call(document.querySelectorAll(".filter-tab-btn"));
@@ -270,7 +292,7 @@
       desc: "Comprehensive digital transformation for an Ayurvedic wellness brand. Engineered a high-converting web storefront, product packaging identity, and custom CMS architecture.",
       deliverables: ["Custom UI/UX", "High-Speed Headless Frontend", "Payment Gateway & Analytics", "Mobile Optimization"],
       image: "/assets/projects/web.webp",
-      cta: "/contact.html?service=website"
+      cta: "/contact#web"
     },
     elytek: {
       title: "Elytek Tech",
@@ -278,7 +300,7 @@
       desc: "Sleek hardware identity and product showcase website for an innovative smart-tech company, blending precision 3D renders with interactive interfaces.",
       deliverables: ["Brand Strategy & Guidelines", "3D CGI Product Renders", "Responsive Web App", "Interactive 3D Stage"],
       image: "/assets/projects/branding.webp",
-      cta: "/contact.html?service=branding"
+      cta: "/contact#branding"
     },
     shieldmax: {
       title: "Shield Max",
@@ -286,7 +308,7 @@
       desc: "Top-tier Amazon Enhanced Brand Content (EBC) modules, comparison tables, and infographic storyboards driving record listing conversion rates.",
       deliverables: ["A+ Brand Story Modules", "Comparison Matrix", "Mobile-First Graphics", "Listing Architecture"],
       image: "/assets/projects/amazon.webp",
-      cta: "/contact.html?service=amazon"
+      cta: "/contact#amazon"
     },
     sonora: {
       title: "Sonora Elite",
@@ -294,7 +316,7 @@
       desc: "Precision studio lighting, macro hardware stills, and 3D visual effects for a luxury audio electronics line.",
       deliverables: ["4K Studio Stills", "Lifestyle Staging", "Exploded View CGI", "Post Retouching"],
       image: "/assets/projects/photo.webp",
-      cta: "/contact.html?service=photography"
+      cta: "/contact#photography"
     },
     hyperion: {
       title: "Hyperion Operations",
@@ -302,7 +324,7 @@
       desc: "Custom inventory management portal and logistics automation suite handling multi-channel orders with sub-second response times.",
       deliverables: ["Custom ERP Architecture", "Inventory Dashboard", "Webhook Automation", "Role-Based Access"],
       image: "/assets/projects/software.webp",
-      cta: "/contact.html?service=software"
+      cta: "/contact#software"
     },
     arcadia: {
       title: "Arcadia Collective",
@@ -310,7 +332,7 @@
       desc: "Multi-channel paid media campaign, performance funnel design, and data-driven ad creative generating 4.2x ROAS in 90 days.",
       deliverables: ["Meta & Google Ad Strategy", "Conversion Funnels", "Creative Ad Sets", "Attribution Analytics"],
       image: "/assets/projects/marketing.webp",
-      cta: "/contact.html?service=marketing"
+      cta: "/contact#marketing"
     }
   };
 

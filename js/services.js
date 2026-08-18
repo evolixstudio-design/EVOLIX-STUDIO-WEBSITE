@@ -259,7 +259,7 @@
     var serviceSlugs = ["web", "branding", "amazon", "photography", "software", "marketing"];
     var detailCta = document.querySelector(".detail-cta-btn");
     if (detailCta) {
-      detailCta.href = "/contact.html?service=" + (serviceSlugs[index] || "web");
+      detailCta.href = "/contact#" + (serviceSlugs[index] || "web");
     }
   }
 
@@ -655,14 +655,16 @@
   // Multi-axis parallax & interactive cursor physics
   // ============================================
   function initMovableShapes() {
+    var backdrop = document.getElementById("shapeHeroBackdrop");
     var shapes = Array.prototype.slice.call(document.querySelectorAll(".elegant-shape"));
-    if (shapes.length === 0) return;
+    if (!backdrop || shapes.length === 0 || prefersReducedMotion) return;
 
     var mouseX = 0;
     var mouseY = 0;
     var currentX = 0;
     var currentY = 0;
     var isRunning = true;
+    var isLoopScheduled = false;
 
     // Per-shape depth, displacement scale, and rotation sensitivity
     var shapeConfigs = [
@@ -676,38 +678,42 @@
       { depthX: -22, depthY: -26, rotMult: -0.03 }
     ];
 
-    function onMouseMove(e) {
-      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      mouseY = (e.clientY / window.innerHeight) * 2 - 1;
-    }
-
-    function onTouchMove(e) {
-      if (e.touches && e.touches[0]) {
-        mouseX = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
-        mouseY = (e.touches[0].clientY / window.innerHeight) * 2 - 1;
+    function wakeLoop() {
+      if (!isLoopScheduled && isRunning) {
+        isLoopScheduled = true;
+        requestAnimationFrame(renderLoop);
       }
     }
 
+    function onMouseMove(e) {
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+      wakeLoop();
+    }
+
     window.addEventListener("mousemove", onMouseMove, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
 
     // IntersectionObserver to pause when off-screen
     if ("IntersectionObserver" in window) {
       var shapeObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           isRunning = entry.isIntersecting;
-          if (isRunning) requestAnimationFrame(renderLoop);
+          if (isRunning) wakeLoop();
         });
       }, { threshold: 0.02 });
       shapeObserver.observe(backdrop);
     }
 
     function renderLoop() {
+      isLoopScheduled = false;
       if (!isRunning) return;
 
+      var dx = mouseX - currentX;
+      var dy = mouseY - currentY;
+
       // Smooth lerp easing towards cursor position
-      currentX += (mouseX - currentX) * 0.065;
-      currentY += (mouseY - currentY) * 0.065;
+      currentX += dx * 0.065;
+      currentY += dy * 0.065;
 
       shapes.forEach(function (shape, i) {
         var cfg = shapeConfigs[i % shapeConfigs.length];
@@ -718,12 +724,13 @@
         shape.style.transform = "translate3d(" + tx.toFixed(2) + "px, " + ty.toFixed(2) + "px, 0) rotate(calc(var(--rot, 0deg) + " + extraRot.toFixed(2) + "deg))";
       });
 
-      if (isRunning) {
+      if (Math.abs(dx) > 0.0005 || Math.abs(dy) > 0.0005) {
+        isLoopScheduled = true;
         requestAnimationFrame(renderLoop);
       }
     }
 
-    renderLoop();
+    wakeLoop();
   }
 
   if (document.readyState === "loading") {

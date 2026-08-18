@@ -34,15 +34,24 @@
       { depthX: -22, depthY: -26, rotMult: -0.03 }
     ];
 
+    function wakeLoop() {
+      if (!isLoopScheduled && isRunning) {
+        isLoopScheduled = true;
+        requestAnimationFrame(renderLoop);
+      }
+    }
+
     function onMouseMove(e) {
       mouseX = (e.clientX / window.innerWidth) * 2 - 1;
       mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+      wakeLoop();
     }
 
     function onTouchMove(e) {
       if (e.touches && e.touches[0]) {
         mouseX = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
         mouseY = (e.touches[0].clientY / window.innerHeight) * 2 - 1;
+        wakeLoop();
       }
     }
 
@@ -54,9 +63,8 @@
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           isRunning = entry.isIntersecting;
-          if (isRunning && !isLoopScheduled) {
-            isLoopScheduled = true;
-            requestAnimationFrame(renderLoop);
+          if (isRunning) {
+            wakeLoop();
           }
         });
       }, { threshold: 0.02 });
@@ -67,9 +75,12 @@
       isLoopScheduled = false;
       if (!isRunning) return;
 
+      var dx = mouseX - currentX;
+      var dy = mouseY - currentY;
+
       // Smooth lerp easing towards cursor position
-      currentX += (mouseX - currentX) * 0.065;
-      currentY += (mouseY - currentY) * 0.065;
+      currentX += dx * 0.08;
+      currentY += dy * 0.08;
 
       shapes.forEach(function (shape, i) {
         var cfg = shapeConfigs[i % shapeConfigs.length];
@@ -87,12 +98,14 @@
           "deg))";
       });
 
-      isLoopScheduled = true;
-      requestAnimationFrame(renderLoop);
+      // If still moving towards target, continue loop; otherwise sleep to save 100% CPU
+      if (Math.abs(dx) > 0.0005 || Math.abs(dy) > 0.0005) {
+        isLoopScheduled = true;
+        requestAnimationFrame(renderLoop);
+      }
     }
 
-    isLoopScheduled = true;
-    requestAnimationFrame(renderLoop);
+    wakeLoop();
   }
 
   if (document.readyState === "loading") {

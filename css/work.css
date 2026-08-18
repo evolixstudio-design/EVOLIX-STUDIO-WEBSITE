@@ -14,6 +14,7 @@
   justify-content: center;
   text-align: center;
   overflow: hidden;
+  touch-action: none;
 }
 
 @media (max-width: 768px) {
@@ -21,6 +22,7 @@
     min-height: 65vh;
     padding-top: 130px;
     padding-bottom: 40px;
+    touch-action: none;
   }
 }
 

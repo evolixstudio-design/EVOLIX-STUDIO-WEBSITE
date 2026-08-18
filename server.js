@@ -36,6 +36,20 @@ const server = http.createServer((req, res) => {
     return serveFile(filePath, res);
   }
 
+  // If unminified css/js requested, check for minified version
+  if (reqPath.endsWith(".css") && !reqPath.endsWith(".min.css")) {
+    let minCssPath = filePath.replace(/\.css$/, ".min.css");
+    if (fs.existsSync(minCssPath) && fs.statSync(minCssPath).isFile()) {
+      return serveFile(minCssPath, res);
+    }
+  }
+  if (reqPath.endsWith(".js") && !reqPath.endsWith(".min.js")) {
+    let minJsPath = filePath.replace(/\.js$/, ".min.js");
+    if (fs.existsSync(minJsPath) && fs.statSync(minJsPath).isFile()) {
+      return serveFile(minJsPath, res);
+    }
+  }
+
   // If request is clean URL like /services, check /services.html
   let htmlPath = filePath + ".html";
   if (fs.existsSync(htmlPath) && fs.statSync(htmlPath).isFile()) {

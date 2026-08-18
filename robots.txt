@@ -1,4 +1,14 @@
+# robots.txt for Evolix Studio (https://evolix-studio.in)
 User-agent: *
 Allow: /
+Allow: /assets/
+Allow: /css/
+Allow: /js/
 
+# Disallow internal query parameters to eliminate duplicate pages in search audits
+Disallow: /contact?*
+Disallow: /*?*
+
+# Sitemaps and AI Discovery
 Sitemap: https://evolix-studio.in/sitemap.xml
+
