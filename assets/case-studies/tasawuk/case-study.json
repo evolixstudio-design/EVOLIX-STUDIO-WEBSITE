@@ -1,0 +1,68 @@
+{
+  "slug": "tasawuk",
+  "businessName": "Tasawuk",
+  "projectTitle": "Consistent Industrial Marketing, Supported by Paid Reach",
+  "category": "Social Media Management & Paid Advertising",
+  "location": "Kuwait",
+  "duration": "3–4 month engagement",
+  "summary": "An Instagram management system combining organic industrial content, profile optimisation and paid advertising.",
+  "challenge": "The client could not maintain consistent reels and posts and needed stronger product communication and wider relevant discovery.",
+  "approach": "Evolix managed the content pipeline, created industrial product-led posts and reels, optimised the profile and supported distribution with paid advertising.",
+  "deliverables": [
+    "Instagram profile optimisation",
+    "Organic content management",
+    "Industrial product reels and posts",
+    "Conversion-focused captions",
+    "Paid advertising support",
+    "Performance monitoring"
+  ],
+  "outcome": "A maintained social presence and broader discovery system that allowed the client to focus more on enquiries and conversion.",
+  "metrics": [
+    {
+      "label": "Instagram views",
+      "value": "111,975",
+      "period": "30 days",
+      "channel": "Organic content + paid distribution",
+      "verified": true,
+      "evidence": "assets/tasawuk-insights-overview.webp"
+    },
+    {
+      "label": "Views from non-followers",
+      "value": "98.1%",
+      "period": "Same reporting period",
+      "channel": "Organic content + paid distribution",
+      "verified": true,
+      "evidence": "assets/tasawuk-insights-overview.webp"
+    },
+    {
+      "label": "Viewers",
+      "value": "35,557",
+      "period": "Supplied Insights snapshot",
+      "channel": "Organic content + paid distribution",
+      "verified": true,
+      "evidence": "assets/tasawuk-content-breakdown.webp"
+    }
+  ],
+  "testimonial": {
+    "quote": "Maintaining consistency on Instagram used to take too much of my time. Evolix took care of the profile optimisation, reels and regular content, which removed that daily hassle. I can now focus more on handling enquiries and converting customers while their team keeps our social presence active and professional.",
+    "clientName": "Mustafa Chai",
+    "designation": "CEO",
+    "approvalStatus": "pending_client_approval"
+  },
+  "logo": "case-studies/tasawuk/logo.webp",
+  "images": [
+    {
+      "src": "case-studies/tasawuk/assets/tasawuk-insights-overview.webp",
+      "role": "primary",
+      "alt": "Tasawuk Instagram Insights showing 111,975 views over 30 days and 98.1 percent from non-followers"
+    },
+    {
+      "src": "case-studies/tasawuk/assets/tasawuk-content-breakdown.webp",
+      "role": "gallery",
+      "alt": "Tasawuk Instagram Insights content breakdown showing viewers and top reel performance"
+    }
+  ],
+  "assetInstruction": "Create an optional decorative cover using the real Tasawuk logo, industrial texture and the label Organic Social + Paid Advertising. Do not fabricate a campaign screenshot.",
+  "seoTitle": "Tasawuk Social Media and Ads Case Study | Evolix Studio",
+  "seoDescription": "How Evolix managed Tasawuk's industrial Instagram presence in Kuwait with organic content and paid advertising support."
+}

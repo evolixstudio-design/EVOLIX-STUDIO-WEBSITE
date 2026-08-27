@@ -1,0 +1,54 @@
+{
+  "slug": "moms-kitchen",
+  "businessName": "Mom's Kitchen",
+  "projectTitle": "One Custom CRM for Orders, Delivery and Finance",
+  "category": "Custom Delivery CRM",
+  "location": "Dubai, UAE",
+  "duration": "1 month",
+  "summary": "A cloud-kitchen CRM connecting orders, delivery, billing, finance and communication in one operational workspace.",
+  "challenge": "Separate order, customer, delivery, billing and accounting processes created avoidable complexity and increased the risk of mistakes.",
+  "approach": "Evolix designed the system around the daily rhythm of a Dubai cloud kitchen, connecting the flow from order intake to billing, rider assignment, delivery and finance.",
+  "deliverables": [
+    "Live operations dashboard",
+    "Multi-channel order management",
+    "Delivery and rider workflow",
+    "Billing and printable bills",
+    "Finance ledger",
+    "Customer communication workspace",
+    "AED-based interface"
+  ],
+  "outcome": "One systematic workspace for key delivery operations, helping the team organise more orders with clearer control and fewer avoidable mistakes.",
+  "metrics": [],
+  "testimonial": {
+    "quote": "Managing orders, leads and accounts separately made our delivery operations difficult to control. Evolix built a custom CRM that brought everything into one systematic workspace. It has made order handling clearer, reduced avoidable mistakes and given our team the confidence to manage more orders in an organised way.",
+    "clientName": "Priya Jaiswal",
+    "designation": "Business Development Chief",
+    "approvalStatus": "pending_client_approval"
+  },
+  "logo": "case-studies/moms-kitchen/logo.webp",
+  "images": [
+    {
+      "src": "case-studies/moms-kitchen/assets/moms-kitchen-dashboard.webp",
+      "role": "primary",
+      "alt": "Mom's Kitchen cloud-kitchen CRM dashboard showing orders, revenue, dishes and rider status"
+    },
+    {
+      "src": "case-studies/moms-kitchen/assets/moms-kitchen-orders.webp",
+      "role": "gallery",
+      "alt": "Mom's Kitchen CRM order workflow with status and rider assignment"
+    },
+    {
+      "src": "case-studies/moms-kitchen/assets/moms-kitchen-billing.webp",
+      "role": "gallery",
+      "alt": "Mom's Kitchen CRM billing screen with menu, customer, VAT, delivery and payment controls"
+    },
+    {
+      "src": "case-studies/moms-kitchen/assets/moms-kitchen-finance.webp",
+      "role": "gallery",
+      "alt": "Mom's Kitchen CRM finance ledger for income, expenses and outstanding amounts"
+    }
+  ],
+  "assetInstruction": "Use supplied real interface screenshots. Treat all amounts and names inside screenshots as interface/demo data, not verified outcomes.",
+  "seoTitle": "Mom's Kitchen Delivery CRM Case Study | Evolix Studio",
+  "seoDescription": "A custom Dubai cloud-kitchen CRM by Evolix connecting orders, riders, billing, finance and customer communication."
+}

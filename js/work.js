@@ -25,15 +25,17 @@
   if (!heroZone || !heroSection) return;
 
   var cardImages = [
-    "/assets/hero-cards/01.webp",
-    "/assets/hero-cards/08.webp",
-    "/assets/hero-cards/06.webp",
-    "/assets/hero-cards/02.webp",
-    "/assets/hero-cards/05.webp",
-    "/assets/hero-cards/07.webp",
-    "/assets/hero-cards/03.webp",
-    "/assets/hero-cards/04.webp",
-    "/assets/hero-cards/09.webp"
+    "/assets/case-studies/moms-kitchen/assets/moms-kitchen-dashboard.webp",
+    "/assets/case-studies/nut-delicacy/assets/nut-delicacy-experience.webp",
+    "/assets/work/software/shield-max/01.webp",
+    "/assets/work/website/krishna-tools/01.webp",
+    "/assets/case-studies/al-marjan-collection/assets/al-marjan-profile-views.webp",
+    "/assets/work/website/nagarwala/01.webp",
+    "/assets/work/website/indian-remedies/01.webp",
+    "/assets/case-studies/tasawuk/assets/tasawuk-insights-overview.webp",
+    "/assets/case-studies/alamdar-tools/assets/alamdar-instagram-grid.webp",
+    "/assets/case-studies/nut-delicacy/assets/nut-delicacy-brand-story.webp",
+    "/assets/case-studies/moms-kitchen/assets/moms-kitchen-billing.webp"
   ];
 
   var cardIndex = 0;

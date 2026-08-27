@@ -674,7 +674,7 @@ p { margin: 0; color: var(--text-muted); }
 }
 
 .kokonut-share-btn-wrap.is-active .kokonut-share-bar {
-  width: 168px;
+  width: 210px;
 }
 
 .kokonut-social-item {
@@ -719,6 +719,11 @@ p { margin: 0; color: var(--text-muted); }
   bottom: 24px;
   right: 24px;
   z-index: 9990;
+}
+
+.kokonut-floating-share .kokonut-share-bar {
+  left: auto;
+  right: 0;
 }
 
 .kokonut-floating-share .kokonut-share-trigger {

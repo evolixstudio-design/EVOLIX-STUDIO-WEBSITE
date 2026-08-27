@@ -103,6 +103,23 @@ function render(html, partials, pageKey) {
   return out;
 }
 
+function getAllHtmlFiles(dir, base = "") {
+  let results = [];
+  if (!fs.existsSync(dir)) return results;
+  const list = fs.readdirSync(dir);
+  for (const item of list) {
+    const fullPath = path.join(dir, item);
+    const relPath = base ? path.join(base, item) : item;
+    const stat = fs.statSync(fullPath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getAllHtmlFiles(fullPath, relPath));
+    } else if (item.endsWith(".html")) {
+      results.push(relPath);
+    }
+  }
+  return results;
+}
+
 async function build() {
   console.log("Minifying assets...");
   minifyAllCSS();
@@ -114,21 +131,31 @@ async function build() {
     console.error("No pages/ directory found.");
     process.exit(1);
   }
-  const files = fs.readdirSync(PAGES_DIR).filter((f) => f.endsWith(".html"));
-  if (files.length === 0) {
+  const relFiles = getAllHtmlFiles(PAGES_DIR);
+  if (relFiles.length === 0) {
     console.warn("No page templates found in pages/.");
   }
-  for (const file of files) {
-    const pageKey = path.basename(file, ".html");
-    const src = fs.readFileSync(path.join(PAGES_DIR, file), "utf8");
+  for (const relFile of relFiles) {
+    const cleanRel = relFile.replace(/\\/g, "/");
+    let pageKey = path.basename(relFile, ".html");
+    if (cleanRel.startsWith("work/")) {
+      pageKey = "work";
+    } else if (cleanRel.startsWith("services/")) {
+      pageKey = "services";
+    }
+
+    const src = fs.readFileSync(path.join(PAGES_DIR, relFile), "utf8");
     let rendered = render(src, partials, pageKey);
     // Two passes so a partial (e.g. nav) can itself reference {{page:key}} for active-state.
     rendered = render(rendered, partials, pageKey);
-    const outName = pageKey === "home" ? "index.html" : `${pageKey}.html`;
-    fs.writeFileSync(path.join(ROOT, outName), minifyHTML(rendered));
-    console.log(`  built ${outName}`);
+    
+    const outRel = cleanRel === "home.html" ? "index.html" : cleanRel;
+    const outPath = path.join(ROOT, outRel);
+    fs.mkdirSync(path.dirname(outPath), { recursive: true });
+    fs.writeFileSync(outPath, minifyHTML(rendered));
+    console.log(`  built ${outRel}`);
   }
-  console.log(`\nDone. ${files.length} page(s) built and all CSS/JS assets minified.`);
+  console.log(`\nDone. ${relFiles.length} page(s) built and all CSS/JS assets minified.`);
 }
 
 build();

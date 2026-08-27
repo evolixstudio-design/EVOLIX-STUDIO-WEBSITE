@@ -95,9 +95,38 @@ function serveFile(filePath, res) {
   });
 }
 
-server.listen(PORT, () => {
-  console.log(`\n🚀 Evolix Server running at:`);
-  console.log(`   - Home:     http://localhost:${PORT}/`);
-  console.log(`   - Services: http://localhost:${PORT}/services (or /services.html)`);
-  console.log(`   - Work:     http://localhost:${PORT}/work (or /work.html)\n`);
+server.on("clientError", (err, socket) => {
+  if (err.code === "ECONNRESET" || !socket.writable) {
+    return;
+  }
+  socket.end("HTTP/1.1 400 Bad Request\r\n\r\n");
 });
+
+let currentPort = parseInt(process.env.PORT, 10) || 3000;
+
+function startServer(port) {
+  server.removeAllListeners("error");
+  
+  server.on("error", (err) => {
+    if (err.code === "EADDRINUSE") {
+      console.warn(`[PORT OCCUPIED] Port ${port} is currently used by another process.`);
+      const nextPort = port + 1;
+      console.log(`[RETRY] Attempting to bind to http://localhost:${nextPort}/ ...`);
+      startServer(nextPort);
+    } else {
+      console.error("Server error:", err.message);
+    }
+  });
+
+  server.listen(port, () => {
+    currentPort = port;
+    console.log(`\n🚀 Evolix Studio Website running at:`);
+    console.log(`   - Home:     http://localhost:${port}/`);
+    console.log(`   - Services: http://localhost:${port}/services`);
+    console.log(`   - Work:     http://localhost:${port}/work\n`);
+  });
+}
+
+startServer(currentPort);
+
+

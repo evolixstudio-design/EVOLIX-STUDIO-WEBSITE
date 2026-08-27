@@ -1,0 +1,32 @@
+{
+  "slug": "shieldmax-safety",
+  "businessName": "Shieldmax Safety",
+  "projectTitle": "ERP Built Around a Real Safety-Supply Workflow",
+  "category": "Custom ERP Software",
+  "location": "Kuwait",
+  "duration": "1 month",
+  "summary": "A custom ERP designed around Shieldmax Safety's quotation, delivery-order, expense and operational workflow.",
+  "challenge": "Critical commercial documents and expenses were difficult to manage consistently, while generic software did not match the business's working process.",
+  "approach": "Evolix mapped the actual workflow first and then connected quotations, delivery orders, expenses and operational records inside one practical system.",
+  "deliverables": [
+    "Central business dashboard",
+    "Custom quotation workflow",
+    "Delivery-order management",
+    "Expense recording and visibility",
+    "Connected operational records",
+    "Role-aware interface"
+  ],
+  "outcome": "One organised system aligned with the client's own workflow, making core commercial and operational processes easier to manage.",
+  "metrics": [],
+  "testimonial": {
+    "quote": "Before working with Evolix, managing quotations, delivery orders and expenses across the business was difficult. Their team understood how we actually work and built an ERP around our process instead of giving us a standard, ready-made system. Everything is now organised in one place and much easier to manage. I am genuinely grateful for the care they put into customising it for us.",
+    "clientName": "Nazar Ali Partapur",
+    "designation": "Founder & CEO",
+    "approvalStatus": "pending_client_approval"
+  },
+  "logo": "case-studies/shieldmax-safety/logo.webp",
+  "images": [],
+  "assetInstruction": "Reuse the real Shieldmax ERP gallery images already present in the existing evolix-studio.in Featured Work source. Do not generate replacement dashboards.",
+  "seoTitle": "Shieldmax Safety ERP Case Study | Evolix Studio",
+  "seoDescription": "See how Evolix built a custom ERP for Shieldmax Safety in Kuwait, connecting quotations, delivery orders, expenses and operations."
+}

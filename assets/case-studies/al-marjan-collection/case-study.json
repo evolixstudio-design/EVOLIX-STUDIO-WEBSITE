@@ -1,0 +1,70 @@
+{
+  "slug": "al-marjan-collection",
+  "businessName": "Al Marjan Collection",
+  "projectTitle": "Launching a Fashion Brand Through Organic Social Media",
+  "category": "Organic Social Media Marketing",
+  "location": "Neemuch, Madhya Pradesh",
+  "duration": "3–4 month engagement",
+  "summary": "An organic Instagram launch system combining positioning, profile optimisation, premium product content and an enquiry-focused funnel.",
+  "challenge": "The brand had no established digital presence and needed to introduce its premium Rida, jodi and women's-wear collection without paid promotion.",
+  "approach": "Evolix created an elegant visual language, organised the profile, planned the launch and built a consistent pipeline of product-led organic posts and reels.",
+  "deliverables": [
+    "Instagram profile positioning",
+    "Organic launch strategy",
+    "Content planning",
+    "Branded posts, carousels and reels",
+    "Product presentation",
+    "Captions and enquiry calls to action"
+  ],
+  "outcome": "A consistent, recognisable Instagram presence capable of presenting products, attracting discovery and supporting enquiries organically.",
+  "metrics": [
+    {
+      "label": "Instagram views",
+      "value": "7.3K",
+      "period": "30 days",
+      "channel": "Organic Instagram",
+      "verified": true,
+      "evidence": "assets/al-marjan-profile-views.webp"
+    },
+    {
+      "label": "Featured creative views",
+      "value": "1.9K",
+      "period": "Supplied post snapshot",
+      "channel": "Organic Instagram",
+      "verified": true,
+      "evidence": "assets/al-marjan-product-post-views.webp"
+    }
+  ],
+  "testimonial": {
+    "quote": "Al Marjan had no real digital presence when we began working with Evolix. They helped us start our social-media journey with a clear marketing direction, consistent content and a proper lead funnel. It has been satisfying to see the brand take shape online and begin reaching the right people.",
+    "clientName": "Kulsum",
+    "designation": "Founder",
+    "approvalStatus": "pending_client_approval"
+  },
+  "logo": "case-studies/al-marjan-collection/logo.webp",
+  "images": [
+    {
+      "src": "case-studies/al-marjan-collection/assets/al-marjan-profile-views.webp",
+      "role": "primary",
+      "alt": "Al Marjan Collection Instagram profile showing a consistent premium fashion grid and 7.3K views in 30 days"
+    },
+    {
+      "src": "case-studies/al-marjan-collection/assets/al-marjan-launch-post.webp",
+      "role": "gallery",
+      "alt": "Al Marjan Collection organic Instagram launch announcement"
+    },
+    {
+      "src": "case-studies/al-marjan-collection/assets/al-marjan-product-post-views.webp",
+      "role": "gallery",
+      "alt": "Al Marjan Collection pink Rida product creative showing 1.9K organic views"
+    },
+    {
+      "src": "case-studies/al-marjan-collection/assets/al-marjan-reel-example.webp",
+      "role": "gallery",
+      "alt": "Al Marjan Collection product reel example featuring a teal Rida"
+    }
+  ],
+  "assetInstruction": "Use only supplied Instagram screenshots. This was fully organic; never add paid-ad language.",
+  "seoTitle": "Al Marjan Organic Social Media Case Study | Evolix Studio",
+  "seoDescription": "How Evolix launched Al Marjan Collection in Neemuch with organic Instagram positioning, premium content and an enquiry-focused funnel."
+}
