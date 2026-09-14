@@ -18,6 +18,11 @@
   to = "/contact.html"
   status = 200
 
+[[redirects]]
+  from = "/event"
+  to = "/event.html"
+  status = 200
+
 # Cache control for static assets (images, fonts, stylesheets, scripts)
 [[headers]]
   for = "/assets/*"

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{partial:head}}
+<title>How We Built a Custom Security ERP for Kuwait | Evolix Studio</title>
+<meta name="description" content="A deep dive into the engineering and operational challenges of building a bespoke ERP system for Shieldmax Safety in Kuwait." />
+<link rel="canonical" href="https://evolix-studio.in/blog/how-we-built-security-erp-kuwait" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="How We Built a Custom Security ERP for Kuwait | Evolix Studio" />
+<meta property="og:description" content="A deep dive into the engineering and operational challenges of building a bespoke ERP system for Shieldmax Safety in Kuwait." />
+<meta property="og:url" content="https://evolix-studio.in/blog/how-we-built-security-erp-kuwait" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How We Built a Custom Security ERP for Kuwait Operations",
+  "author": {
+    "@type": "Organization",
+    "name": "Evolix Studio",
+    "url": "https://evolix-studio.in"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Evolix Studio",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://evolix-studio.in/assets/logo.png"
+    }
+  },
+  "datePublished": "2026-08-29",
+  "url": "https://evolix-studio.in/blog/how-we-built-security-erp-kuwait"
+}
+</script>
+<style>
+  .service-content-section { padding: 150px 0 80px; }
+  .service-content-container { max-width: 800px; margin: 0 auto; color: rgba(255,255,255,0.8); font-family: 'Inter', sans-serif; line-height: 1.7; font-size: 1.1rem; }
+  .service-content-container h1 { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; margin-bottom: 1rem; color: #fff; line-height: 1.2; letter-spacing: -0.02em; }
+  .service-content-container .blog-meta { font-size: 0.9rem; color: var(--accent); margin-bottom: 2rem; display: block; }
+  .service-content-container h2 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; margin: 3rem 0 1.5rem; color: #fff; letter-spacing: -0.01em; }
+  .service-content-container p { margin-bottom: 1.5rem; }
+  .service-content-container ul { margin-bottom: 2rem; padding-left: 1.5rem; }
+  .service-content-container li { margin-bottom: 0.5rem; }
+  .service-content-container .service-cta { margin-top: 4rem; padding: 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; text-align: center; }
+  .service-content-container a.cta-btn { display: inline-block; margin-top: 1.5rem; padding: 14px 28px; background: var(--accent); color: #fff; text-decoration: none; border-radius: 99px; font-weight: 500; font-family: 'Space Grotesk', sans-serif; transition: all 0.3s ease; }
+  .service-content-container a.cta-btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+  .internal-links { margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; display: flex; flex-wrap: wrap; gap: 1.5rem; }
+  .internal-links a { color: var(--accent); text-decoration: none; font-weight: 500; font-family: 'Space Grotesk', sans-serif; }
+  .internal-links a:hover { text-decoration: underline; }
+</style>
+</head>
+<body data-page-word="BLOG">
+
+{{partial:loader}}
+{{partial:nav}}
+
+<main id="main-content">
+  <div class="shape-hero-backdrop" aria-hidden="true">
+    <div class="shape-ambient-glow"></div>
+  </div>
+  
+  <section class="service-content-section">
+    <div class="container">
+      <div class="service-content-container">
+        <h1>How We Built a Custom Security ERP for Kuwait Operations</h1>
+        <span class="blog-meta">By Evolix Studio • 7 min read • Case Study</span>
+        
+        <p>Enterprise software often fails not because the code is bad, but because the software forces the business to change how it works, rather than adapting to the business. When Shieldmax Safety, a leading safety equipment supplier in Kuwait, approached Evolix Studio, this was their exact pain point.</p>
+        
+        <h2>The Operational Crisis</h2>
+        <p>Shieldmax was managing high-volume commercial transactions across multiple branches using a fragile network of spreadsheets and legacy accounting software. Quotations were delayed because pricing wasn't centralized. Delivery orders (DOs) were misplaced, causing dispatch friction. Expenses were recorded days after they occurred, leaving management blind to real-time cash flow.</p>
+        
+        <h2>Engineering the Solution</h2>
+        <p>Instead of imposing a rigid off-the-shelf CRM, our team spent the first phase of the project acting as workflow consultants. We mapped the exact journey of a transaction: Inquiry &rarr; Quotation &rarr; Approval &rarr; Dispatch &rarr; Delivery Order &rarr; Invoice &rarr; Payment Receipt.</p>
+        
+        <p>We architected a centralized, cloud-based ERP using a high-performance stack (React.js frontend, Node.js backend, PostgreSQL database). Key modules included:</p>
+        <ul>
+          <li><strong>Dynamic Quotation Engine:</strong> Allowed the sales team to pull centralized pricing, apply conditional discounts, and generate professional PDF quotes in seconds, rather than hours.</li>
+          <li><strong>Integrated Delivery Flow:</strong> Linked approved quotes directly to the dispatch team's dashboard, automating the creation of Delivery Orders and tracking rider assignments.</li>
+          <li><strong>Role-Based Access:</strong> Ensured that warehouse staff only saw dispatch queues, while management had full visibility into financials and profitability metrics.</li>
+        </ul>
+        
+        <h2>The Impact on Operations</h2>
+        <p>The results of implementing a custom-engineered solution were immediate. Quotation turnaround time dropped by 60%. Administrative document loss was entirely eliminated. Most importantly, the staff actually enjoyed using the software because the UI was designed around their specific daily tasks, stripping away unnecessary clutter.</p>
+        <p>This project solidified our core belief: the best software is invisible. It removes friction so the business can focus purely on growth.</p>
+        
+        <div class="service-cta">
+          <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; color: #fff; margin-bottom: 10px;">Struggling with operational bottlenecks?</h3>
+          <p style="margin-bottom: 0;">Let's build a software system that actually works the way you do.</p>
+          <a href="/contact" class="cta-btn">Consult Our Engineers →</a>
+        </div>
+        
+        <div class="internal-links">
+          <a href="/blog">← Back to Blog</a>
+          <a href="/work/shieldmax-safety">View the Full Shieldmax Case Study</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{{partial:footer}}
+<script src="/js/loader.js"></script>
+</body>
+</html>
