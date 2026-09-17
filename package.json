@@ -4,16 +4,24 @@
   "description": "Evolix Agency Website",
   "main": "server.js",
   "scripts": {
-    "build": "node build.js",
+    "build": "vite build && node build.js",
     "start": "node server.js",
     "dev": "node build.js && node server.js"
   },
   "keywords": [],
   "author": "Evolix Studio",
   "license": "ISC",
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "three": "^0.186.0"
+  },
   "devDependencies": {
+    "@vitejs/plugin-react": "5.0.4",
     "clean-css": "^5.3.3",
     "sharp": "^0.35.3",
-    "terser": "^5.50.0"
+    "terser": "^5.50.0",
+    "vite": "6.4.2"
   }
 }

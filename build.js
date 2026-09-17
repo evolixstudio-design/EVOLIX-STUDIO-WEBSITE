@@ -20,6 +20,12 @@ function loadPartials() {
       partials[name] = fs.readFileSync(path.join(PARTIALS_DIR, file), "utf8");
     }
   }
+  
+  const manifestPath = path.join(ROOT, "assets", "event-app", "manifest.json");
+  if (fs.existsSync(manifestPath)) {
+    partials._viteManifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  }
+  
   return partials;
 }
 
@@ -99,6 +105,21 @@ function render(html, partials, pageKey) {
   // Switch local CSS and JS references to minified versions
   out = out.replace(/href=["']\/css\/([a-zA-Z0-9_-]+?)(\.min)?\.css["']/g, 'href="/css/$1.min.css"');
   out = out.replace(/src=["']\/js\/([a-zA-Z0-9_-]+?)(\.min)?\.js["']/g, 'src="/js/$1.min.js"');
+
+  // Inject Vite built assets if manifest exists
+  if (partials._viteManifest && partials._viteManifest["src/event/main.jsx"]) {
+    const entry = partials._viteManifest["src/event/main.jsx"];
+    const jsPath = "/assets/event-app/" + entry.file;
+    const cssPath = entry.css && entry.css.length > 0 ? "/assets/event-app/" + entry.css[0] : "";
+    
+    out = out.replace(/\{\{vite:js\}\}/g, `<script type="module" crossorigin src="${jsPath}"></script>`);
+    if (cssPath) {
+      out = out.replace(/\{\{vite:css\}\}/g, `<link rel="stylesheet" href="${cssPath}" />`);
+    }
+  } else {
+    out = out.replace(/\{\{vite:js\}\}/g, '');
+    out = out.replace(/\{\{vite:css\}\}/g, '');
+  }
 
   return out;
 }

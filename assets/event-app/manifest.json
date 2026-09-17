@@ -1,0 +1,39 @@
+{
+  "_three.module.CpqctG3s.js": {
+    "file": "three.module.CpqctG3s.js",
+    "name": "three.module"
+  },
+  "src/event/main.jsx": {
+    "file": "main.Bha7R8H4.js",
+    "name": "main",
+    "src": "src/event/main.jsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/event/scene.js",
+      "src/event/world.js",
+      "src/event/world.js"
+    ],
+    "css": [
+      "main.BzBvn8ZM.css"
+    ]
+  },
+  "src/event/scene.js": {
+    "file": "scene.sxv0vJHt.js",
+    "name": "scene",
+    "src": "src/event/scene.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_three.module.CpqctG3s.js",
+      "src/event/main.jsx"
+    ]
+  },
+  "src/event/world.js": {
+    "file": "world.yja2BLoy.js",
+    "name": "world",
+    "src": "src/event/world.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_three.module.CpqctG3s.js"
+    ]
+  }
+}

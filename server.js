@@ -36,6 +36,38 @@ const server = http.createServer((req, res) => {
     return serveFile(filePath, res);
   }
 
+  // Handle local /api requests by calling the Netlify function module directly
+  if (reqPath.startsWith("/api/")) {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', () => {
+      console.log(`[API Proxy] ${req.method} ${req.url}`);
+      console.log(`[API Proxy] Body length: ${body.length}`);
+      import("./netlify/functions/api.mjs").then(async module => {
+        const handler = module.default;
+        try {
+          const webReq = new Request("http://localhost:" + PORT + req.url, {
+            method: req.method,
+            headers: new Headers(req.headers),
+            body: req.method === "POST" ? (body || null) : undefined
+          });
+          const response = await handler(webReq, {});
+          const responseBody = await response.text();
+          const headers = Object.fromEntries(response.headers.entries());
+          res.writeHead(response.status, headers);
+          res.end(responseBody);
+        } catch(e) {
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: e.toString() }));
+        }
+      }).catch(e => {
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: e.toString() }));
+      });
+    });
+    return;
+  }
+
   // If unminified css/js requested, check for minified version
   if (reqPath.endsWith(".css") && !reqPath.endsWith(".min.css")) {
     let minCssPath = filePath.replace(/\.css$/, ".min.css");
