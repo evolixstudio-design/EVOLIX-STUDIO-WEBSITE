@@ -187,36 +187,35 @@ export function App() {
     busyRef.current = true;
     setBusy(true);
     try {
-      const response = await fetch('/api/leads', {
+      // 1. Calculate result instantly on frontend
+      const result = calculateAudit(answers);
+      
+      // 2. Start background save (fire and forget)
+      fetch('/api/leads', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           submissionId,
           sessionId,
           answers,
           lead: checked.lead
-        }),
-        signal: AbortSignal.timeout(15000)
-      });
-      const payload = await response.json();
-      if (!response.ok) throw new Error(payload.error || 'We couldn’t save your result. Please try again.');
+        })
+      }).catch(err => console.error("Background save failed:", err));
+
+      // 3. Play animation and show result instantly
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
         setRevealing(true);
         await new Promise(resolve => setTimeout(resolve, 1400));
       }
       setRevealing(false);
       setLead(checked.lead);
-      setResult(payload.result);
+      setResult(result);
       track('lead_form_submitted');
       track('score_revealed');
       history.pushState(null, '', '#result');
       requestAnimationFrame(() => scrollToId('results'));
     } catch (error) {
-      setErrors({
-        form: error.name === 'TimeoutError' ? 'The connection is taking longer than expected. Your answers are safe. Please try again.' : error.message === 'Failed to fetch' ? 'Please check your connection and try again. Your answers are still here.' : error.message
-      });
+      setErrors({ form: error.message });
     } finally {
       setBusy(false);
       busyRef.current = false;
