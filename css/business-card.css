@@ -1,0 +1,273 @@
+/* ============================================
+   EVOLIX — DIGITAL BUSINESS CARD
+   ============================================ */
+
+.business-card-page {
+  /* Inherit global variables from theme.css */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.business-card-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero Section */
+.card-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding-top: 100px; /* Account for navbar */
+  background: radial-gradient(circle at center, var(--bg-card) 0%, var(--bg) 100%);
+}
+
+.card-hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  pointer-events: none;
+}
+
+.card-hero-content .eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.card-hero-content h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--headline-color);
+  margin-bottom: 0.5rem;
+}
+
+.card-instruction {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+/* 3D Container */
+.card-3d-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  cursor: grab;
+}
+
+.card-3d-container:active {
+  cursor: grabbing;
+}
+
+/* Actions Section */
+.card-actions-section {
+  padding: 6rem 0;
+  background: var(--bg);
+  position: relative;
+  z-index: 20;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--headline-color);
+  margin-bottom: 3rem;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.action-card {
+  display: flex;
+  align-items: center;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: var(--card-shadow);
+}
+
+.action-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  margin-right: 1.25rem;
+  color: var(--headline-color);
+  transition: all 0.3s ease;
+}
+
+.action-card:hover .action-icon {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+.action-info h3 {
+  font-size: 1.2rem;
+  font-family: var(--font-body);
+  color: var(--headline-color);
+  margin-bottom: 0.2rem;
+}
+
+.action-info p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.action-arrow {
+  position: absolute;
+  right: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.action-card:hover .action-arrow {
+  transform: translate(4px, -4px);
+  color: var(--accent);
+}
+
+/* Footer CTAs */
+.card-footer-cta {
+  padding: 4rem 0 8rem;
+  background: var(--bg);
+  position: relative;
+  z-index: 20;
+}
+
+.cta-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+@media (min-width: 768px) {
+  .cta-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.audit-block, .consultancy-block {
+  background: var(--bg-raised);
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.audit-block h3, .consultancy-block h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--headline-color);
+}
+
+.audit-block p, .consultancy-block p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.primary-button, .secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.75rem;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.primary-button {
+  background: var(--headline-color);
+  color: var(--bg);
+  gap: 0.5rem;
+}
+
+.primary-button:hover {
+  background: var(--accent);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.secondary-button {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--headline-color);
+}
+
+.secondary-button:hover {
+  border-color: var(--headline-color);
+  background: var(--bg-card);
+}
+
+/* Animations */
+.fade-in {
+  opacity: 0;
+  animation: fadeInUP 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.card-hero-content .eyebrow { animation-delay: 0.2s; }
+.card-hero-content h1 { animation-delay: 0.4s; }
+.card-hero-content p { animation-delay: 0.6s; }
+
+@keyframes fadeInUP {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

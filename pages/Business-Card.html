@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  {{partial:head}}
+  <title>Digital Business Card | EVOLIX STUDIO</title>
+  <meta name="description" content="Connect with Evolix Studio. Digital business card and premium contacts." />
+  <link rel="stylesheet" href="/css/business-card.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="business-card-page">
+  <!-- Reused Navbar -->
+  {{partial:nav}}
+
+  <main class="business-card-main">
+    <!-- Hero Section / 3D Card Viewer -->
+    <section class="card-hero" aria-label="3D Interactive Business Card">
+      <div class="card-hero-content">
+        <span class="eyebrow fade-in">EVOLIX STUDIO</span>
+        <h1 class="fade-in">Digital Business Card</h1>
+        <p class="fade-in card-instruction">Drag to rotate. Tap to flip.</p>
+      </div>
+      <div id="card-3d-container" class="card-3d-container">
+        <!-- Three.js Canvas will be injected here -->
+      </div>
+    </section>
+
+    <!-- Digital Connection Actions -->
+    <section class="card-actions-section">
+      <div class="container">
+        <h2 class="section-title">Connect with us</h2>
+        
+        <div class="action-grid">
+          <!-- WhatsApp -->
+          <a href="https://wa.me/919098173239?text=Hi%20Evolix%20Studio%2C%20I%20came%20across%20your%20digital%20business%20card%20and%20would%20like%20to%20discuss%20a%20project." 
+             target="_blank" rel="noopener noreferrer" class="action-card whatsapp-action">
+             <div class="action-icon">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                 <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.95 1.36-.5.06-1.12.08-3.64-.96-3.23-1.33-5.3-4.63-5.46-4.85-.16-.22-1.3-1.73-1.3-3.3 0-1.57.82-2.34 1.11-2.66.29-.32.64-.4.85-.4.21 0 .43 0 .61.01.2.01.46-.07.72.55.26.63.9 2.2.98 2.36.08.16.13.35.03.56-.11.21-.16.34-.32.53-.16.19-.34.42-.48.56-.16.16-.33.33-.14.66.19.33.85 1.4 1.82 2.27 1.25 1.11 2.3 1.46 2.63 1.62.33.16.52.13.72-.09.2-.23.85-.99 1.08-1.33.23-.34.46-.28.77-.17.31.11 1.98.93 2.32 1.1.34.17.57.26.65.4.08.14.08.83-.16 1.51z"/>
+               </svg>
+             </div>
+             <div class="action-info">
+               <h3>WhatsApp</h3>
+               <p>Direct message to +91 9098173239</p>
+             </div>
+             <span class="action-arrow">↗</span>
+          </a>
+
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/evolixstudio/" 
+             target="_blank" rel="noopener noreferrer" class="action-card instagram-action">
+             <div class="action-icon">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                 <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                 <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+               </svg>
+             </div>
+             <div class="action-info">
+               <h3>Instagram</h3>
+               <p>@evolixstudio</p>
+             </div>
+             <span class="action-arrow">↗</span>
+          </a>
+
+          <!-- Website -->
+          <a href="https://evolix-studio.in/" 
+             class="action-card website-action">
+             <div class="action-icon">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                 <circle cx="12" cy="12" r="10"></circle>
+                 <line x1="2" y1="12" x2="22" y2="12"></line>
+                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+               </svg>
+             </div>
+             <div class="action-info">
+               <h3>Official Website</h3>
+               <p>evolix-studio.in</p>
+             </div>
+             <span class="action-arrow">↗</span>
+          </a>
+
+          <!-- Linktree -->
+          <a href="https://linktr.ee/evolixstudio" 
+             target="_blank" rel="noopener noreferrer" class="action-card linktree-action">
+             <div class="action-icon">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                 <path d="M13.736 5.853l4.005-4.117 2.325 2.38-4.2 4.144h5.275v3.294h-5.275l4.2 4.143-2.325 2.381-4.005-4.117v6.18h-3.47v-6.18l-4.005 4.117-2.325-2.38 4.2-4.144H2.86v-3.294h5.275l-4.2-4.144 2.325-2.38 4.005 4.117v-5.8h3.47v5.8z"/>
+               </svg>
+             </div>
+             <div class="action-info">
+               <h3>Explore all links</h3>
+               <p>Our Linktree connections</p>
+             </div>
+             <span class="action-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Destinations & CTAs -->
+    <section class="card-footer-cta">
+      <div class="container cta-container">
+        
+        <div class="audit-block">
+          <h3>Business Evolution Audit</h3>
+          <p>Discover your business score and growth roadmap with our free assessment.</p>
+          <a href="/event" class="secondary-button">Take the Audit</a>
+        </div>
+
+        <div class="consultancy-block">
+          <h3>Ready to Evolve?</h3>
+          <p>Let's discuss how we can transform your digital presence.</p>
+          <a href="/contact" class="primary-button cta-button">
+            Get your free consultancy
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  {{partial:footer}}
+
+  <script src="/js/business-card.js"></script>
+</body>
+</html>
