@@ -10,12 +10,6 @@
   force = true
 
 [[redirects]]
-  from = "/*.html"
-  to = "/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/services"
   to = "/services.html"
   status = 200

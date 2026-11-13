@@ -6,7 +6,7 @@ const crypto = require('crypto');
 const CleanCSS = require("clean-css");
 const Terser = require("terser");
 const { createImageOptimizer, createIcons } = require('./scripts/build-images');
-const { enhanceSEO, createSitemap } = require('./scripts/build-seo');
+const { enhanceSEO, createSitemap, createRedirects } = require('./scripts/build-seo');
 
 const ROOT = __dirname;
 const PAGES_DIR = path.join(ROOT, "pages");
@@ -214,6 +214,7 @@ async function build() {
     console.log(`  built ${outRel}`);
   }
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), createSitemap(sitemapRoutes));
+  fs.writeFileSync(path.join(ROOT, '_redirects'), createRedirects(sitemapRoutes));
   console.log(`\nDone. ${relFiles.length} page(s) built and all CSS/JS assets minified.`);
 }
 

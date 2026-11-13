@@ -34,4 +34,10 @@ function createSitemap(routes) {
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + [...new Set(routes)].sort().map(route => `  <url><loc>${origin}${route}</loc></url>`).join('\n') + '\n</urlset>\n';
 }
 
-module.exports = { enhanceSEO, createSitemap };
+function createRedirects(routes) {
+  // Netlify splats must finish the source path; `/*.html` cannot express this.
+  // Emit exact routes so nested service, blog and case-study URLs also redirect.
+  return routes.map(route => `${route === '/' ? '/index' : route}.html ${route} 301!`).join('\n') + '\n';
+}
+
+module.exports = { enhanceSEO, createSitemap, createRedirects };
