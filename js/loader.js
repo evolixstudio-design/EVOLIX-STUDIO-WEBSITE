@@ -8,6 +8,8 @@
 
   var loaderEl = document.getElementById("page-loader");
   if (!loaderEl) return;
+  // Static HTML is ready to read immediately; never hide it behind a timer.
+  if (loaderEl.classList.contains('loader-hidden')) return;
 
   var wordEl = document.getElementById("loader-word");
   var pctEl = document.getElementById("loader-pct");

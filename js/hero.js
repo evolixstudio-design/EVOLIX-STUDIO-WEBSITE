@@ -16,13 +16,15 @@
   let activeHoverCard = null;
   let isHeroVisible = true;
   let isLoopScheduled = false;
+  const compactScreen = window.matchMedia('(max-width: 767px)');
+  let lastFrame = 0;
 
   // Mouse sway variables
   let mouseX = 0, mouseY = 0;
   let targetMouseX = 0, targetMouseY = 0;
 
   // Detect mouse position for subtle interactive 3D perspective shift
-  if (heroStack) {
+  if (heroStack && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     window.addEventListener("mousemove", (e) => {
       if (!isHeroVisible) return;
       const rect = heroStack.getBoundingClientRect();
@@ -79,11 +81,21 @@
   updateAmplitudes();
   window.addEventListener("resize", updateAmplitudes, { passive: true });
 
-  function renderFrame() {
+  function renderFrame(timestamp) {
     isLoopScheduled = false;
-    if (!isHeroVisible) return;
+    if (!isHeroVisible || document.hidden) return;
 
-    progress += speed;
+    // Render at 30fps on small screens and cap high-refresh laptop displays.
+    const frameInterval = compactScreen.matches ? 1000 / 30 : 1000 / 60;
+    const elapsed = lastFrame ? timestamp - lastFrame : frameInterval;
+    if (elapsed < frameInterval - 1) {
+      isLoopScheduled = true;
+      requestAnimationFrame(renderFrame);
+      return;
+    }
+    lastFrame = timestamp;
+
+    progress += speed * Math.min(elapsed / (1000 / 60), 3);
     if (progress > 6283.18) progress -= 6283.18;
 
     // Smooth lerp for mouse sway
@@ -137,6 +149,14 @@
       requestAnimationFrame(renderFrame);
     }
   }
+
+  document.addEventListener('visibilitychange', () => {
+    lastFrame = 0;
+    if (!document.hidden && isHeroVisible && !isLoopScheduled) {
+      isLoopScheduled = true;
+      requestAnimationFrame(renderFrame);
+    }
+  });
 
   isLoopScheduled = true;
   requestAnimationFrame(renderFrame);

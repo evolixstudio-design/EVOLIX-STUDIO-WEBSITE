@@ -4,6 +4,8 @@ const fs = require("fs");
 const path = require("path");
 const CleanCSS = require("clean-css");
 const Terser = require("terser");
+const { createImageOptimizer, createIcons } = require('./scripts/build-images');
+const { enhanceSEO, createSitemap } = require('./scripts/build-seo');
 
 const ROOT = __dirname;
 const PAGES_DIR = path.join(ROOT, "pages");
@@ -47,6 +49,11 @@ function minifyAllCSS() {
   for (const file of files) {
     const srcPath = path.join(CSS_DIR, file);
     const content = fs.readFileSync(srcPath, "utf8");
+    // clean-css 5 drops variable-font ranges such as `font-weight: 300 800`.
+    if (file === 'fonts.css') {
+      fs.writeFileSync(path.join(CSS_DIR, 'fonts.min.css'), content.replace(/\s+/g, ' ').trim(), 'utf8');
+      continue;
+    }
     const minified = cleanCSS.minify(content).styles;
     const minPath = path.join(CSS_DIR, file.replace(/\.css$/, ".min.css"));
     fs.writeFileSync(minPath, minified, "utf8");
@@ -84,12 +91,20 @@ async function minifyAllJS() {
 
 // Production HTML Minifier
 function minifyHTML(html) {
-  return html
+  // Whitespace and line breaks inside code/preformatted content are significant.
+  // Protect these blocks so // comments cannot swallow the rest of a script.
+  const blocks = [];
+  const protectedHTML = html.replace(/<(script|style|pre|textarea)\b[^>]*>[\s\S]*?<\/\1>/gi, block => {
+    blocks.push(block);
+    return `___EVOLIX_RAW_BLOCK_${blocks.length - 1}___`;
+  });
+  return protectedHTML
     .replace(/<!--[\s\S]*?-->/g, "")
     .replace(/[ \t]+/g, " ")
-    .replace(/^\s+|\s+$/gm, "")
+    .replace(/^[ \t]+|[ \t]+$/gm, "")
     .replace(/\n+/g, "\n")
-    .replace(/>\s+</g, "><");
+    .replace(/>\s+</g, "><")
+    .replace(/___EVOLIX_RAW_BLOCK_(\d+)___/g, (_, index) => blocks[Number(index)]);
 }
 
 function render(html, partials, pageKey) {
@@ -105,6 +120,7 @@ function render(html, partials, pageKey) {
   // Switch local CSS and JS references to minified versions
   out = out.replace(/href=["']\/css\/([a-zA-Z0-9_-]+?)(\.min)?\.css["']/g, 'href="/css/$1.min.css"');
   out = out.replace(/src=["']\/js\/([a-zA-Z0-9_-]+?)(\.min)?\.js["']/g, 'src="/js/$1.min.js"');
+  out = out.replace(/<script\b([^>]*\bsrc=[^>]+)>/gi, (tag, attributes) => /\b(?:defer|async|type\s*=)/i.test(attributes) ? tag : '<script defer' + attributes + '>');
 
   // Inject Vite built assets if manifest exists
   if (partials._viteManifest && partials._viteManifest["src/event/main.jsx"]) {
@@ -142,6 +158,7 @@ function getAllHtmlFiles(dir, base = "") {
 }
 
 async function build() {
+  await createIcons(ROOT);
   console.log("Minifying assets...");
   minifyAllCSS();
   await minifyAllJS();
@@ -153,6 +170,8 @@ async function build() {
     process.exit(1);
   }
   const relFiles = getAllHtmlFiles(PAGES_DIR);
+  const optimizeImages = createImageOptimizer(ROOT);
+  const sitemapRoutes = [];
   if (relFiles.length === 0) {
     console.warn("No page templates found in pages/.");
   }
@@ -171,12 +190,17 @@ async function build() {
     rendered = render(rendered, partials, pageKey);
     
     const outRel = cleanRel === "home.html" ? "index.html" : cleanRel;
+    const route = outRel === 'index.html' ? '/' : '/' + outRel.replace(/\.html$/, '');
+    rendered = enhanceSEO(rendered, route);
+    rendered = await optimizeImages(rendered);
+    if (!/<meta[^>]+name="robots"[^>]+content="[^"]*noindex/i.test(rendered)) sitemapRoutes.push(route);
     const outPath = path.join(ROOT, outRel);
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, minifyHTML(rendered));
     console.log(`  built ${outRel}`);
   }
+  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), createSitemap(sitemapRoutes));
   console.log(`\nDone. ${relFiles.length} page(s) built and all CSS/JS assets minified.`);
 }
 
-build();
+build().catch(error => { console.error(error); process.exitCode = 1; });

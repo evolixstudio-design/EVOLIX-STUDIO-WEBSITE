@@ -19,6 +19,7 @@
   var TRANSITION_DURATION = 350; // 350ms smooth slide/fade
 
   function initDynamicText() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var ctaSections = Array.prototype.slice.call(
       document.querySelectorAll(".cta-headline-dynamic, .dynamic-cta-section")
     );

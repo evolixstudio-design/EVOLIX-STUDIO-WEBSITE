@@ -6,7 +6,7 @@
   "use strict";
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion) return;
+  if (reduceMotion || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
   function initMovableShapes() {
     var backdrop = document.getElementById("shapeHeroBackdrop");
@@ -35,7 +35,7 @@
     ];
 
     function wakeLoop() {
-      if (!isLoopScheduled && isRunning) {
+      if (!isLoopScheduled && isRunning && !document.hidden) {
         isLoopScheduled = true;
         requestAnimationFrame(renderLoop);
       }
@@ -73,7 +73,7 @@
 
     function renderLoop() {
       isLoopScheduled = false;
-      if (!isRunning) return;
+      if (!isRunning || document.hidden) return;
 
       var dx = mouseX - currentX;
       var dy = mouseY - currentY;

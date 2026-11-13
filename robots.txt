@@ -5,9 +5,8 @@ Allow: /assets/
 Allow: /css/
 Allow: /js/
 
-# Disallow internal query parameters to eliminate duplicate pages in search audits
-Disallow: /contact?*
-Disallow: /*?*
+# Keep function endpoints out of search. Canonicals consolidate tracking URLs.
+Disallow: /api/
 
 # Sitemaps and AI Discovery
 Sitemap: https://evolix-studio.in/sitemap.xml

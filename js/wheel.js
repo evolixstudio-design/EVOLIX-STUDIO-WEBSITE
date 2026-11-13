@@ -24,6 +24,7 @@
   var isVisible = true;
   var rafId = null;
   var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var lastFrame = 0;
 
   // Responsive radius calculation - decreased spacing for tighter, sleeker vertical cylinder
   function getRadius() {
@@ -86,15 +87,17 @@
   var section = document.getElementById("services-wheel") || document.getElementById("wheelSection") || viewport;
 
   // Animation Loop (Autonomous, Smooth, 60fps - Never pauses on click or hover)
-  function animate() {
-    if (!isVisible) {
+  function animate(timestamp) {
+    if (!isVisible || document.hidden || prefersReducedMotion) {
       rafId = null;
       return;
     }
 
-    if (!prefersReducedMotion) {
-      targetAngle -= speed;
-    }
+    var interval = window.innerWidth < 768 ? 1000 / 30 : 1000 / 60;
+    var elapsed = lastFrame ? timestamp - lastFrame : interval;
+    if (elapsed < interval - 1) { rafId = requestAnimationFrame(animate); return; }
+    lastFrame = timestamp;
+    targetAngle -= speed * Math.min(elapsed / (1000 / 60), 3);
 
     // Smooth damping lerp
     currentAngle += (targetAngle - currentAngle) * 0.1;
@@ -104,10 +107,15 @@
   }
 
   function startLoop() {
-    if (!rafId && isVisible) {
+    if (!rafId && isVisible && !document.hidden && !prefersReducedMotion) {
       rafId = requestAnimationFrame(animate);
     }
   }
+
+  document.addEventListener('visibilitychange', function () {
+    lastFrame = 0;
+    startLoop();
+  });
 
   // IntersectionObserver to sleep when offscreen
   if ("IntersectionObserver" in window) {

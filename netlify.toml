@@ -4,6 +4,18 @@
 
 # Clean URL redirects (allows accessing /services, /work, /contact without .html)
 [[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/*.html"
+  to = "/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/services"
   to = "/services.html"
   status = 200

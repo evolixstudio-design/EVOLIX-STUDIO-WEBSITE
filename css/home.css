@@ -55,6 +55,8 @@
 }
 
 .hero-headline {
+  margin: 0;
+  font-family: var(--font-display);
   position: relative;
   z-index: 50;
   font-size: clamp(56px, 11vw, 155px);
@@ -66,6 +68,14 @@
   flex-direction: column;
   width: 100%;
   pointer-events: none;
+}
+
+.hero-intro { font-family: var(--font-display); font-size: clamp(.85rem, 1.4vw, 1.1rem); max-width: 800px; margin: 20px auto 32px; color: var(--text-muted); font-weight: 500; text-align: center; position: relative; z-index: 50; }
+
+@media (max-width: 767px) {
+  .shape-container .elegant-shape:nth-child(n+4) { display: none; }
+  .shape-inner { animation: none; }
+  .shape-glass { backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
 .hero-headline .line1 {
   align-self: flex-start;

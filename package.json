@@ -6,6 +6,7 @@
   "scripts": {
     "build": "vite build && node build.js",
     "start": "node server.js",
+    "check:site": "node scripts/verify-site.js",
     "dev": "node build.js && node server.js"
   },
   "keywords": [],
