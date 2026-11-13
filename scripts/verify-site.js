@@ -51,6 +51,8 @@ async function main() {
   assert.equal((testimonials.match(/class="ts-dot(?: active)?"/g) || []).length, 7);
   assert(!/Jumana Maimoon|Aliasg[ae]r Maimoon|Nut Delicacy|Elytek Technologies/i.test(testimonials));
   assert(home.includes('srcset='), 'Responsive images should be present');
+  assert(/\/css\/home\.min\.css\?v=[a-f0-9]{12}/.test(home), 'Updated CSS should bypass older browser caches');
+  assert(/\/js\/hero\.min\.js\?v=[a-f0-9]{12}/.test(home), 'Updated scripts should bypass older browser caches');
   assert(!home.includes('fonts.googleapis.com'), 'Main site should use local fonts');
   for (const slug of ['it-solutions-indore','app-development-indore','software-development-indore','digital-marketing-indore']) {
     assert(routes.includes('/services/' + slug));

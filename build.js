@@ -2,6 +2,7 @@
 // Usage: node build.js
 const fs = require("fs");
 const path = require("path");
+const crypto = require('crypto');
 const CleanCSS = require("clean-css");
 const Terser = require("terser");
 const { createImageOptimizer, createIcons } = require('./scripts/build-images');
@@ -12,6 +13,18 @@ const PAGES_DIR = path.join(ROOT, "pages");
 const PARTIALS_DIR = path.join(ROOT, "partials");
 const CSS_DIR = path.join(ROOT, "css");
 const JS_DIR = path.join(ROOT, "js");
+const assetVersions = new Map();
+
+// Browsers may retain CSS/JS for a week. A content version ensures that a new
+// deployment also updates returning visitors without discarding useful caching.
+function versionAssets(html) {
+  return html.replace(/\b(href|src)="(\/(?:css|js)\/[^"?]+)"/g, (match, attribute, url) => {
+    const file = path.join(ROOT, url);
+    if (!fs.existsSync(file)) return match;
+    if (!assetVersions.has(url)) assetVersions.set(url, crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex').slice(0, 12));
+    return `${attribute}="${url}?v=${assetVersions.get(url)}"`;
+  });
+}
 
 function loadPartials() {
   const partials = {};
@@ -193,6 +206,7 @@ async function build() {
     const route = outRel === 'index.html' ? '/' : '/' + outRel.replace(/\.html$/, '');
     rendered = enhanceSEO(rendered, route);
     rendered = await optimizeImages(rendered);
+    rendered = versionAssets(rendered);
     if (!/<meta[^>]+name="robots"[^>]+content="[^"]*noindex/i.test(rendered)) sitemapRoutes.push(route);
     const outPath = path.join(ROOT, outRel);
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
