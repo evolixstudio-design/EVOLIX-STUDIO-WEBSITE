@@ -1,7 +1,7 @@
 // ============================================================
 // EVOLIX STUDIO — CONTACT & DISCOVERY ENGINE
 // KokonutUI Canvas Particle FlowField Background,
-// Rupee (₹) Budget Selector, Custom Amount, WhatsApp Dispatch & Studio Clocks.
+// Rupee (₹) Budget Selector, Custom Amount, WhatsApp Dispatch.
 // ============================================================
 
 (function () {
@@ -298,16 +298,19 @@
   var customBudgetInput = document.getElementById("customBudgetInput");
 
   var whatsappDirectBtn = document.getElementById("whatsappDirectBtn");
-  var successOverlay = document.getElementById("inquirySuccessOverlay");
+  var reviewDialog = document.getElementById("inquirySuccessOverlay");
   var confirmName = document.getElementById("confirmName");
   var successSummaryBox = document.getElementById("successSummaryBox");
+  var editBtn = document.getElementById("editInquiryBtn");
   var resetBtn = document.getElementById("resetInquiryBtn");
 
   var selectedServices = [];
-  var selectedBudget = "₹50,000 – ₹1,00,000";
+  var defaultBudget = budgetPills.find(function (pill) { return pill.classList.contains("active"); });
+  var selectedBudget = defaultBudget ? defaultBudget.dataset.budget : "To be discussed";
 
   // Service Pills Multi-select Toggle
   servicePills.forEach(function (pill) {
+    pill.setAttribute("aria-pressed", "false");
     pill.addEventListener("click", function () {
       var sId = pill.getAttribute("data-service-id");
       var sColor = pill.getAttribute("data-color") || "#cc3f48";
@@ -320,6 +323,7 @@
         pill.classList.add("active");
         selectedServices.push({ id: sId, label: sLabel, color: sColor });
       }
+      pill.setAttribute("aria-pressed", String(pill.classList.contains("active")));
 
       var errorServices = document.getElementById("errorServices");
       if (errorServices && selectedServices.length > 0) {
@@ -330,9 +334,12 @@
 
   // Budget Pills Radio Toggle & Custom Input Handler
   budgetPills.forEach(function (pill) {
+    pill.setAttribute("aria-pressed", String(pill === defaultBudget));
     pill.addEventListener("click", function () {
-      budgetPills.forEach(function (p) { p.classList.remove("active"); });
-      pill.classList.add("active");
+      budgetPills.forEach(function (p) {
+        p.classList.toggle("active", p === pill);
+        p.setAttribute("aria-pressed", String(p === pill));
+      });
 
       var bVal = pill.getAttribute("data-budget");
       if (bVal === "custom") {
@@ -413,7 +420,7 @@
       "💰 *Estimated Budget:* " + selectedBudget + "\n\n" +
       "📝 *Project Brief:*\n" + brief + "\n" +
       "━━━━━━━━━━━━━━━━━━━━\n" +
-      "Sent via evolix.agency discovery platform";
+      "Sent via evolix-studio.in";
 
     return encodeURIComponent(message);
   }
@@ -423,7 +430,7 @@
     whatsappDirectBtn.addEventListener("click", function () {
       var payload = buildWhatsAppPayload();
       var waUrl = "https://api.whatsapp.com/send?phone=919098173239&text=" + payload;
-      window.open(waUrl, "_blank");
+      window.open(waUrl, "_blank", "noopener,noreferrer");
     });
   }
 
@@ -438,7 +445,7 @@
         return;
       }
 
-      // Populate Success Modal
+      // Populate the review dialog.
       var name = clientNameInput.value.trim();
       var org = orgNameInput.value.trim();
       var mobile = mobileInput.value.trim();
@@ -448,11 +455,19 @@
       if (confirmName) confirmName.textContent = name;
 
       if (successSummaryBox) {
-        successSummaryBox.innerHTML = 
-          "<div><strong>Organization:</strong> " + org + "</div>" +
-          "<div><strong>Contact:</strong> " + mobile + " (" + location + ")</div>" +
-          "<div><strong>Selected Scope:</strong> " + servicesText + "</div>" +
-          "<div><strong>Budget:</strong> " + selectedBudget + "</div>";
+        var details = {
+          Organization: org,
+          Contact: mobile + " (" + location + ")",
+          Services: servicesText,
+          Budget: selectedBudget,
+        };
+        successSummaryBox.replaceChildren(...Object.entries(details).map(function ([label, value]) {
+          var row = document.createElement("div");
+          var title = document.createElement("strong");
+          title.textContent = label + ": ";
+          row.append(title, value);
+          return row;
+        }));
       }
 
       var payload = buildWhatsAppPayload();
@@ -461,27 +476,25 @@
         waLink.href = "https://api.whatsapp.com/send?phone=919098173239&text=" + payload;
       }
 
-      // Trigger Success Overlay
-      if (successOverlay) {
-        successOverlay.classList.add("active");
-        if (window.gsap) {
-          gsap.fromTo(
-            ".success-card-content",
-            { scale: 0.9, opacity: 0, y: 20 },
-            { scale: 1, opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }
-          );
-        }
-      }
+      if (reviewDialog && !reviewDialog.open) reviewDialog.showModal();
     });
   }
 
-  if (resetBtn && successOverlay) {
+  if (editBtn && reviewDialog) {
+    editBtn.addEventListener("click", function () { reviewDialog.close(); });
+  }
+
+  if (resetBtn && reviewDialog) {
     resetBtn.addEventListener("click", function () {
-      successOverlay.classList.remove("active");
+      reviewDialog.close();
       if (form) form.reset();
       selectedServices = [];
-      servicePills.forEach(function (p) { p.classList.remove("active"); });
-      if (customBudgetWrapper) customBudgetWrapper.style.display = "none";
+      servicePills.forEach(function (p) {
+        p.classList.remove("active");
+        p.setAttribute("aria-pressed", "false");
+      });
+      if (defaultBudget) defaultBudget.click();
+      clientNameInput.focus();
     });
   }
 
@@ -512,50 +525,6 @@
       }, 400);
     }
   }
-
-  // ============================================================
-  // 4. LIVE STUDIO CLOCKS (IST, DUBAI GST, KUWAIT AST)
-  // ============================================================
-  var istClockEl = document.getElementById("istClock");
-  var dubaiClockEl = document.getElementById("dubaiClock");
-  var kuwaitClockEl = document.getElementById("kuwaitClock");
-
-  function updateStudioClocks() {
-    var now = new Date();
-
-    // IST (India, UTC +5:30)
-    var istOptions = {
-      timeZone: "Asia/Kolkata",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true
-    };
-    if (istClockEl) istClockEl.textContent = new Intl.DateTimeFormat("en-US", istOptions).format(now);
-
-    // Dubai (GST, UTC +4:00)
-    var dubaiOptions = {
-      timeZone: "Asia/Dubai",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true
-    };
-    if (dubaiClockEl) dubaiClockEl.textContent = new Intl.DateTimeFormat("en-US", dubaiOptions).format(now);
-
-    // Kuwait (AST, UTC +3:00)
-    var kuwaitOptions = {
-      timeZone: "Asia/Kuwait",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true
-    };
-    if (kuwaitClockEl) kuwaitClockEl.textContent = new Intl.DateTimeFormat("en-US", kuwaitOptions).format(now);
-  }
-
-  setInterval(updateStudioClocks, 1000);
-  updateStudioClocks();
 
   // ============================================================
   // INITIALIZE

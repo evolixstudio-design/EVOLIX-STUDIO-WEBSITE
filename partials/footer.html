@@ -1,36 +1,80 @@
 <footer class="site-footer">
   <div class="container">
+    <div class="footer-invitation">
+      <div>
+        <h2>Have a project in mind?</h2>
+        <p>Tell us what your customers or team need to do more easily.</p>
+      </div>
+      <a href="/contact" class="footer-project-link">Start a project <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <section class="footer-ai" id="ask-ai" aria-labelledby="footer-ai-title">
+      <div class="footer-ai-intro">
+        <h2 id="footer-ai-title">Ask AI about us</h2>
+        <p>Ask your preferred assistant what Evolix Studio does and see examples of our work.</p>
+      </div>
+      <div class="footer-ai-providers" role="group" aria-label="AI assistants">
+        <a href="https://chatgpt.com/" data-prompt-param="q" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/ai-assistants/chatgpt.svg" alt="" width="21" height="21" loading="lazy" />
+          <span>ChatGPT</span><span class="footer-ai-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a href="https://claude.ai/new" data-prompt-param="q" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/ai-assistants/claude.svg" alt="" width="21" height="21" loading="lazy" />
+          <span>Claude</span><span class="footer-ai-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a href="https://gemini.google.com/app" data-copy-question target="_blank" rel="noopener noreferrer">
+          <img src="/assets/ai-assistants/gemini.svg" alt="" width="21" height="21" loading="lazy" />
+          <span>Gemini</span><span class="footer-ai-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a href="https://www.perplexity.ai/search" data-prompt-param="q" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/ai-assistants/perplexity.svg" alt="" width="21" height="21" loading="lazy" />
+          <span>Perplexity</span><span class="footer-ai-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a href="https://grok.com/" data-prompt-param="q" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/ai-assistants/grok.svg" alt="" width="21" height="21" loading="lazy" />
+          <span>Grok</span><span class="footer-ai-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a href="https://copilot.microsoft.com/" data-copy-question target="_blank" rel="noopener noreferrer">
+          <img src="/assets/ai-assistants/copilot.svg" alt="" width="21" height="21" loading="lazy" />
+          <span>Copilot</span><span class="footer-ai-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <div class="footer-ai-question">
+        <details class="footer-ai-details">
+          <summary>View question</summary>
+          <textarea id="footer-ai-prompt" aria-label="Question about Evolix Studio" rows="3" readonly>What is Evolix Studio (https://evolix-studio.in/) and what does it do? Use its official website, services page (https://evolix-studio.in/services) and case studies (https://evolix-studio.in/work) to explain its services, who it helps and examples of its work. Cite your sources and say if you cannot verify something.</textarea>
+        </details>
+        <button class="footer-ai-copy" type="button" hidden>Copy question</button>
+        <span class="footer-ai-status" role="status"></span>
+      </div>
+    </section>
+
     <div class="footer-top">
       <div class="footer-brand">
         <a href="/" class="logo" aria-label="Evolix Studio">
-          <img src="/assets/evolix-logo.webp" alt="EVOLIX STUDIO Logo" width="30" height="30" style="aspect-ratio:1/1; object-fit:contain;" />
-          <span class="footer-logo-text">EVOLIX STUDIO</span>
+          <img src="/assets/evolix-logo.webp" alt="" width="38" height="38" />
+          <span class="footer-logo-text">Evolix Studio</span>
         </a>
-        <p class="footer-tagline">Digital agency for modern brands, high-growth products, and bespoke enterprise software.</p>
-        
-        <div class="footer-status-badge">
-          <span class="status-pulse-dot"></span>
-          <span>Available for select projects in 2026</span>
-        </div>
+        <p class="footer-tagline">Websites, mobile apps, custom software and digital marketing for businesses.</p>
       </div>
 
       <div class="footer-cols">
         <div class="footer-col">
-          <span class="footer-col-heading">Disciplines</span>
+          <span class="footer-col-heading">Services</span>
           <a href="/services/website-development-indore">Website Development</a>
           <a href="/services/branding-agency-indore">Branding &amp; Identity</a>
           <a href="/services/amazon-a-plus-content">Amazon A+ Content</a>
           <a href="/services/3d-rendering-motion-design">3D &amp; Motion Design</a>
           <a href="/services/software-development-indore">Software Development</a>
-<a href="/services/app-development-indore">App Development</a>
-<a href="/services/it-solutions-indore">IT Solutions</a>
-<a href="/services/custom-erp-software-india">Custom ERP Software</a>
+          <a href="/services/app-development-indore">App Development</a>
+          <a href="/services/it-solutions-indore">IT Solutions</a>
+          <a href="/services/custom-erp-software-india">Custom ERP Software</a>
           <a href="/services/digital-marketing-indore">Digital Marketing</a>
         </div>
 
         <div class="footer-col">
-          <span class="footer-col-heading">Navigation</span>
-          <a href="/">Index</a>
+          <span class="footer-col-heading">Explore</span>
+          <a href="/">Home</a>
           <a href="/services">All Services</a>
           <a href="/work">Selected Work</a>
           <a href="/blog">Studio Blog</a>
@@ -100,11 +144,44 @@
       </div>
 
       <div class="footer-bottom-right">
-        <span>GLOBAL STUDIO // GMT+5:30</span>
+        <a href="#" class="footer-back-link">Back to top ↑</a>
       </div>
     </div>
   </div>
 </footer>
+
+<script>
+  (function () {
+    const section = document.getElementById("ask-ai");
+    const question = section.querySelector("textarea");
+    const details = section.querySelector("details");
+    const status = section.querySelector(".footer-ai-status");
+    const copy = section.querySelector(".footer-ai-copy");
+
+    for (const link of section.querySelectorAll("[data-prompt-param]")) {
+      const address = new URL(link.href);
+      address.searchParams.set(link.dataset.promptParam, question.value);
+      link.href = address.href;
+    }
+
+    async function copyQuestion(provider) {
+      try {
+        await navigator.clipboard.writeText(question.value);
+        status.textContent = provider ? "Question copied. Paste it into " + provider + "." : "Question copied.";
+      } catch {
+        details.open = true;
+        question.select();
+        status.textContent = "Select and copy the question above.";
+      }
+    }
+
+    copy.hidden = false;
+    copy.addEventListener("click", () => copyQuestion());
+    for (const link of section.querySelectorAll("[data-copy-question]")) {
+      link.addEventListener("click", () => copyQuestion(link.querySelector("span").textContent));
+    }
+  })();
+</script>
 
 <!-- ============ KOKONUTUI FLOATING SOCIAL SHARE POPUP (BOTTOM RIGHT) ============ -->
 <div class="kokonut-floating-share" id="floatingShareWidget" aria-label="Quick Share">
